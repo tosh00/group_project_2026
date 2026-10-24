@@ -54,6 +54,7 @@ Katalog `data/` jest tylko do odczytu. Nie zmieniaj danych wejściowych.
 ```
 cmd/server/          serwer HTTP: API, SSE, pula workerów
 cmd/solve/           CLI: solve -in data/dane_planu.json -out plan.json -seed 42
+cmd/waliduj/         CLI: waliduj -plan plan.json (kod 0 = plan poprawny)
 internal/model/      struktury danych wejściowych + import          [kontrakt]
 internal/solver/     fazy 1–3, funkcja kosztu
 internal/validator/  10 reguł twardych, bez importów z solver/
