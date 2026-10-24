@@ -1,0 +1,7 @@
+﻿id,kierunek,stopien_studiow,rok,semestr,nazwa,liczba_studentow,syntetyczny
+INF1-R1,Informatyka,I,1,1,"Informatyka I st., rok I, sem. I",118,false
+INF1-R2,Informatyka,I,2,3,"Informatyka I st., rok II, sem. III",72,false
+INF1-R3,Informatyka,I,3,5,"Informatyka I st., rok III, sem. V",64,false
+INF1-R4,Informatyka,I,4,7,"Informatyka I st., rok IV, sem. VII",60,false
+INF2-R1,Informatyka,II,1,1,"Informatyka II st., rok I, sem. I",40,true
+INF2-R2,Informatyka,II,2,3,"Informatyka II st., rok II, sem. III",18,false

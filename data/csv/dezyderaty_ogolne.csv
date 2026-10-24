@@ -1,0 +1,51 @@
+﻿prowadzacy,liczba_godzin_wykluczonych,powod_wykluczen,preferencja_dni,inne_uwagi
+P01,10,praca w projekcie badawczym (pomiary w laboratorium),nieskumulowane,
+P02,4,opieka nad dzieckiem,nieskumulowane,
+P03,10,opieka nad dzieckiem,nieskumulowane,
+P04,6,zajęcia w szkole doktorskiej,nieskumulowane,
+P05,4,zajęcia w szkole doktorskiej,nieskumulowane,
+P06,0,,skumulowane,
+P07,2,opieka nad dzieckiem,brak,"Proszę o zajęcia w budynku A, jeśli to możliwe."
+P08,4,zajęcia na innym kierunku (Fizyka),nieskumulowane,
+P09,6,dyżur w innej instytucji,skumulowane,
+P10,10,praca w projekcie badawczym (pomiary w laboratorium),brak,Proszę o jeden dzień w tygodniu bez zajęć.
+P11,4,zajęcia w szkole doktorskiej,nieskumulowane,
+P12,0,,nieskumulowane,Wolę zajęcia w godzinach popołudniowych.
+P13,6,dojazd z innego miasta,brak,
+P14,8,dojazd z innego miasta,skumulowane,
+P15,8,dojazd z innego miasta,nieskumulowane,
+P16,4,zajęcia w szkole doktorskiej,nieskumulowane,
+P17,8,dojazd z innego miasta,skumulowane,
+P18,10,opieka nad dzieckiem,skumulowane,
+P19,10,dojazd z innego miasta,skumulowane,
+P20,0,,skumulowane,
+P21,10,dojazd z innego miasta,skumulowane,Proszę o przerwę między zajęciami nie dłuższą niż 2 godziny.
+P22,0,,skumulowane,Wolę zajęcia w godzinach porannych.
+P23,6,zajęcia na innym kierunku (Fizyka),brak,
+P24,4,posiedzenia komisji uczelnianej,skumulowane,
+P25,4,posiedzenia komisji uczelnianej,skumulowane,
+P26,0,,nieskumulowane,
+P27,0,,brak,Wolę zajęcia w godzinach porannych.
+P28,0,,skumulowane,
+P29,0,,skumulowane,
+P30,6,dyżur w innej instytucji,skumulowane,
+P31,4,opieka nad dzieckiem,nieskumulowane,
+P32,4,zajęcia w szkole doktorskiej,brak,"Proszę o zajęcia w budynku A, jeśli to możliwe."
+P33,6,zajęcia na innym wydziale UŁ,skumulowane,
+P34,0,,brak,
+P35,12,dyżur w innej instytucji,skumulowane,
+P36,0,,skumulowane,
+P37,6,dojazd z innego miasta,skumulowane,Proszę nie planować zajęć po 17:00.
+P38,0,,nieskumulowane,"Proszę o zajęcia w budynku A, jeśli to możliwe."
+P39,12,zajęcia na innym kierunku (Fizyka),skumulowane,
+P40,4,zajęcia na innym kierunku (Fizyka),skumulowane,
+P41,6,zajęcia w szkole doktorskiej,skumulowane,
+P42,8,zajęcia w szkole doktorskiej,brak,
+P43,0,,nieskumulowane,
+P44,4,zajęcia na innym kierunku (Fizyka),brak,
+P45,12,opieka nad dzieckiem,skumulowane,Wolę zajęcia w godzinach porannych.
+P46,10,praca w projekcie badawczym (pomiary w laboratorium),skumulowane,
+P47,0,,brak,Proszę o jeden dzień w tygodniu bez zajęć.
+P48,0,,brak,
+P49,6,praca w projekcie badawczym (pomiary w laboratorium),brak,
+P50,2,dyżur w innej instytucji,skumulowane,Wolę zajęcia w godzinach popołudniowych.

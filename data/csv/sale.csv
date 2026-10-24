@@ -1,0 +1,56 @@
+﻿id,nazwa,budynek,typ,pojemnosc,pojemnosc_szacowana,metraz_m2,wyposazenie,przeznaczenie,dostepna_do_planowania,uwagi
+A225,,A,sala_dydaktyczna,12,false,31.6,projektor;tablica_suchościeralna;tablica_multimedialna,,true,"Opis wyposażenia: projektor, 2 tablice suchościeralne, tablica multimedialna"
+A233,,A,sala_dydaktyczna,34,false,61.5,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A271,,A,sala_dydaktyczna,38,false,63.7,projektor;ekran;tablica_suchościeralna;gniazda_elektryczne,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne, 12 podwójnych gniazd białych, podlicznik energii"
+A272,,A,sala_dydaktyczna,40,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A273,,A,sala_dydaktyczna,38,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A281,Duża Aula,A,aula,264,false,287.2,projektor;ekran;tablica_tryptyk,,true,"Pojemność w źródle: 264+30 na bokach; Opis wyposażenia: 2 projektory podsufitowe, 2 ekrany, 3 tablice tryptyk"
+A283,Mała Aula,A,aula,156,false,209.3,projektor;ekran;tablica_tryptyk,,true,"Pojemność w źródle: 156+ 32 na bokach; Opis wyposażenia: 1 projektor podsufitowy, 1 ekran, 1 tablica tryptyk, 2 tablice pojedyncze"
+B201,,B,sala_dydaktyczna,51,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B222,,B,sala_dydaktyczna,36,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B351,,B,sala_dydaktyczna,40,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B471,,B,sala_dydaktyczna,29,false,47.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B551,,B,sala_dydaktyczna,30,false,47.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B628,,B,sala_dydaktyczna,9,false,31.6,projektor;ekran;tablica_kredowa,,true,"Opis wyposażenia: projektor, ekran, 3 tablice kredowe"
+B671,,B,sala_dydaktyczna,32,false,47.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A105,,A,pracownia_komputerowa,20,false,63.7,projektor;ekran,,false,"Opis wyposażenia: sala dla studentów, ekran, projektor"
+A121,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A122,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_tryptyk,,true,"Opis wyposażenia: projektor, ekran, tablica tryptyk"
+A123,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A171,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A172,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A173,,A,pracownia_komputerowa,25,false,63.7,projektor;ekran;tablica_suchościeralna,,true,"Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+A234,,A,pracownia_komputerowa,20,false,59.7,projektor;ekran;tablica_suchościeralna;MAC,,true,"Pojemność w źródle: 20 stanowisk MAC; Opis wyposażenia: projektor, ekran, 2 tablice suchościeralne"
+B251,,B,pracownia_komputerowa,30,false,77.5,projektor;ekran;tablica_tryptyk,,true,"Opis wyposażenia: 2 projektory, 2 ekrany, 1 tablica tryptyk"
+B253,,B,pracownia_komputerowa,30,false,77.5,projektor;ekran;tablica_tryptyk,,true,"Opis wyposażenia: 2 projektory, 2 ekrany, 1 tablica tryptyk"
+B271,,B,pracownia_komputerowa,30,false,77.5,projektor;ekran;tablica_tryptyk,,true,"Opis wyposażenia: 2 projektory, 2 ekrany, 1 tablica tryptyk"
+B273,,B,pracownia_komputerowa,25,false,77.5,projektor;ekran;tablica_tryptyk;CISCO,,true,"Pojemność w źródle: 25 stanowisk, 6 szaf sieciowych; Opis wyposażenia: 2 projektory, 2 ekrany, 1 tablica tryptyk"
+B571/572,,B,pracownia_robotyki,12,false,95.4,projektor;ekran;tablica_tryptyk;robotyka,,true,"Opis wyposażenia: 2 projektory, 2 ekrany, 2 tablice tryptyk"
+B573/574,,B,pracownia_robotyki,16,false,95.4,projektor;ekran;tablica_tryptyk;robotyka,,true,"Opis wyposażenia: 2 projektory, 2 ekrany, 2 tablice tryptyk"
+B151,,B,pracownia_specjalistyczna,16,true,63.7,projektor;ekran,mikroprocesory,true,"Opis wyposażenia: projektor, ekran; Pojemność oszacowana (brak w źródle)"
+B153,,B,pracownia_specjalistyczna,16,true,63.7,,telekomunikacja,true,Pojemność oszacowana (brak w źródle)
+B353,,B,pracownia_specjalistyczna,,false,31.6,,"ćw. numer 1,2,5,37",false,
+B354,,B,pracownia_specjalistyczna,,false,31.6,,"ćw. numer 3,10,11,29",false,
+B355,,B,pracownia_specjalistyczna,,false,31.6,,"ćw. numer 6,27,7",false,
+B375,,B,pracownia_specjalistyczna,,false,15.5,,"ćw. umer 26,32",false,
+B376,,B,pracownia_specjalistyczna,,false,15.5,,ćw numer 8,false,
+B377,,B,pracownia_specjalistyczna,,false,15.5,,"ćw. numer 12,38",false,
+B378,,B,pracownia_specjalistyczna,,false,15.5,,ćw. numer 38,false,
+B379,,B,pracownia_specjalistyczna,,false,15.5,,ćw. numer 15,false,
+B380,,B,pracownia_specjalistyczna,,false,15.5,,ćw. numer 25,false,
+B381,,B,pracownia_specjalistyczna,,false,15.5,,ćw. numer 16,false,
+B451,,B,pracownia_specjalistyczna,,false,80.1,tablica_tryptyk,mechanika,false,Opis wyposażenia: tryptyk
+B452,,B,pracownia_specjalistyczna,,false,31.6,,mechanika,false,Opis wyposażenia: sala przejściowa
+B453,,B,pracownia_specjalistyczna,,false,47.7,,termodynamika,false,
+B454,,B,pracownia_specjalistyczna,,false,15.5,,optyka,false,
+B472,,B,pracownia_specjalistyczna,16,true,80.1,,elektryka i magnetyzm,true,Pojemność oszacowana (brak w źródle)
+B473,,B,pracownia_specjalistyczna,,false,15.5,,optyka,false,
+B474,,B,pracownia_specjalistyczna,,false,15.5,,optyka,false,
+B475,,B,pracownia_specjalistyczna,,false,31.6,,optyka,false,
+B553,,B,pracownia_specjalistyczna,,false,31.6,,p. Szadkowski,false,
+B651,,B,pracownia_specjalistyczna,,false,63.7,,Jądrówka,false,
+B653,,B,pracownia_specjalistyczna,,false,31.6,,Jądrówka,false,
+B654,,B,pracownia_specjalistyczna,,false,47.7,,Jądrówka,false,
+B672,,B,pracownia_specjalistyczna,,false,31.6,,Jądrówka,false,
+B674,,B,pracownia_specjalistyczna,,false,47.7,,Jądrówka,false,
+B675,,B,pracownia_specjalistyczna,,false,47.7,,Jądrówka,false,

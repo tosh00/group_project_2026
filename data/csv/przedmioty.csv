@@ -1,0 +1,59 @@
+﻿id,rocznik,nazwa
+PRZ-INF1-R1-01,INF1-R1,Analiza matematyczna I
+PRZ-INF1-R1-02,INF1-R1,Ekonomia
+PRZ-INF1-R1-03,INF1-R1,Fizyka
+PRZ-INF1-R1-04,INF1-R1,Języki programowania
+PRZ-INF1-R1-05,INF1-R1,Matematyka dyskretna z logiką
+PRZ-INF1-R1-06,INF1-R1,Ochrona własności intelektualnej
+PRZ-INF1-R1-07,INF1-R1,Podstawy informatyki
+PRZ-INF1-R1-08,INF1-R1,Repetytorium z matematyki
+PRZ-INF1-R2-01,INF1-R2,Algorytmy i struktury danych I
+PRZ-INF1-R2-02,INF1-R2,Lektorat – język angielski II
+PRZ-INF1-R2-03,INF1-R2,Metody probabilistyczne i statystyka
+PRZ-INF1-R2-04,INF1-R2,Podstawy elektrotechniki i elektroniki
+PRZ-INF1-R2-05,INF1-R2,Podstawy grafiki komputerowej
+PRZ-INF1-R2-06,INF1-R2,Podstawy sztucznej inteligencji
+PRZ-INF1-R2-07,INF1-R2,Projektowanie witryn internetowych
+PRZ-INF1-R2-08,INF1-R2,Systemy baz danych
+PRZ-INF1-R2-09,INF1-R2,Wprowadzenie do inżynierii oprogramowania
+PRZ-INF1-R2-10,INF1-R2,Środowisko pracy informatyka
+PRZ-INF1-R3-01,INF1-R3,Aplikacje bazodanowe w Java EE
+PRZ-INF1-R3-02,INF1-R3,Bazy danych II
+PRZ-INF1-R3-03,INF1-R3,Modele językowe w praktyce
+PRZ-INF1-R3-04,INF1-R3,Modelowanie i symulacje komputerowe
+PRZ-INF1-R3-05,INF1-R3,Podstawy efektywności
+PRZ-INF1-R3-06,INF1-R3,Podstawy platformy ASP.NET
+PRZ-INF1-R3-07,INF1-R3,Podstawy sztucznej inteligencji AI
+PRZ-INF1-R3-08,INF1-R3,Programowanie wieloplatformowe w QT
+PRZ-INF1-R3-09,INF1-R3,Programowanie zaawansowane II
+PRZ-INF1-R3-10,INF1-R3,Projektowanie aplikacji mobilnych
+PRZ-INF1-R3-11,INF1-R3,Rozproszone bazy danych
+PRZ-INF1-R3-12,INF1-R3,Sterowanie komputerowe i robotyka
+PRZ-INF1-R3-13,INF1-R3,System LaTeX
+PRZ-INF1-R3-14,INF1-R3,Techniki komputerowe w medycynie
+PRZ-INF1-R3-15,INF1-R3,Technologie informacyjne w geodezji i kartografii
+PRZ-INF1-R3-16,INF1-R3,Zaawansowane metody obliczeniowe
+PRZ-INF1-R3-17,INF1-R3,Złożoność obliczeniowa algorytmów
+PRZ-INF1-R4-01,INF1-R4,Eksploracja danych
+PRZ-INF1-R4-02,INF1-R4,Etyka i kodeks postępowania w informatyce
+PRZ-INF1-R4-03,INF1-R4,Języki skryptowe
+PRZ-INF1-R4-04,INF1-R4,Multimedia – cyfrowe przetwarzanie dźwięku
+PRZ-INF1-R4-05,INF1-R4,Programowanie gier na urządzenia mobilne
+PRZ-INF1-R4-06,INF1-R4,Projektowanie sieci komputerowych
+PRZ-INF1-R4-07,INF1-R4,Seminarium dyplomowe
+PRZ-INF2-R1-01,INF2-R1,Język angielski specjalistyczny
+PRZ-INF2-R1-02,INF2-R1,Kryptografia i bezpieczeństwo systemów
+PRZ-INF2-R1-03,INF2-R1,Metody optymalizacji
+PRZ-INF2-R1-04,INF2-R1,Ochrona własności intelektualnej
+PRZ-INF2-R1-05,INF2-R1,Programowanie współbieżne i rozproszone
+PRZ-INF2-R1-06,INF2-R1,Uczenie maszynowe
+PRZ-INF2-R1-07,INF2-R1,Zaawansowana inżynieria oprogramowania
+PRZ-INF2-R1-08,INF2-R1,Zaawansowane systemy baz danych
+PRZ-INF2-R2-01,INF2-R2,Analiza danych
+PRZ-INF2-R2-02,INF2-R2,Grupowy projekt praktyczny
+PRZ-INF2-R2-03,INF2-R2,Język angielski – przygotowanie do egzaminu i egzamin
+PRZ-INF2-R2-04,INF2-R2,Kształtowanie umiejętności pracy w biznesie
+PRZ-INF2-R2-05,INF2-R2,Metody detekcji i korekcji błędów
+PRZ-INF2-R2-06,INF2-R2,Seminarium magisterskie
+PRZ-INF2-R2-07,INF2-R2,Teoria informacji
+PRZ-INF2-R2-08,INF2-R2,Zarządzanie danymi

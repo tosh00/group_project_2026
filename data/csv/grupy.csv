@@ -1,0 +1,52 @@
+﻿id,rocznik,nazwa,typ,podzial,grupa_nadrzedna,liczba_studentow
+INF1-R1-ALL,INF1-R1,Cały rocznik,rocznik,,,118
+INF1-R2-ALL,INF1-R2,Cały rocznik,rocznik,,,72
+INF1-R3-ALL,INF1-R3,Cały rocznik,rocznik,,,64
+INF1-R4-ALL,INF1-R4,Cały rocznik,rocznik,,,60
+INF2-R1-ALL,INF2-R1,Cały rocznik,rocznik,,,40
+INF2-R2-ALL,INF2-R2,Cały rocznik,rocznik,,,18
+INF1-R1-G1,INF1-R1,Grupa 1,grupa,grupy ćwiczeniowe,INF1-R1-ALL,24
+INF1-R1-G2,INF1-R1,Grupa 2,grupa,grupy ćwiczeniowe,INF1-R1-ALL,24
+INF1-R1-G3,INF1-R1,Grupa 3,grupa,grupy ćwiczeniowe,INF1-R1-ALL,23
+INF1-R1-G4,INF1-R1,Grupa 4,grupa,grupy ćwiczeniowe,INF1-R1-ALL,24
+INF1-R1-G5,INF1-R1,Grupa 5,grupa,grupy ćwiczeniowe,INF1-R1-ALL,23
+INF1-R2-G1,INF1-R2,Grupa 1,grupa,grupy laboratoryjne,INF1-R2-ALL,24
+INF1-R2-G2,INF1-R2,Grupa 2,grupa,grupy laboratoryjne,INF1-R2-ALL,24
+INF1-R2-G3,INF1-R2,Grupa 3,grupa,grupy laboratoryjne,INF1-R2-ALL,24
+INF1-R2-GR1,INF1-R2,GR 1,grupa,grupy pracowni elektrotechniki,INF1-R2-ALL,14
+INF1-R2-GR2,INF1-R2,GR 2,grupa,grupy pracowni elektrotechniki,INF1-R2-ALL,14
+INF1-R2-GR3,INF1-R2,GR 3,grupa,grupy pracowni elektrotechniki,INF1-R2-ALL,15
+INF1-R2-GR4,INF1-R2,GR 4,grupa,grupy pracowni elektrotechniki,INF1-R2-ALL,15
+INF1-R2-GR5,INF1-R2,GR 5,grupa,grupy pracowni elektrotechniki,INF1-R2-ALL,14
+INF1-R2-OPC-SPI,INF1-R2,Opcja: Środowisko pracy informatyka,opcja,przedmiot do wyboru,INF1-R2-ALL,24
+INF1-R2-OPC-PWI,INF1-R2,Opcja: Projektowanie witryn internetowych,opcja,przedmiot do wyboru,INF1-R2-ALL,48
+INF1-R2-OPC-PWI-G1,INF1-R2,PWI Grupa 1,grupa,grupy opcji PWI,INF1-R2-OPC-PWI,24
+INF1-R2-OPC-PWI-G2,INF1-R2,PWI Grupa 2,grupa,grupy opcji PWI,INF1-R2-OPC-PWI,24
+INF1-R3-A,INF1-R3,Specjalność A,specjalnosc,specjalność,INF1-R3-ALL,20
+INF1-R3-B,INF1-R3,Specjalność B,specjalnosc,specjalność,INF1-R3-ALL,22
+INF1-R3-C,INF1-R3,Specjalność C,specjalnosc,specjalność,INF1-R3-ALL,22
+INF1-R3-A1,INF1-R3,Grupa A1,grupa,podgrupy robotyki A,INF1-R3-A,10
+INF1-R3-A2,INF1-R3,Grupa A2,grupa,podgrupy robotyki A,INF1-R3-A,10
+INF1-R3-B1,INF1-R3,Grupa B1,grupa,podgrupy robotyki B,INF1-R3-B,11
+INF1-R3-B2,INF1-R3,Grupa B2,grupa,podgrupy robotyki B,INF1-R3-B,11
+INF1-R3-C1,INF1-R3,Grupa C1,grupa,podgrupy robotyki C,INF1-R3-C,11
+INF1-R3-C2,INF1-R3,Grupa C2,grupa,podgrupy robotyki C,INF1-R3-C,11
+INF1-R3-OPC-TIGK,INF1-R3,Opcja: Technologie informacyjne w geodezji i kartografii,opcja,przedmiot do wyboru,INF1-R3-ALL,14
+INF1-R3-OPC-MJP,INF1-R3,Opcja: Modele językowe w praktyce,opcja,przedmiot do wyboru,INF1-R3-ALL,16
+INF1-R3-OPC-LTX,INF1-R3,Opcja: System LaTeX,opcja,przedmiot do wyboru,INF1-R3-ALL,12
+INF1-R3-OPC-PE,INF1-R3,Opcja: Podstawy efektywności,opcja,przedmiot do wyboru,INF1-R3-ALL,10
+INF1-R3-OPC-TKM,INF1-R3,Opcja: Techniki komputerowe w medycynie,opcja,przedmiot do wyboru,INF1-R3-ALL,12
+INF1-R4-A,INF1-R4,Specjalność A,specjalnosc,specjalność,INF1-R4-ALL,14
+INF1-R4-B,INF1-R4,Specjalność B,specjalnosc,specjalność,INF1-R4-ALL,20
+INF1-R4-C,INF1-R4,Specjalność C,specjalnosc,specjalność,INF1-R4-ALL,14
+INF1-R4-D,INF1-R4,Specjalność D,specjalnosc,specjalność,INF1-R4-ALL,12
+INF1-R4-B1,INF1-R4,Grupa B1,grupa,podgrupy B (USOS),INF1-R4-B,10
+INF1-R4-B2,INF1-R4,Grupa B2,grupa,podgrupy B (USOS),INF1-R4-B,10
+INF1-R4-SEM1,INF1-R4,Seminarium grupa 1,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF1-R4-SEM2,INF1-R4,Seminarium grupa 2,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF1-R4-SEM3,INF1-R4,Seminarium grupa 3,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF1-R4-SEM4,INF1-R4,Seminarium grupa 4,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF1-R4-SEM5,INF1-R4,Seminarium grupa 5,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF1-R4-SEM6,INF1-R4,Seminarium grupa 6,seminarium,seminarium dyplomowe,INF1-R4-ALL,10
+INF2-R1-L1,INF2-R1,Grupa L1,grupa,grupy laboratoryjne,INF2-R1-ALL,20
+INF2-R1-L2,INF2-R1,Grupa L2,grupa,grupy laboratoryjne,INF2-R1-ALL,20
