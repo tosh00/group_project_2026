@@ -11,14 +11,41 @@ Ten plik jest wersją roboczą w repo. Gdy coś się zmieni, aktualizujemy go tu
    Nakładanie się: ten sam dzień ∧ wspólny slot ∧ `maskaA & maskaB != 0`.
 2. **Konstrukcja zachłanna.** Kolejność: najmniejsza domena, potem najwyższy stopień w grafie, najdłuższe i największe.
    Wybór kandydata o najmniejszym przyroście kosztu, forward checking, naprawa ślepych zaułków.
+   Jeśli naprawa nie znajdzie opcji dla zajęć w limicie iteracji, solver przechodzi w **tryb awaryjny**
+   (patrz niżej): wstawia te zajęcia tam, gdzie łamią najmniej reguł twardych, i jedzie dalej.
 3. **Symulowane wyżarzanie.** Ruchy: zmiana sali, przesunięcie terminu, zamiana terminów, zmiana parzystości.
-   Tylko ruchy dopuszczalne, koszt liczony przyrostowo, kilka goroutines z różnymi seedami.
+   Koszt liczony przyrostowo, kilka goroutines z różnymi seedami. W trybie normalnym tylko ruchy dopuszczalne;
+   w trybie awaryjnym także niedopuszczalne, ale z karą za naruszenia w koszcie.
 
 Interfejs: `Solve(ctx, dane, wagi) (Plan, error)`. Własny algorytm, bez gotowych solverów (ADR 0002).
 
+## Tryb awaryjny i walidator (ADR 0006)
+
+Solver **zawsze zwraca plan**, w którym każde zajęcia mają przypisanie. Zamiast „nie udało się”
+użytkownik dostaje plan i listę konkretnych problemów do naprawienia ręcznie albo w danych.
+
+- **Tryb domyślny bez zmian:** najpierw próba planu zgodnego ze wszystkimi regułami twardymi.
+- **Tryb awaryjny:** gdy naprawa ślepego zaułka nie znajdzie opcji w limicie iteracji, zajęcia nie są pomijane.
+  Trafiają do kandydata z najmniejszą liczbą naruszeń twardych (remis: mniejszy przyrost kosztu miękkiego).
+  Format `plan.json` v1 się nie zmienia: status planu wynika z raportu walidatora, nie z pola w planie.
+- **Wyżarzanie usuwa naruszenia:** w trybie awaryjnym `koszt = 10 000 × liczba_naruszeń + koszt_miękki`.
+  Waga 10 000 jest większa niż każdy realny koszt miękki, więc wyżarzanie najpierw usuwa naruszenia,
+  a dopiero potem poprawia jakość. Gdy liczba naruszeń spadnie do 0, solver wraca do ruchów tylko dopuszczalnych.
+- **Walidator ma ostatnie słowo:** po każdym uruchomieniu sprawdza plan niezależnie od solvera i ustala status:
+  `poprawny` (0 naruszeń) albo `z_naruszeniami` (N). Wypisuje **wszystkie** naruszenia, nie tylko pierwsze:
+  regułę, zajęcia, dzień, sloty, salę i tygodnie. Format raportu: `contracts/plan-format.md`.
+- **Dwa rodzaje „nieidealności” są rozdzielone:** naruszenia twarde (plan niedopuszczalny) i koszt miękki
+  (plan dopuszczalny, ale z okienkami itd.). Raport zawsze pokazuje oba; koszt miękki w `meta.koszt` nie zawiera kary 10 000.
+- **API:** status uruchomienia `poprawny` / `z_naruszeniami` z liczbą naruszeń. Status `blad` tylko dla
+  niepoprawnych danych wejściowych albo przerwania przed końcem konstrukcji.
+- **Frontend:** znacznik statusu nad siatką, zajęcia z naruszeniami podświetlone na siatce, lista naruszeń
+  z przejściem do zajęć, filtr „tylko naruszenia”. Ruch ręczny jest dozwolony, jeśli nie zwiększa liczby
+  naruszeń twardych, więc plan z naruszeniami da się naprawiać przeciąganiem. Szczegóły: `design/claude-design-brief.md`.
+
 ## Funkcja kosztu
 
-`koszt(plan) = Σ waga_k × kara_k(plan)`. Twarde reguły 1–10 to filtr, a nie składnik kosztu.
+`koszt(plan) = Σ waga_k × kara_k(plan)`. W trybie normalnym twarde reguły 1–10 to filtr, a nie składnik kosztu.
+W trybie awaryjnym dochodzi składnik `10 000 × liczba_naruszeń_twardych` (patrz wyżej).
 
 | Kryterium | Kara | Waga startowa |
 |---|---|---|
@@ -54,9 +81,9 @@ Funkcja kosztu nie jest osobnym etapem: powstaje razem z solverem, bo konstrukcj
 | Etap | Kiedy | Zakres |
 |---|---|---|
 | 0 | dzień 1 | Szkielet repo (moduł Go + `web/`), Docker Compose, CI, `internal/model` + import JSON; kontrakty: `plan.json`, `Solve(ctx, dane, wagi)`, szkic OpenAPI |
-| 1 | tydzień 1 | Walidator 10 reguł z testami tabelarycznymi |
-| 2 | tygodnie 1–4 | Solver z funkcją kosztu: fazy 1–3, benchmarki, strojenie wag. Poprawny plan dla 174 zajęć z `cmd/solve` po ok. 2 tygodniach, potem jakość |
+| 1 | tydzień 1 | Walidator 10 reguł z testami tabelarycznymi; pełna lista naruszeń w formacie raportu |
+| 2 | tygodnie 1–4 | Solver z funkcją kosztu: fazy 1–3, tryb awaryjny, benchmarki, strojenie wag. Poprawny plan dla 174 zajęć z `cmd/solve` po ok. 2 tygodniach, potem jakość |
 | równolegle | tygodnie 1–3 | API i baza: migracje goose, sqlc, import, endpointy, pula workerów, SSE (z atrapą solvera) |
-| równolegle | tygodnie 2–5 | Frontend MVP: dane, wagi, postęp, siatka, raport (najpierw na mocku z OpenAPI) |
+| równolegle | tygodnie 2–5 | Frontend MVP: dane, wagi, postęp, siatka, raport z naruszeniami i podświetleniem na siatce (najpierw na mocku z OpenAPI) |
 | 3 | tydzień 5 | Integracja: prawdziwy solver w API, postęp przez SSE, walidator po każdym uruchomieniu, testy e2e |
 | 4 | tydzień 6 | Dodatki i prezentacja: edycja ręczna, porównanie, eksport |

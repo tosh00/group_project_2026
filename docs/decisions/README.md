@@ -13,3 +13,4 @@ Otwarte kwestie czekające na decyzję: `../open-questions.md`.
 | 0003 | [Format pliku `plan.json`](0003-format-plan-json.md) | przyjęta |
 | 0004 | [Wybór tygodni dla `wybrane_tygodnie`](0004-tygodnie-z105.md) | przyjęta |
 | 0005 | [Sale z szacowaną pojemnością bez marginesu](0005-pojemnosc-szacowana.md) | przyjęta |
+| 0006 | [Solver zawsze zwraca plan, walidator wypisuje naruszenia](0006-solver-zawsze-zwraca-plan.md) | przyjęta |

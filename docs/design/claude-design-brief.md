@@ -31,22 +31,60 @@ Pracuje na laptopie lub dużym monitorze; telefon tylko do podglądu planu. Jęz
 - Zajęcia trwają 1–4 slotów (bloki różnej wysokości). Karta zajęć: przedmiot, forma (W wykład, LI laboratorium,
   K konwersatorium, P projekt, LEK lektorat, SEM seminarium), sala, prowadzący, grupa. Kolor według formy
   albo rocznika (do wyboru).
-- **Widok według filtra:** rocznik, grupa, prowadzący lub sala. Plan jednego rocznika na raz, bo cały wydział
-  w jednej siatce jest nieczytelny. Kilka zajęć w tym samym slocie w widoku rocznika (różne grupy
-  laboratoryjne równolegle) to norma: karty obok siebie w kolumnie dnia.
+- **Widok według filtra** (szczegóły w sekcji „Filtrowanie gotowego planu”). Kilka zajęć w tym samym slocie
+  w widoku rocznika (różne grupy laboratoryjne równolegle) to norma: karty obok siebie w kolumnie dnia.
 - **Tygodnie 1–14.** Zajęcia nie zawsze trwają cały semestr: „co 2 tygodnie” (tyg. parzyste / nieparzyste),
   „tyg. 6–14”, „bez tyg. 6”. Na karcie mała etykieta tygodni. Przełącznik tygodnia 1–14 (z datą) pokazuje
   tylko zajęcia z danego tygodnia; domyślnie widok „wszystkie tygodnie”.
-- Pasek nad siatką: koszt planu (jedna liczba + trend po edycji), znacznik „0 naruszeń” (zielony), eksport.
+- Pasek nad siatką: koszt planu (jedna liczba + trend po edycji), znacznik statusu, eksport.
+  Znacznik: „Plan poprawny · 0 naruszeń” (zielony) albo „Plan z naruszeniami · N” (czerwony, klikalny:
+  otwiera listę naruszeń).
+
+## Filtrowanie gotowego planu
+
+Gotowy plan przeglądamy w kawałkach, bo cały wydział w jednej siatce jest nieczytelny.
+Filtr jest głównym elementem nawigacji nad kalendarzem, a jego stan trafia do URL (link do konkretnego widoku).
+
+- **Wymiary filtra:** rocznik, grupa (w obrębie rocznika), prowadzący, sala. Jeden wymiar główny na raz
+  decyduje, czyj plan widzimy: „plan rocznika INF1”, „plan dr P07”, „plan sali A281”.
+- **Wybór:** lista z wyszukiwaniem (wpisz „P07”, „A28”, „Analiza”), pogrupowana: roczniki → grupy,
+  prowadzący alfabetycznie, sale według oznaczenia (A…, B…) z typem i pojemnością.
+- **Filtry dodatkowe (zawężające):** forma zajęć (W, LI, K, P, LEK, SEM), tydzień 1–14, „tylko naruszenia”.
+- **Szybkie przejścia:** kliknięcie prowadzącego, sali lub grupy na karcie zajęć przełącza widok na jego/jej plan.
+  Okruszki i „Wstecz” wracają do poprzedniego widoku.
+- **Widok sali:** pokazuje też zajętość (ile slotów w tygodniu zajęte); widok prowadzącego: okienka
+  i dni wolne wyróżnione delikatnie (to kryteria miękkie).
+- **Pusty wynik filtra:** komunikat „Brak zajęć dla … w tygodniu …” z przyciskiem wyczyszczenia filtrów dodatkowych.
+- Filtr działa tak samo w trybie edycji: przeciąganie w widoku sali lub prowadzącego też jest dozwolone.
+
+## Plan z naruszeniami
+
+Solver zawsze zwraca plan, w którym każde zajęcia są na siatce. Gdy nie da się spełnić wszystkich reguł
+twardych, część zajęć trafia tam, gdzie łamią najmniej reguł. Walidator wypisuje każde naruszenie,
+a UI musi to pokazać wyraźnie, żeby plan z naruszeniami nie wyglądał na gotowy.
+
+- **Podświetlenie na siatce:** karta zajęć z naruszeniem ma czerwoną ramkę i ikonę ostrzeżenia
+  (nie tylko kolor). Najechanie pokazuje opis w jednym zdaniu („Grupy INF1-R1-G2 i INF1-R1 mają
+  jednocześnie Z014 i Z087”, „Sala A225 ma 12 miejsc, potrzeba 30”). Obie karty z kolizji są podświetlone.
+- **Lista naruszeń:** panel boczny (otwierany ze znacznika statusu): reguła, zajęcia, dzień i sloty, sala,
+  tygodnie. Grupowanie według reguły. Kliknięcie pozycji przełącza filtr na rocznik / prowadzącego / salę
+  tych zajęć i przewija do karty.
+- **Filtr „tylko naruszenia”:** wygasza pozostałe karty, żeby problemy było widać od razu.
+- **Licznik w filtrach:** przy roczniku, prowadzącym i sali na liście wyboru liczba naruszeń, np. „INF1 (2)”.
+- **Naprawa ręczna:** w planie z naruszeniami ruch jest dozwolony, jeśli nie zwiększa liczby naruszeń
+  twardych. Podgląd na polu: „−1 naruszenie, +6 kosztu”. Gdy liczba spadnie do 0, znacznik zmienia się na zielony.
+- **Dwa wskaźniki zawsze osobno:** naruszenia twarde (czerwone, plan niedopuszczalny) i koszt miękki
+  (neutralny, jakość planu). Nie łączymy ich w jedną liczbę.
 
 ## Drag & drop: zasady (kluczowe)
 
 Reguły planu dzielą się na dwie grupy i UI musi je traktować różnie:
 
-- **Reguły twarde (10 sztuk): nie wolno ich złamać.** Np. prowadzący w dwóch miejscach naraz, dwa zajęcia
+- **Reguły twarde (10 sztuk): ruch ręczny nie może ich złamać.** Np. prowadzący w dwóch miejscach naraz, dwa zajęcia
   w jednej sali, kolizja studentów, sala za mała / złego typu, godzina wykluczona przez prowadzącego,
   Rada Wydziału, stałe blokady (WF). Przeciągnięcie, które by je złamało, **jest niemożliwe**: pole jest
-  zablokowane, karta wraca na miejsce.
+  zablokowane, karta wraca na miejsce. Wyjątek: w planie z naruszeniami (sekcja niżej) dozwolony jest ruch,
+  który nie zwiększa liczby naruszeń.
 - **Kryteria miękkie (wagi): mogą się pogorszyć.** Ruch dozwolony nawet jeśli plan staje się gorszy
   (więcej okienek, zajęcia po 17:00). Użytkownik widzi, o ile zmienił się koszt.
 
@@ -64,14 +102,15 @@ Zachowanie podczas przeciągania:
 
 ## Pozostałe ekrany
 
-- **Raport jakości:** 0 naruszeń twardych, koszt całkowity, rozbicie kosztu na kryteria (wykres słupkowy),
+- **Raport jakości:** status (poprawny / z naruszeniami), pełna lista naruszeń twardych, koszt miękki całkowity, rozbicie kosztu na kryteria (wykres słupkowy),
   najgorsze grupy i prowadzący (lista z linkiem do kalendarza z filtrem).
 - **Porównanie (dodatkowo):** dwa wygenerowane plany obok siebie, różnice zaznaczone.
 - **Eksport (dodatkowo):** CSV, XLSX, ICS.
 
 ## Stany do zaprojektowania
 
-Pusty stan (brak danych), wgrywanie, błąd pliku, generowanie w toku, zatrzymane, brak planu (błąd solvera),
+Pusty stan (brak danych), wgrywanie, błąd pliku, generowanie w toku, zatrzymane, plan poprawny, plan z naruszeniami (znacznik, podświetlone karty, panel listy),
+błąd uruchomienia (niepoprawne dane, przerwanie przed końcem konstrukcji),
 kalendarz bez zajęć dla filtra, przeciąganie (dozwolone / zabronione / podgląd kosztu), konflikt przy cofnięciu.
 
 ## Kierunek wizualny
