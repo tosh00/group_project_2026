@@ -87,3 +87,28 @@ Funkcja kosztu nie jest osobnym etapem: powstaje razem z solverem, bo konstrukcj
 | równolegle | tygodnie 2–5 | Frontend MVP: dane, wagi, postęp, siatka, raport z naruszeniami i podświetleniem na siatce (najpierw na mocku z OpenAPI) |
 | 3 | tydzień 5 | Integracja: prawdziwy solver w API, postęp przez SSE, walidator po każdym uruchomieniu, testy e2e |
 | 4 | tydzień 6 | Dodatki i prezentacja: edycja ręczna, porównanie, eksport |
+
+## Pomysły na kolejne iteracje (poza MVP)
+
+Nie planujemy ich w etapach 0–4. Zapisane, żeby nie zamknąć sobie drogi w kontraktach.
+
+### Własne ograniczenia użytkownika
+
+Użytkownik dodaje w UI ograniczenia, których nie ma w danych wejściowych, i generuje plan od nowa.
+Przykład: remont w części A, więc dostępne są tylko sale z oznaczeniem B (w naszych danych A i B
+to oznaczenia sal w jednym budynku, patrz `notes.md`, ale mechanizm ma działać tak samo dla osobnych budynków).
+
+- **Gotowe szablony zamiast dowolnych reguł:** niedostępność sal (wybór pojedynczo, według oznaczenia A/B,
+  typu albo wyposażenia), niedostępność prowadzącego, blokada terminu dla rocznika lub grupy,
+  zajęcia przypięte do sali lub terminu. Każdy szablon ma zakres: dni, sloty, tygodnie 1–14.
+- **Twarde albo miękkie:** użytkownik wybiera, czy ograniczenie jest twarde (filtr w fazie 1 i reguła
+  w walidatorze), czy miękkie (kryterium kosztu z wagą, np. „unikaj sal A”).
+- **Kompilacja do istniejących mechanizmów:** szablony zmieniają domeny w fazie 1 (dostępność sal,
+  wykluczenia prowadzących, blokady), więc solver nie potrzebuje nowego kodu dla każdego typu.
+  Walidator dostaje te same ograniczenia jako dodatkowe reguły i wypisuje ich naruszenia w raporcie,
+  jak dla reguł 1–10.
+- **Podgląd skutków przed uruchomieniem:** np. „bez sal A zostaje 14 sal, 2 wykłady nie mają sali z ≥ 198 miejscami”.
+  Przy niemożliwych ograniczeniach działa tryb awaryjny (ADR 0006).
+- **Kontrakty:** ograniczenia użytkownika jako osobna lista obok danych wejściowych (nie zmieniamy
+  `dane_planu.json`), wersjonowana razem z uruchomieniem, żeby plan dało się odtworzyć. Wymaga ADR
+  przed implementacją.
