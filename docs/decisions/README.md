@@ -9,3 +9,5 @@ Otwarte kwestie czekające na decyzję: `../open-questions.md`.
 | Nr | Tytuł | Status |
 |---|---|---|
 | 0001 | [Repozytorium jako wspólna pamięć](0001-repo-jako-wspolna-pamiec.md) | przyjęta |
+| 0002 | [Własny algorytm zamiast gotowego solvera](0002-wlasny-algorytm.md) | przyjęta |
+| 0003 | [Format pliku `plan.json`](0003-format-plan-json.md) | przyjęta |

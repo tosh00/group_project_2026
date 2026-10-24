@@ -14,7 +14,7 @@ Ten plik jest wersją roboczą w repo. Gdy coś się zmieni, aktualizujemy go tu
 3. **Symulowane wyżarzanie.** Ruchy: zmiana sali, przesunięcie terminu, zamiana terminów, zmiana parzystości.
    Tylko ruchy dopuszczalne, koszt liczony przyrostowo, kilka goroutines z różnymi seedami.
 
-Interfejs: `Solve(ctx, dane, wagi) (Plan, error)`. Opcjonalnie drugi silnik CP-SAT (Python, podproces).
+Interfejs: `Solve(ctx, dane, wagi) (Plan, error)`. Własny algorytm, bez gotowych solverów (ADR 0002).
 
 ## Funkcja kosztu
 
@@ -59,4 +59,4 @@ Funkcja kosztu nie jest osobnym etapem: powstaje razem z solverem, bo konstrukcj
 | równolegle | tygodnie 1–3 | API i baza: migracje goose, sqlc, import, endpointy, pula workerów, SSE (z atrapą solvera) |
 | równolegle | tygodnie 2–5 | Frontend MVP: dane, wagi, postęp, siatka, raport (najpierw na mocku z OpenAPI) |
 | 3 | tydzień 5 | Integracja: prawdziwy solver w API, postęp przez SSE, walidator po każdym uruchomieniu, testy e2e |
-| 4 | tydzień 6 | Dodatki i prezentacja: edycja ręczna, porównanie, eksport, opcjonalnie CP-SAT |
+| 4 | tydzień 6 | Dodatki i prezentacja: edycja ręczna, porównanie, eksport |

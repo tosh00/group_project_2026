@@ -16,5 +16,10 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
 - 30 wierszy `rozne_dni`, 2 wiersze `ten_sam_termin`.
 - Rada Wydziału: wtorek, sloty 9–10. WF rocznika INF1-R2: czwartek, sloty 1–4.
 - 5 zajęć ma kilku prowadzących, wszyscy muszą być wolni.
+- Z169 (`wybrane_tygodnie`) ma tydzień 6 w `tygodnie_niedostepne`, więc jego 13 tygodni jest wyznaczone przez dane.
+  Prawdziwy wybór tygodni dotyczy tylko Z105 (9 z 14).
+- Szacowaną pojemność (16 miejsc) mają tylko B151, B153, B472. Z071–Z080, Z136, Z137 mogą być tylko w B153 lub B472,
+  a Z075–Z078 (15 osób) wypełniają je prawie do końca. Z115 (20 osób) ma do dyspozycji tylko A234 (20 miejsc).
+  Jakikolwiek twardy margines pojemności czyni problem nierozwiązywalnym (2026-10-24).
 - Litera A/B w nazwie sali (`A281`, `B153`) to część oznaczenia sali w jednym budynku WFiIS, a nie osobne budynki.
   Przejście między salami A i B nie wymaga przerwy (ustalenie zespołu, 2026-10-24).
