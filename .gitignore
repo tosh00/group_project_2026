@@ -1,0 +1,24 @@
+# Pliki blokad LibreOffice / MS Office
+.~lock.*#
+~$*
+
+# Go
+/bin/
+*.test
+*.out
+
+# Node
+node_modules/
+web/dist/
+
+# Środowisko
+.env
+.DS_Store
+.idea/
+.vscode/
+
+# Lokalne ustawienia Claude Code (wspólne: .claude/settings.json)
+.claude/settings.local.json
+
+# Wyniki lokalnych uruchomień solvera
+/out/

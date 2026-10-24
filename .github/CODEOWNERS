@@ -1,0 +1,17 @@
+# Właściciele modułów: patrz docs/team.md.
+# Odkomentujcie linie i wpiszcie loginy GitHub po ustaleniu ról.
+
+# /internal/model/      @?
+# /internal/solver/     @?
+# /cmd/solve/           @?
+# /internal/validator/  @?
+# /cmd/server/          @?
+# /internal/api/        @?
+# /internal/store/      @?
+# /migrations/          @?
+# /api/                 @?
+# /web/                 @?
+
+# Kontrakty i decyzje: review całego zespołu
+# /docs/contracts/      @? @? @?
+# /docs/decisions/      @? @? @?

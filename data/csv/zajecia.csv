@@ -1,0 +1,175 @@
+﻿id,rocznik,przedmiot_id,przedmiot,forma,forma_opis,grupy,liczba_studentow,laczone_z,dodatkowi_studenci,prowadzacy,godziny_programowe,liczba_spotkan,sloty_na_spotkanie,czestotliwosc,tydzien_od,tydzien_do,typy_sal,dozwolone_sale,wymagane_wyposazenie,tryb,powiazanie,typ_powiazania,tygodnie_niedostepne,uwagi
+Z001,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,W,wykład,INF1-R1-ALL,118,,0,P39,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z002,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P31,28,9,2,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-01,rozne_dni,,"Ćwiczenia od tygodnia 6 (po repetytorium), 2 spotkania w tygodniu: 2 sloty + 1 slot, w różne dni."
+Z003,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P31,28,9,1,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-01,rozne_dni,,
+Z004,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P39,28,9,2,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-02,rozne_dni,,"Ćwiczenia od tygodnia 6 (po repetytorium), 2 spotkania w tygodniu: 2 sloty + 1 slot, w różne dni."
+Z005,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P39,28,9,1,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-02,rozne_dni,,
+Z006,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P31,28,9,2,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-03,rozne_dni,,"Ćwiczenia od tygodnia 6 (po repetytorium), 2 spotkania w tygodniu: 2 sloty + 1 slot, w różne dni."
+Z007,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P31,28,9,1,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-03,rozne_dni,,
+Z008,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P07,28,9,2,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-04,rozne_dni,,"Ćwiczenia od tygodnia 6 (po repetytorium), 2 spotkania w tygodniu: 2 sloty + 1 slot, w różne dni."
+Z009,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P07,28,9,1,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-04,rozne_dni,,
+Z010,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P45,28,9,2,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-05,rozne_dni,,"Ćwiczenia od tygodnia 6 (po repetytorium), 2 spotkania w tygodniu: 2 sloty + 1 slot, w różne dni."
+Z011,INF1-R1,PRZ-INF1-R1-01,Analiza matematyczna I,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P45,28,9,1,co_tydzien,6,14,sala_dydaktyczna,,,stacjonarny,POW-05,rozne_dni,,
+Z012,INF1-R1,PRZ-INF1-R1-02,Ekonomia,W,wykład,INF1-R1-ALL,118,,0,P47,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,Liczba godzin nie była podana w planie – założono 28 h.
+Z013,INF1-R1,PRZ-INF1-R1-03,Fizyka,W,wykład,INF1-R1-ALL,118,,0,P16,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z014,INF1-R1,PRZ-INF1-R1-03,Fizyka,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P23,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z015,INF1-R1,PRZ-INF1-R1-03,Fizyka,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P24,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z016,INF1-R1,PRZ-INF1-R1-03,Fizyka,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P28,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z017,INF1-R1,PRZ-INF1-R1-03,Fizyka,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P23,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z018,INF1-R1,PRZ-INF1-R1-03,Fizyka,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P04,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z019,INF1-R1,PRZ-INF1-R1-04,Języki programowania,W,wykład,INF1-R1-ALL,118,,0,P11,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z020,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G1,24,,0,P22,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-06,rozne_dni,,"56 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z021,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G1,24,,0,P22,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-06,rozne_dni,,
+Z022,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G2,24,,0,P06,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-07,rozne_dni,,"56 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z023,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G2,24,,0,P06,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-07,rozne_dni,,
+Z024,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G3,23,,0,P13,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-08,rozne_dni,,"56 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z025,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G3,23,,0,P13,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-08,rozne_dni,,
+Z026,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G4,24,,0,P11,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-09,rozne_dni,,"56 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z027,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G4,24,,0,P11,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-09,rozne_dni,,
+Z028,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G5,23,,0,P11,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-10,rozne_dni,,"56 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z029,INF1-R1,PRZ-INF1-R1-04,Języki programowania,LI,laboratorium informatyczne,INF1-R1-G5,23,,0,P11,56,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,POW-10,rozne_dni,,
+Z030,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,W,wykład,INF1-R1-ALL,118,,0,P35,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z031,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P12,42,14,3,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z032,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P49,42,14,3,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z033,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P39,42,14,3,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z034,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P12,42,14,3,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z035,INF1-R1,PRZ-INF1-R1-05,Matematyka dyskretna z logiką,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P49,42,14,3,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z036,INF1-R1,PRZ-INF1-R1-06,Ochrona własności intelektualnej,W,wykład,INF1-R1-ALL,118,,0,P37,10,5,2,co_tydzien,1,5,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z037,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,W,wykład,INF1-R1-ALL,118,Fizyka,80,P30,28,7,2,co_tydzien,1,7,aula;sala_dydaktyczna,,,stacjonarny,POW-11,ten_sam_termin,,Wykład prowadzony przez dwie osoby kolejno: tygodnie 1-7 i 8-14.
+Z038,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,W,wykład,INF1-R1-ALL,118,Fizyka,80,P38,28,7,2,co_tydzien,8,14,aula;sala_dydaktyczna,,,stacjonarny,POW-11,ten_sam_termin,,
+Z039,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P30,14,7,2,co_tydzien,1,7,sala_dydaktyczna,,,stacjonarny,,,,"Konwersatorium w tygodniach 1-7, potem laboratorium (tygodnie 8-14)."
+Z040,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P24,14,7,2,co_tydzien,1,7,sala_dydaktyczna,,,stacjonarny,,,,"Konwersatorium w tygodniach 1-7, potem laboratorium (tygodnie 8-14)."
+Z041,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P30,14,7,2,co_tydzien,1,7,sala_dydaktyczna,,,stacjonarny,,,,"Konwersatorium w tygodniach 1-7, potem laboratorium (tygodnie 8-14)."
+Z042,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P24,14,7,2,co_tydzien,1,7,sala_dydaktyczna,,,stacjonarny,,,,"Konwersatorium w tygodniach 1-7, potem laboratorium (tygodnie 8-14)."
+Z043,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P24,14,7,2,co_tydzien,1,7,sala_dydaktyczna,,,stacjonarny,,,,"Konwersatorium w tygodniach 1-7, potem laboratorium (tygodnie 8-14)."
+Z044,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,LI,laboratorium informatyczne,INF1-R1-G1,24,,0,P38,14,7,2,co_tydzien,8,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z045,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,LI,laboratorium informatyczne,INF1-R1-G2,24,,0,P21,14,7,2,co_tydzien,8,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z046,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,LI,laboratorium informatyczne,INF1-R1-G3,23,,0,P38,14,7,2,co_tydzien,8,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z047,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,LI,laboratorium informatyczne,INF1-R1-G4,24,,0,P21,14,7,2,co_tydzien,8,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z048,INF1-R1,PRZ-INF1-R1-07,Podstawy informatyki,LI,laboratorium informatyczne,INF1-R1-G5,23,,0,P38,14,7,2,co_tydzien,8,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z049,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G1,24,,0,P30,28,5,5,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,,,,"Repetytorium odbywa się tylko w tygodniach 1-5, przed ćwiczeniami z Analizy matematycznej I."
+Z050,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G2,24,,0,P46,28,5,5,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,,,,"Repetytorium odbywa się tylko w tygodniach 1-5, przed ćwiczeniami z Analizy matematycznej I."
+Z051,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P10,28,5,3,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,POW-12,rozne_dni,,"Repetytorium odbywa się tylko w tygodniach 1-5, przed ćwiczeniami z Analizy matematycznej I."
+Z052,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G3,23,,0,P10,28,5,2,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,POW-12,rozne_dni,,
+Z053,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P07,28,5,3,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,POW-13,rozne_dni,,"Repetytorium odbywa się tylko w tygodniach 1-5, przed ćwiczeniami z Analizy matematycznej I."
+Z054,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G4,24,,0,P07,28,5,2,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,POW-13,rozne_dni,,
+Z055,INF1-R1,PRZ-INF1-R1-08,Repetytorium z matematyki,K,konwersatorium / ćwiczenia,INF1-R1-G5,23,,0,P46,28,5,5,co_tydzien,1,5,sala_dydaktyczna,,,stacjonarny,,,,"Repetytorium odbywa się tylko w tygodniach 1-5, przed ćwiczeniami z Analizy matematycznej I."
+Z056,INF1-R2,PRZ-INF1-R2-01,Algorytmy i struktury danych I,W,wykład,INF1-R2-ALL,72,,0,P32,14,7,2,co_2_tygodnie,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z057,INF1-R2,PRZ-INF1-R2-01,Algorytmy i struktury danych I,LI,laboratorium informatyczne,INF1-R2-G1,24,,0,P21,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z058,INF1-R2,PRZ-INF1-R2-01,Algorytmy i struktury danych I,LI,laboratorium informatyczne,INF1-R2-G2,24,,0,P02,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z059,INF1-R2,PRZ-INF1-R2-01,Algorytmy i struktury danych I,LI,laboratorium informatyczne,INF1-R2-G3,24,,0,P02,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z060,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G1,24,,0,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-14,rozne_dni,,"60 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z061,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G1,24,,0,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-14,rozne_dni,,
+Z062,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G2,24,Fizyka,15,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-15,rozne_dni,,"60 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z063,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G2,24,Fizyka,15,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-15,rozne_dni,,
+Z064,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G3,24,,0,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-16,rozne_dni,,"60 h = 2 spotkania po 2 sloty w tygodniu, w różne dni."
+Z065,INF1-R2,PRZ-INF1-R2-02,Lektorat – język angielski II,LEK,lektorat,INF1-R2-G3,24,,0,P17,60,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,POW-16,rozne_dni,,
+Z066,INF1-R2,PRZ-INF1-R2-03,Metody probabilistyczne i statystyka,W,wykład,INF1-R2-ALL,72,Fizyka,40,P16,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z067,INF1-R2,PRZ-INF1-R2-03,Metody probabilistyczne i statystyka,LI,laboratorium informatyczne,INF1-R2-G1,24,,0,P04,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z068,INF1-R2,PRZ-INF1-R2-03,Metody probabilistyczne i statystyka,LI,laboratorium informatyczne,INF1-R2-G2,24,,0,P26,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z069,INF1-R2,PRZ-INF1-R2-03,Metody probabilistyczne i statystyka,LI,laboratorium informatyczne,INF1-R2-G3,24,,0,P32,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z070,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,W,wykład,INF1-R2-ALL,72,,0,P38,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z071,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR1,14,,0,P38,28,5,3,co_tydzien,1,5,,B472,,stacjonarny,,,,"Pracownia: część elektrotechniczna (tygodnie 1-5, sala B472), potem elektroniczna (tygodnie 6-10, sala B153)."
+Z072,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR1,14,,0,P38,28,5,3,co_tydzien,6,10,,B153,,stacjonarny,,,,
+Z073,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR2,14,,0,P38,28,5,3,co_tydzien,1,5,,B472,,stacjonarny,,,,"Pracownia: część elektrotechniczna (tygodnie 1-5, sala B472), potem elektroniczna (tygodnie 6-10, sala B153)."
+Z074,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR2,14,,0,P38,28,5,3,co_tydzien,6,10,,B153,,stacjonarny,,,,
+Z075,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR3,15,,0,P33,28,5,3,co_tydzien,1,5,,B472,,stacjonarny,,,,"Pracownia: część elektrotechniczna (tygodnie 1-5, sala B472), potem elektroniczna (tygodnie 6-10, sala B153)."
+Z076,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR3,15,,0,P21,28,5,3,co_tydzien,6,10,,B153,,stacjonarny,,,,
+Z077,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR4,15,,0,P44,28,5,3,co_tydzien,1,5,,B472,,stacjonarny,,,,"Pracownia: część elektrotechniczna (tygodnie 1-5, sala B472), potem elektroniczna (tygodnie 6-10, sala B153)."
+Z078,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR4,15,,0,P44,28,5,3,co_tydzien,6,10,,B153,,stacjonarny,,,,
+Z079,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR5,14,,0,P33,28,5,3,co_tydzien,1,5,,B472,,stacjonarny,,,,"Pracownia: część elektrotechniczna (tygodnie 1-5, sala B472), potem elektroniczna (tygodnie 6-10, sala B153)."
+Z080,INF1-R2,PRZ-INF1-R2-04,Podstawy elektrotechniki i elektroniki,P,pracownia,INF1-R2-GR5,14,,0,P21,28,5,3,co_tydzien,6,10,,B153,,stacjonarny,,,,
+Z081,INF1-R2,PRZ-INF1-R2-05,Podstawy grafiki komputerowej,W,wykład,INF1-R2-ALL,72,,0,P34,14,7,2,co_2_tygodnie,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z082,INF1-R2,PRZ-INF1-R2-05,Podstawy grafiki komputerowej,LI,laboratorium informatyczne,INF1-R2-G1,24,,0,P25,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z083,INF1-R2,PRZ-INF1-R2-05,Podstawy grafiki komputerowej,LI,laboratorium informatyczne,INF1-R2-G2,24,,0,P25,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z084,INF1-R2,PRZ-INF1-R2-05,Podstawy grafiki komputerowej,LI,laboratorium informatyczne,INF1-R2-G3,24,,0,P25,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z085,INF1-R2,PRZ-INF1-R2-06,Podstawy sztucznej inteligencji,W,wykład,INF1-R2-ALL,72,,0,P36,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z086,INF1-R2,PRZ-INF1-R2-06,Podstawy sztucznej inteligencji,LI,laboratorium informatyczne,INF1-R2-G1,24,,0,P36,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z087,INF1-R2,PRZ-INF1-R2-06,Podstawy sztucznej inteligencji,LI,laboratorium informatyczne,INF1-R2-G2,24,,0,P50,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z088,INF1-R2,PRZ-INF1-R2-06,Podstawy sztucznej inteligencji,LI,laboratorium informatyczne,INF1-R2-G3,24,,0,P50,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z089,INF1-R2,PRZ-INF1-R2-07,Projektowanie witryn internetowych,LI,laboratorium informatyczne,INF1-R2-OPC-PWI-G1,24,,0,P25,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z090,INF1-R2,PRZ-INF1-R2-07,Projektowanie witryn internetowych,LI,laboratorium informatyczne,INF1-R2-OPC-PWI-G2,24,,0,P25,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z091,INF1-R2,PRZ-INF1-R2-08,Systemy baz danych,W,wykład,INF1-R2-ALL,72,,0,P15,14,7,2,co_2_tygodnie,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z092,INF1-R2,PRZ-INF1-R2-08,Systemy baz danych,LI,laboratorium informatyczne,INF1-R2-G1,24,,0,P08,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z093,INF1-R2,PRZ-INF1-R2-08,Systemy baz danych,LI,laboratorium informatyczne,INF1-R2-G2,24,,0,P08,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z094,INF1-R2,PRZ-INF1-R2-08,Systemy baz danych,LI,laboratorium informatyczne,INF1-R2-G3,24,,0,P07,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z095,INF1-R2,PRZ-INF1-R2-09,Wprowadzenie do inżynierii oprogramowania,W,wykład,INF1-R2-ALL,72,,0,P12,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z096,INF1-R2,PRZ-INF1-R2-10,Środowisko pracy informatyka,LI,laboratorium informatyczne,INF1-R2-OPC-SPI,24,,0,P44,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z097,INF1-R3,PRZ-INF1-R3-01,Aplikacje bazodanowe w Java EE,W,wykład,INF1-R3-C,22,,0,P20,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z098,INF1-R3,PRZ-INF1-R3-01,Aplikacje bazodanowe w Java EE,LI,laboratorium informatyczne,INF1-R3-C,22,,0,P05,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z099,INF1-R3,PRZ-INF1-R3-02,Bazy danych II,W,wykład,INF1-R3-C,22,,0,P15,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z100,INF1-R3,PRZ-INF1-R3-02,Bazy danych II,LI,laboratorium informatyczne,INF1-R3-C,22,,0,P15,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z101,INF1-R3,PRZ-INF1-R3-03,Modele językowe w praktyce,LI,laboratorium informatyczne,INF1-R3-OPC-MJP,16,,0,P36,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z102,INF1-R3,PRZ-INF1-R3-04,Modelowanie i symulacje komputerowe,LI,laboratorium informatyczne,INF1-R3-A,20,,0,P14;P19,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,Zajęcia prowadzone wspólnie przez 2 osoby.
+Z103,INF1-R3,PRZ-INF1-R3-04,Modelowanie i symulacje komputerowe,LI,laboratorium informatyczne,INF1-R3-B,22,,0,P14;P19,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,Zajęcia prowadzone wspólnie przez 2 osoby.
+Z104,INF1-R3,PRZ-INF1-R3-04,Modelowanie i symulacje komputerowe,LI,laboratorium informatyczne,INF1-R3-C,22,,0,P14;P19,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,Zajęcia prowadzone wspólnie przez 2 osoby.
+Z105,INF1-R3,PRZ-INF1-R3-05,Podstawy efektywności,K,konwersatorium / ćwiczenia,INF1-R3-OPC-PE,10,,0,P48,28,9,3,wybrane_tygodnie,1,14,sala_dydaktyczna,,,stacjonarny,,,,9 spotkań po 3 sloty w dowolnych 9 z 14 tygodni (ten sam dzień i godzina). Forma zajęć nie była podana – przyjęto K.
+Z106,INF1-R3,PRZ-INF1-R3-06,Podstawy platformy ASP.NET,LI,laboratorium informatyczne,INF1-R3-C,22,,0,P20,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z107,INF1-R3,PRZ-INF1-R3-07,Podstawy sztucznej inteligencji AI,W,wykład,INF1-R3-ALL,64,,0,P36,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z108,INF1-R3,PRZ-INF1-R3-07,Podstawy sztucznej inteligencji AI,LI,laboratorium informatyczne,INF1-R3-A,20,,0,P50,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z109,INF1-R3,PRZ-INF1-R3-07,Podstawy sztucznej inteligencji AI,LI,laboratorium informatyczne,INF1-R3-B,22,,0,P50,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z110,INF1-R3,PRZ-INF1-R3-07,Podstawy sztucznej inteligencji AI,LI,laboratorium informatyczne,INF1-R3-C,22,,0,P42,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z111,INF1-R3,PRZ-INF1-R3-08,Programowanie wieloplatformowe w QT,W,wykład,INF1-R3-A,20,,0,P13;P34;P50,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna;pracownia_komputerowa,,,stacjonarny,,,,Zajęcia prowadzone wspólnie przez 3 osoby (wszystkie muszą być wolne).
+Z112,INF1-R3,PRZ-INF1-R3-08,Programowanie wieloplatformowe w QT,LI,laboratorium informatyczne,INF1-R3-A,20,,0,P13;P34;P50,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z113,INF1-R3,PRZ-INF1-R3-09,Programowanie zaawansowane II,LI,laboratorium informatyczne,INF1-R3-B,22,,0,P20,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z114,INF1-R3,PRZ-INF1-R3-10,Projektowanie aplikacji mobilnych,W,wykład,INF1-R3-A,20,,0,P30,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z115,INF1-R3,PRZ-INF1-R3-10,Projektowanie aplikacji mobilnych,LI,laboratorium informatyczne,INF1-R3-A,20,,0,P30,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,MAC,stacjonarny,,,,
+Z116,INF1-R3,PRZ-INF1-R3-11,Rozproszone bazy danych,W,wykład,INF1-R3-A,20,,0,P15,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z117,INF1-R3,PRZ-INF1-R3-11,Rozproszone bazy danych,LI,laboratorium informatyczne,INF1-R3-A,20,,0,P15,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z118,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,W,wykład,INF1-R3-ALL,64,,0,P18,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z119,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-A1,10,,0,P18,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z120,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-A2,10,,0,P44,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z121,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-B1,11,,0,P44,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z122,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-B2,11,,0,P44,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z123,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-C1,11,,0,P44,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z124,INF1-R3,PRZ-INF1-R3-12,Sterowanie komputerowe i robotyka,LI,laboratorium informatyczne,INF1-R3-C2,11,,0,P44,42,14,3,co_tydzien,1,14,,B571/572;B573/574,,stacjonarny,,,,
+Z125,INF1-R3,PRZ-INF1-R3-13,System LaTeX,LI,laboratorium informatyczne,INF1-R3-OPC-LTX,12,,0,P31,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z126,INF1-R3,PRZ-INF1-R3-14,Techniki komputerowe w medycynie,W,wykład,INF1-R3-OPC-TKM,12,,0,P27,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,hybrydowy,,,,Zajęcia hybrydowe – sala potrzebna (część osób na miejscu).
+Z127,INF1-R3,PRZ-INF1-R3-15,Technologie informacyjne w geodezji i kartografii,LI,laboratorium informatyczne,INF1-R3-OPC-TIGK,14,,0,P24,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z128,INF1-R3,PRZ-INF1-R3-16,Zaawansowane metody obliczeniowe,W,wykład,INF1-R3-B,22,,0,P40,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z129,INF1-R3,PRZ-INF1-R3-16,Zaawansowane metody obliczeniowe,LI,laboratorium informatyczne,INF1-R3-B,22,,0,P40,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z130,INF1-R3,PRZ-INF1-R3-17,Złożoność obliczeniowa algorytmów,W,wykład,INF1-R3-B,22,,0,P49,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z131,INF1-R3,PRZ-INF1-R3-17,Złożoność obliczeniowa algorytmów,LI,laboratorium informatyczne,INF1-R3-B,22,,0,P49,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z132,INF1-R4,PRZ-INF1-R4-01,Eksploracja danych,W,wykład,INF1-R4-C,14,,0,P50,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna;pracownia_komputerowa,,,stacjonarny,,,,
+Z133,INF1-R4,PRZ-INF1-R4-01,Eksploracja danych,LI,laboratorium informatyczne,INF1-R4-C,14,,0,P50,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z134,INF1-R4,PRZ-INF1-R4-02,Etyka i kodeks postępowania w informatyce,W,wykład,INF1-R4-ALL,60,,0,P29,14,7,2,co_tydzien,1,7,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z135,INF1-R4,PRZ-INF1-R4-03,Języki skryptowe,LI,laboratorium informatyczne,INF1-R4-B,20,,0,P46,14,7,2,co_tydzien,1,7,pracownia_komputerowa,,,stacjonarny,,,,
+Z136,INF1-R4,PRZ-INF1-R4-04,Multimedia – cyfrowe przetwarzanie dźwięku,LI,laboratorium informatyczne,INF1-R4-B1,10,,0,P38,28,14,2,co_tydzien,1,14,,B153,,stacjonarny,,,,
+Z137,INF1-R4,PRZ-INF1-R4-04,Multimedia – cyfrowe przetwarzanie dźwięku,LI,laboratorium informatyczne,INF1-R4-B2,10,,0,P38,28,14,2,co_tydzien,1,14,,B153,,stacjonarny,,,,
+Z138,INF1-R4,PRZ-INF1-R4-05,Programowanie gier na urządzenia mobilne,LI,laboratorium informatyczne,INF1-R4-A,14,,0,P20,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z139,INF1-R4,PRZ-INF1-R4-06,Projektowanie sieci komputerowych,W,wykład,INF1-R4-D,12,,0,P01,14,14,1,co_tydzien,1,14,,B273,,stacjonarny,,,,
+Z140,INF1-R4,PRZ-INF1-R4-06,Projektowanie sieci komputerowych,LI,laboratorium informatyczne,INF1-R4-D,12,,0,P01,28,14,2,co_tydzien,1,14,,B273,CISCO,stacjonarny,,,,
+Z141,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM1,10,,0,P30,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,Liczba godzin nie była podana w planie – założono 28 h.
+Z142,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM2,10,,0,P07,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z143,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM3,10,,0,P02,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z144,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM4,10,,0,P20,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z145,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM5,10,,0,P46,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z146,INF1-R4,PRZ-INF1-R4-07,Seminarium dyplomowe,SEM,seminarium,INF1-R4-SEM6,10,,0,P43,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z147,INF2-R1,PRZ-INF2-R1-01,Język angielski specjalistyczny,LEK,lektorat,INF2-R1-ALL,40,,0,P03,30,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z148,INF2-R1,PRZ-INF2-R1-02,Kryptografia i bezpieczeństwo systemów,W,wykład,INF2-R1-ALL,40,,0,P01,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z149,INF2-R1,PRZ-INF2-R1-02,Kryptografia i bezpieczeństwo systemów,LI,laboratorium informatyczne,INF2-R1-L1,20,,0,P01,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z150,INF2-R1,PRZ-INF2-R1-02,Kryptografia i bezpieczeństwo systemów,LI,laboratorium informatyczne,INF2-R1-L2,20,,0,P01,14,7,2,co_2_tygodnie,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z151,INF2-R1,PRZ-INF2-R1-03,Metody optymalizacji,W,wykład,INF2-R1-ALL,40,,0,P07,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z152,INF2-R1,PRZ-INF2-R1-03,Metody optymalizacji,K,konwersatorium / ćwiczenia,INF2-R1-ALL,40,,0,P07,28,14,2,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z153,INF2-R1,PRZ-INF2-R1-04,Ochrona własności intelektualnej,W,wykład,INF2-R1-ALL,40,,0,P37,10,5,2,co_tydzien,1,5,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z154,INF2-R1,PRZ-INF2-R1-05,Programowanie współbieżne i rozproszone,W,wykład,INF2-R1-ALL,40,,0,P20,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z155,INF2-R1,PRZ-INF2-R1-05,Programowanie współbieżne i rozproszone,LI,laboratorium informatyczne,INF2-R1-L1,20,,0,P02,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z156,INF2-R1,PRZ-INF2-R1-05,Programowanie współbieżne i rozproszone,LI,laboratorium informatyczne,INF2-R1-L2,20,,0,P20,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z157,INF2-R1,PRZ-INF2-R1-06,Uczenie maszynowe,W,wykład,INF2-R1-ALL,40,,0,P50,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z158,INF2-R1,PRZ-INF2-R1-06,Uczenie maszynowe,LI,laboratorium informatyczne,INF2-R1-L1,20,,0,P50,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z159,INF2-R1,PRZ-INF2-R1-06,Uczenie maszynowe,LI,laboratorium informatyczne,INF2-R1-L2,20,,0,P42,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z160,INF2-R1,PRZ-INF2-R1-07,Zaawansowana inżynieria oprogramowania,W,wykład,INF2-R1-ALL,40,,0,P12,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z161,INF2-R1,PRZ-INF2-R1-07,Zaawansowana inżynieria oprogramowania,LI,laboratorium informatyczne,INF2-R1-L1,20,,0,P13,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z162,INF2-R1,PRZ-INF2-R1-07,Zaawansowana inżynieria oprogramowania,LI,laboratorium informatyczne,INF2-R1-L2,20,,0,P13,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z163,INF2-R1,PRZ-INF2-R1-08,Zaawansowane systemy baz danych,W,wykład,INF2-R1-ALL,40,,0,P15,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z164,INF2-R1,PRZ-INF2-R1-08,Zaawansowane systemy baz danych,LI,laboratorium informatyczne,INF2-R1-L1,20,,0,P08,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z165,INF2-R1,PRZ-INF2-R1-08,Zaawansowane systemy baz danych,LI,laboratorium informatyczne,INF2-R1-L2,20,,0,P15,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z166,INF2-R2,PRZ-INF2-R2-01,Analiza danych,LI,laboratorium informatyczne,INF2-R2-ALL,18,,0,P42,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z167,INF2-R2,PRZ-INF2-R2-02,Grupowy projekt praktyczny,LI,laboratorium informatyczne,INF2-R2-ALL,18,,0,P13,28,14,2,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z168,INF2-R2,PRZ-INF2-R2-03,Język angielski – przygotowanie do egzaminu i egzamin,LEK,lektorat,INF2-R2-ALL,18,,0,P03,15,14,1,co_tydzien,1,14,sala_dydaktyczna,,,stacjonarny,,,,
+Z169,INF2-R2,PRZ-INF2-R2-04,Kształtowanie umiejętności pracy w biznesie,W,wykład,INF2-R2-ALL,18,Fizyka,10,P09,28,13,3,wybrane_tygodnie,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,6,13 spotkań po 3 sloty (jeden tydzień wolny – prowadzący niedostępny w tygodniu 6).
+Z170,INF2-R2,PRZ-INF2-R2-05,Metody detekcji i korekcji błędów,W,wykład,INF2-R2-ALL,18,,0,P49,14,14,1,co_tydzien,1,14,aula;sala_dydaktyczna;pracownia_komputerowa,,,stacjonarny,,,,
+Z171,INF2-R2,PRZ-INF2-R2-05,Metody detekcji i korekcji błędów,LI,laboratorium informatyczne,INF2-R2-ALL,18,,0,P49,14,14,1,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,
+Z172,INF2-R2,PRZ-INF2-R2-06,Seminarium magisterskie,SEM,seminarium,INF2-R2-ALL,18,,0,P40,28,14,2,co_tydzien,1,14,sala_dydaktyczna;pracownia_komputerowa,,,stacjonarny,,,,
+Z173,INF2-R2,PRZ-INF2-R2-07,Teoria informacji,W,wykład,INF2-R2-ALL,18,,0,P49,28,14,2,co_tydzien,1,14,aula;sala_dydaktyczna,,,stacjonarny,,,,
+Z174,INF2-R2,PRZ-INF2-R2-08,Zarządzanie danymi,LI,laboratorium informatyczne,INF2-R2-ALL,18,,0,P41,42,14,3,co_tydzien,1,14,pracownia_komputerowa,,,stacjonarny,,,,

@@ -1,0 +1,85 @@
+﻿data,dzien_tygodnia,typ_dnia,plan_dnia,nr_tygodnia,opis
+2026-10-01,czwartek,wolne,,,Inauguracja roku akademickiego – zajęcia od 2 X
+2026-10-02,piątek,zajęcia,5,1,
+2026-10-05,poniedziałek,zajęcia,1,1,
+2026-10-06,wtorek,zajęcia,2,1,
+2026-10-07,środa,zajęcia,3,1,
+2026-10-08,czwartek,zajęcia,4,1,
+2026-10-09,piątek,zajęcia,5,2,
+2026-10-12,poniedziałek,zajęcia,1,2,
+2026-10-13,wtorek,zajęcia,2,2,
+2026-10-14,środa,zajęcia,3,2,
+2026-10-15,czwartek,zajęcia,4,2,
+2026-10-16,piątek,zajęcia,5,3,
+2026-10-19,poniedziałek,zajęcia,1,3,
+2026-10-20,wtorek,zajęcia,2,3,
+2026-10-21,środa,zajęcia,3,3,
+2026-10-22,czwartek,zajęcia,4,3,
+2026-10-23,piątek,zajęcia,5,4,
+2026-10-26,poniedziałek,zajęcia,1,4,
+2026-10-27,wtorek,zajęcia,2,4,
+2026-10-28,środa,zajęcia,3,4,
+2026-10-29,czwartek,zajęcia,4,4,
+2026-10-30,piątek,zajęcia,5,5,
+2026-11-02,poniedziałek,wolne,,,Dzień rektorski
+2026-11-03,wtorek,zajęcia,2,5,
+2026-11-04,środa,zajęcia,3,5,
+2026-11-05,czwartek,zajęcia,4,5,
+2026-11-06,piątek,zajęcia,5,6,
+2026-11-09,poniedziałek,zajęcia,1,5,
+2026-11-10,wtorek,zajęcia,2,6,
+2026-11-11,środa,wolne,,,Narodowe Święto Niepodległości
+2026-11-12,czwartek,zajęcia,4,6,
+2026-11-13,piątek,zajęcia,5,7,
+2026-11-16,poniedziałek,zajęcia,1,6,
+2026-11-17,wtorek,zajęcia,2,7,
+2026-11-18,środa,zajęcia,3,6,
+2026-11-19,czwartek,zajęcia,4,7,
+2026-11-20,piątek,zajęcia,5,8,
+2026-11-23,poniedziałek,zajęcia,1,7,
+2026-11-24,wtorek,zajęcia,2,8,
+2026-11-25,środa,zajęcia,3,7,
+2026-11-26,czwartek,zajęcia,4,8,
+2026-11-27,piątek,zajęcia,5,9,
+2026-11-30,poniedziałek,zajęcia,1,8,
+2026-12-01,wtorek,zajęcia,2,9,
+2026-12-02,środa,zajęcia,3,8,
+2026-12-03,czwartek,zajęcia,4,9,
+2026-12-04,piątek,zajęcia,5,10,
+2026-12-07,poniedziałek,zajęcia,1,9,
+2026-12-08,wtorek,zajęcia,2,10,
+2026-12-09,środa,zajęcia,3,9,
+2026-12-10,czwartek,zajęcia,4,10,
+2026-12-11,piątek,zajęcia,5,11,
+2026-12-14,poniedziałek,zajęcia,1,10,
+2026-12-15,wtorek,zajęcia,2,11,
+2026-12-16,środa,zajęcia,3,10,
+2026-12-17,czwartek,zajęcia,4,11,
+2026-12-18,piątek,zajęcia,5,12,
+2026-12-21,poniedziałek,zajęcia,1,11,
+2026-12-22,wtorek,zajęcia,2,12,
+2026-12-23,środa,wolne,,,Zimowa przerwa świąteczna
+2026-12-24,czwartek,wolne,,,Zimowa przerwa świąteczna
+2026-12-25,piątek,wolne,,,Zimowa przerwa świąteczna
+2026-12-28,poniedziałek,wolne,,,Zimowa przerwa świąteczna
+2026-12-29,wtorek,wolne,,,Zimowa przerwa świąteczna
+2026-12-30,środa,wolne,,,Zimowa przerwa świąteczna
+2026-12-31,czwartek,wolne,,,Zimowa przerwa świąteczna
+2027-01-01,piątek,wolne,,,Zimowa przerwa świąteczna
+2027-01-04,poniedziałek,wolne,,,Zimowa przerwa świąteczna
+2027-01-05,wtorek,wolne,,,Zimowa przerwa świąteczna
+2027-01-06,środa,wolne,,,Zimowa przerwa świąteczna
+2027-01-07,czwartek,zajęcia,4,12,
+2027-01-08,piątek,odpracowanie,3,11,Zajęcia wg planu środy (odrabianie)
+2027-01-11,poniedziałek,zajęcia,1,12,
+2027-01-12,wtorek,zajęcia,2,13,
+2027-01-13,środa,zajęcia,3,12,
+2027-01-14,czwartek,zajęcia,4,13,
+2027-01-15,piątek,zajęcia,5,13,
+2027-01-18,poniedziałek,zajęcia,1,13,
+2027-01-19,wtorek,zajęcia,2,14,
+2027-01-20,środa,zajęcia,3,13,
+2027-01-21,czwartek,zajęcia,4,14,
+2027-01-22,piątek,zajęcia,5,14,
+2027-01-25,poniedziałek,odpracowanie,1,14,Dodatkowy poniedziałek (odrabianie 2 XI) – już w okresie sesji
+2027-01-26,wtorek,odpracowanie,3,14,Zajęcia wg planu środy (odrabianie 11 XI) – już w okresie sesji
