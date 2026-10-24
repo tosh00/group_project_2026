@@ -1,6 +1,6 @@
 # Plan projektu (skrót)
 
-Pełna wersja z diagramami: https://claude.ai/artifact/Y2bEygpkVhLJdbvjqdd3QU
+Pełna wersja z diagramami: https://claude.ai/artifact/Fp7h19TgAp6TyBp3NraJ94
 Ten plik jest wersją roboczą w repo. Gdy coś się zmieni, aktualizujemy go tutaj, a decyzje zapisujemy w `decisions/`.
 
 ## Algorytm: trzy fazy
@@ -33,9 +33,11 @@ Interfejs: `Solve(ctx, dane, wagi) (Plan, error)`. Opcjonalnie drugi silnik CP-S
 | „Jeden dzień wolny” | prowadzący ma zajęcia w 5 dniach | 10 |
 | „Przerwa ≤ 2 h” | sloty przerwy ponad 2 | 8 |
 | Pora dnia (inne_uwagi) | sloty poza preferowaną połową dnia | 3 |
-| „Budynek A” | zajęcia w budynku B | 3 |
-| Zmiana budynku bez przerwy | kolejne zajęcia grupy w innym budynku | 4 |
+| „Sale A, jeśli możliwe” | zajęcia prowadzącego w sali z oznaczeniem B | 3 |
 | Wykłady rocznika w jednym dniu | ponad limit | 2 |
+
+A i B to oznaczenia sal (np. `A123`, `B657`) w jednym budynku WFiIS, a nie osobne budynki.
+Przejście między salami A i B nie wymaga przerwy, więc nie ma kary za „zmianę budynku”.
 
 ## Stack
 
@@ -44,12 +46,17 @@ PostgreSQL 16, Docker Compose, GitHub Actions (go test, golangci-lint, Vitest).
 
 ## Etapy
 
-| Etap | Tydzień | Zakres |
+Solver i walidator idą pierwsze, bo to najtrudniejsza i najbardziej ryzykowna część; da się je budować
+i testować na samym JSON przez CLI, bez bazy. API, baza i frontend idą równolegle: w dniu 1 ustalamy
+format `plan.json`, interfejs `Solve` i szkic OpenAPI, więc backend pracuje z atrapą solvera, a frontend z mockiem API.
+Funkcja kosztu nie jest osobnym etapem: powstaje razem z solverem, bo konstrukcja zachłanna wybiera według kosztu.
+
+| Etap | Kiedy | Zakres |
 |---|---|---|
-| 0 | 1 | Szkielet repo, Docker Compose, CI, `internal/model` + import JSON, kontrakty |
-| 1 | 2 | Walidator 10 reguł z testami tabelarycznymi |
-| 2 | 3–4 | Solver fazy 1–2: poprawny plan dla 174 zajęć z `cmd/solve` |
-| 3 | 4–5 | Funkcja kosztu, wyżarzanie, benchmarki, strojenie wag |
-| 4 | 5–6 | Migracje, sqlc, API, pula workerów, SSE |
-| 5 | 6–7 | Frontend MVP: dane, wagi, postęp, siatka, raport |
-| 6 | 8 | Dodatki: edycja ręczna, porównanie, eksport, CP-SAT |
+| 0 | dzień 1 | Szkielet repo (moduł Go + `web/`), Docker Compose, CI, `internal/model` + import JSON; kontrakty: `plan.json`, `Solve(ctx, dane, wagi)`, szkic OpenAPI |
+| 1 | tydzień 1 | Walidator 10 reguł z testami tabelarycznymi |
+| 2 | tygodnie 1–4 | Solver z funkcją kosztu: fazy 1–3, benchmarki, strojenie wag. Poprawny plan dla 174 zajęć z `cmd/solve` po ok. 2 tygodniach, potem jakość |
+| równolegle | tygodnie 1–3 | API i baza: migracje goose, sqlc, import, endpointy, pula workerów, SSE (z atrapą solvera) |
+| równolegle | tygodnie 2–5 | Frontend MVP: dane, wagi, postęp, siatka, raport (najpierw na mocku z OpenAPI) |
+| 3 | tydzień 5 | Integracja: prawdziwy solver w API, postęp przez SSE, walidator po każdym uruchomieniu, testy e2e |
+| 4 | tydzień 6 | Dodatki i prezentacja: edycja ręczna, porównanie, eksport, opcjonalnie CP-SAT |

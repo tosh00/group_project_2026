@@ -16,3 +16,5 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
 - 30 wierszy `rozne_dni`, 2 wiersze `ten_sam_termin`.
 - Rada Wydziału: wtorek, sloty 9–10. WF rocznika INF1-R2: czwartek, sloty 1–4.
 - 5 zajęć ma kilku prowadzących, wszyscy muszą być wolni.
+- Litera A/B w nazwie sali (`A281`, `B153`) to część oznaczenia sali w jednym budynku WFiIS, a nie osobne budynki.
+  Przejście między salami A i B nie wymaga przerwy (ustalenie zespołu, 2026-10-24).
