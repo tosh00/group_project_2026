@@ -1,16 +1,16 @@
 # Zespół i właściciele modułów
 
 Właściciel modułu decyduje o jego wnętrzu i robi review zmian w nim.
-Uzupełnijcie tabelę i odpowiadający jej plik `.github/CODEOWNERS`.
+Tabela odpowiada plikowi `.github/CODEOWNERS`; zmieniajcie oba razem.
 
 | Moduł | Ścieżki | Właściciel | GitHub |
 |---|---|---|---|
-| Model danych + import | `internal/model/` | _do ustalenia_ | `@?` |
-| Solver (fazy 1–3, koszt) | `internal/solver/`, `cmd/solve/` | _do ustalenia_ | `@?` |
-| Walidator + testy | `internal/validator/` | _do ustalenia (inna osoba niż autor solvera)_ | `@?` |
-| Backend + baza | `cmd/server/`, `internal/api/`, `internal/store/`, `migrations/`, `api/` | _do ustalenia_ | `@?` |
-| Frontend | `web/` | _do ustalenia_ | `@?` |
-| Infrastruktura (Docker, CI) | `docker-compose.yml`, `.github/workflows/` | _do ustalenia_ | `@?` |
+| Model danych + import | `internal/model/` | Bartosz | `@tosh00` |
+| Solver (fazy 1–3, koszt) | `internal/solver/`, `cmd/solve/` | krzysiu-w | `@krzysiu-w` |
+| Walidator + testy | `internal/validator/` | Bartosz | `@tosh00` |
+| Backend + baza | `cmd/server/`, `internal/api/`, `internal/store/`, `migrations/`, `api/` | Kajetan | `@KajetanJanusz` |
+| Frontend | `web/`, `docs/design/` | shokera | `@shokera` |
+| Infrastruktura (Docker, CI) | `docker-compose.yml`, `Dockerfile*`, `.github/workflows/` | shokera | `@shokera` |
 
 ## Kanały
 

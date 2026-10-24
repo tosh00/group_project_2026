@@ -1,17 +1,35 @@
-# Właściciele modułów: patrz docs/team.md.
-# Odkomentujcie linie i wpiszcie loginy GitHub po ustaleniu ról.
+# Właściciele modułów: patrz docs/team.md (zmieniajcie oba pliki razem).
+# Na GitHubie wygrywa ostatnia pasująca reguła.
 
-# /internal/model/      @?
-# /internal/solver/     @?
-# /cmd/solve/           @?
-# /internal/validator/  @?
-# /cmd/server/          @?
-# /internal/api/        @?
-# /internal/store/      @?
-# /migrations/          @?
-# /api/                 @?
-# /web/                 @?
+# Domyślnie: Bartosz (koordynacja)
+*                       @tosh00
 
-# Kontrakty i decyzje: review całego zespołu
-# /docs/contracts/      @? @? @?
-# /docs/decisions/      @? @? @?
+# Model danych + walidator
+/internal/model/        @tosh00
+/internal/validator/    @tosh00
+
+# Solver
+/internal/solver/       @krzysiu-w
+/cmd/solve/             @krzysiu-w
+
+# Backend + baza
+/cmd/server/            @KajetanJanusz
+/internal/api/          @KajetanJanusz
+/internal/store/        @KajetanJanusz
+/migrations/            @KajetanJanusz
+/api/                   @KajetanJanusz
+
+# Frontend
+/web/                   @shokera
+/docs/design/           @shokera
+
+# Infrastruktura
+/docker-compose*.yml    @shokera
+Dockerfile*             @shokera
+/.github/workflows/     @shokera
+
+# Zasady, kontrakty i decyzje: cały zespół
+/CLAUDE.md              @tosh00 @krzysiu-w @KajetanJanusz @shokera
+/docs/contracts/        @tosh00 @krzysiu-w @KajetanJanusz @shokera
+/docs/decisions/        @tosh00 @krzysiu-w @KajetanJanusz @shokera
+/.github/CODEOWNERS     @tosh00 @krzysiu-w @KajetanJanusz @shokera
