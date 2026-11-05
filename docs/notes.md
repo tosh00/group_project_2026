@@ -26,3 +26,7 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
 - Z071–Z080, Z136, Z137 mają w `dozwolone_sale` **po jednej** sali (np. Z071, Z075, Z077 tylko B472; Z072, Z076, Z080 tylko B153),
   a nie wybór „B153 lub B472”. Razem z B273 (Z139, Z140), A234 (Z115) i A281 (Z037+Z038) to najmniejsze domeny:
   35–55 możliwych terminów (2026-11-05).
+- Studenci tworzą 88 klas o identycznym zbiorze grup (372 osoby), więc okienka studentów da się liczyć dokładnie
+  per klasa, a nie per grupa. Po wyżarzaniu (domyślne wagi) najwięcej kosztu dają `za_duza_sala` (~180, dużo zajęć
+  ma do wyboru tylko duże sale) i `preferencja_dni` (~110); okienka studentów i prowadzących schodzą prawie do 0
+  (2026-11-05).

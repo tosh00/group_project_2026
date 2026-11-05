@@ -8,7 +8,7 @@ na początku każda osoba (i jej agent) może pracować niezależnie.
 | Dane wejściowe | `data/dane_planu.json` (format: `data/README.md`) | wszyscy | stały |
 | Struktury danych w Go | `internal/model/`, opis: [model.md](model.md) | solver, walidator, backend | gotowe (etap 0) |
 | Plan wyjściowy | `plan.json`, opis: [plan-format.md](plan-format.md) | solver, walidator, backend, frontend | przyjęty, wersja 1 (ADR 0003) |
-| Interfejs solvera | `Solve(ctx, dane, wagi, opcje...) (Plan, error)` w `internal/solver`, opis: [solver.md](solver.md) | backend | szkic (faza 1 gotowa) |
+| Interfejs solvera | `Solve(ctx, dane, wagi, opcje...) (Plan, error)` w `internal/solver`, opis: [solver.md](solver.md) | backend | gotowe (fazy 1–3) |
 | API HTTP | `api/openapi.yaml` | backend, frontend | szkic w etapie 0, rozwijany równolegle z API |
 | Schemat bazy | `migrations/` | backend | do zrobienia (ścieżka API i baza, tygodnie 1–3) |
 

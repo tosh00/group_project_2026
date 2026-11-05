@@ -115,11 +115,14 @@ func naruszeniaTwarde(d *model.Dane, plan model.Plan) []string {
 	return out
 }
 
+// testoweIteracje: mniej iteracji wyżarzania niż domyślnie, żeby testy były szybkie.
+const testoweIteracje = 50_000
+
 func TestSolvePrawdziweDane(t *testing.T) {
 	d := wczytajDane(t)
 	for _, seed := range []int64{1, 2, 42, 2026} {
 		t.Run(fmt.Sprint("seed ", seed), func(t *testing.T) {
-			plan, err := Solve(context.Background(), d, DomyslneWagi(), ZSeed(seed))
+			plan, err := Solve(context.Background(), d, DomyslneWagi(), ZSeed(seed), ZIteracjami(testoweIteracje))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -148,8 +151,8 @@ func TestKonstrukcjaBezTrybuAwaryjnego(t *testing.T) {
 
 func TestSolvePowtarzalny(t *testing.T) {
 	d := wczytajDane(t)
-	a, _ := Solve(context.Background(), d, DomyslneWagi(), ZSeed(7))
-	b, _ := Solve(context.Background(), d, DomyslneWagi(), ZSeed(7))
+	a, _ := Solve(context.Background(), d, DomyslneWagi(), ZSeed(7), ZIteracjami(testoweIteracje))
+	b, _ := Solve(context.Background(), d, DomyslneWagi(), ZSeed(7), ZIteracjami(testoweIteracje))
 	if !slices.Equal(a.Przypisania, b.Przypisania) {
 		t.Error("ten sam seed dał różne plany")
 	}
@@ -202,7 +205,7 @@ func TestTrybAwaryjny(t *testing.T) {
 		t.Run(p.nazwa, func(t *testing.T) {
 			d := wczytajDane(t)
 			p.zepsuj(d)
-			plan, err := Solve(context.Background(), d, DomyslneWagi())
+			plan, err := Solve(context.Background(), d, DomyslneWagi(), ZIteracjami(testoweIteracje))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -288,7 +291,7 @@ func TestNaprawWyrzucaKonflikty(t *testing.T) {
 // Ta sama sytuacja od zera: konstrukcja kończy z planem bez naruszeń.
 func TestKonstrukcjaMaleDane(t *testing.T) {
 	d := maleDane()
-	plan, err := Solve(context.Background(), d, DomyslneWagi())
+	plan, err := Solve(context.Background(), d, DomyslneWagi(), ZIteracjami(testoweIteracje))
 	if err != nil {
 		t.Fatal(err)
 	}
