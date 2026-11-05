@@ -23,3 +23,6 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
   Jakikolwiek twardy margines pojemności czyni problem nierozwiązywalnym (2026-10-24).
 - Litera A/B w nazwie sali (`A281`, `B153`) to część oznaczenia sali w jednym budynku WFiIS, a nie osobne budynki.
   Przejście między salami A i B nie wymaga przerwy (ustalenie zespołu, 2026-10-24).
+- Z071–Z080, Z136, Z137 mają w `dozwolone_sale` **po jednej** sali (np. Z071, Z075, Z077 tylko B472; Z072, Z076, Z080 tylko B153),
+  a nie wybór „B153 lub B472”. Razem z B273 (Z139, Z140), A234 (Z115) i A281 (Z037+Z038) to najmniejsze domeny:
+  35–55 możliwych terminów (2026-11-05).
