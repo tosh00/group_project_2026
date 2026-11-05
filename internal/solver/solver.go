@@ -7,7 +7,7 @@ package solver
 
 import (
 	"context"
-	"errors"
+	"math/rand/v2"
 	"time"
 
 	"github.com/tosh00/group_project_2026/internal/model"
@@ -16,8 +16,9 @@ import (
 // Silnik to wartość meta.silnik w plan.json.
 const Silnik = "go-hybrid"
 
-// ErrNieZaimplementowane zwraca Solve, dopóki faza 2 nie jest gotowa.
-var ErrNieZaimplementowane = errors.New("solver: faza 2 jeszcze nie jest zaimplementowana")
+// limitNaprawNaWezel: ile napraw ślepych zaułków (na węzeł) wolno zrobić w fazie 2,
+// zanim solver przejdzie w tryb awaryjny.
+const limitNaprawNaWezel = 20
 
 // Opcja zmienia ustawienia uruchomienia. Opcje są opcjonalne, więc wywołanie
 // Solve(ctx, dane, wagi) z kontraktu działa bez nich.
@@ -41,9 +42,22 @@ func Solve(ctx context.Context, dane *model.Dane, wagi Wagi, opcje ...Opcja) (mo
 	if err := ctx.Err(); err != nil {
 		return model.Plan{}, err
 	}
-	_ = przygotuj(dane)
-	_ = wagi
-	return model.Plan{}, ErrNieZaimplementowane
+	pr := przygotuj(dane)
+	rng := rand.New(rand.NewPCG(uint64(u.seed), 0x9e3779b97f4a7c15))
+	st, _, err := pr.konstruuj(ctx, rng, &wagi, limitNaprawNaWezel*len(pr.wezly))
+	if err != nil {
+		return model.Plan{}, err
+	}
+	// TODO(faza 3): wyżarzanie i pełna funkcja kosztu; na razie meta.koszt to suma kryteriów lokalnych.
+	return nowyPlan(u, pr.kosztLokalnyPlanu(st, &wagi), st.przypisania()), nil
+}
+
+func (pr *problem) kosztLokalnyPlanu(st *stan, wagi *Wagi) float64 {
+	var koszt float64
+	for _, w := range pr.wezly {
+		koszt += pr.kosztLokalny(w, st.przyp[w.id], wagi)
+	}
+	return koszt
 }
 
 // nowyPlan buduje plan.json v1 z przypisań.

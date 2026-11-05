@@ -18,5 +18,6 @@ dało się dodać bez zmiany sygnatury. Nowa opcja nie łamie kontraktu, zmiana 
 
 Pola `Wagi` mają tagi JSON (`okienka_studentow`, `po_17`, …), więc backend może je przyjmować wprost z API.
 
-Status: szkic. Faza 1 (przygotowanie domen) jest gotowa, `Solve` zwraca `ErrNieZaimplementowane`
-do czasu fazy 2.
+Status: szkic. Fazy 1 i 2 są gotowe: `Solve` zwraca pełny plan (na prawdziwych danych bez naruszeń,
+sprawdzone walidatorem). `meta.koszt` to na razie suma kryteriów lokalnych (pora dnia, sala, uwagi
+prowadzących); pełna funkcja kosztu i wyżarzanie przyjdą z fazą 3.

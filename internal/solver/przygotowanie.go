@@ -38,6 +38,10 @@ type wezel struct {
 	// warianty tygodni (reguła 2); w zestawie ten_sam_termin iloczyn wariantów członków.
 	warianty []wariant
 
+	// naruszeniaStale > 0: któraś domena była pusta i została rozluźniona (tryb awaryjny, ADR 0006),
+	// więc każde przypisanie węzła łamie tyle reguł twardych niezależnie od innych węzłów.
+	naruszeniaStale int
+
 	sasiedzi []int // węzły ze wspólnym prowadzącym albo studentem (reguły 3 i 5)
 	rozneDni []int // węzły, które muszą być w innym dniu (reguła 10, rozne_dni)
 }
@@ -83,7 +87,8 @@ func przygotuj(d *model.Dane) *problem {
 	for _, w := range pr.wezly {
 		w.sale = pr.domenaSal(w, numerSali)
 		w.starty = pr.domenaStartow(w, zablokowane)
-		w.warianty = wariantyWezla(w)
+		w.warianty = wariantyWezla(w, false)
+		pr.rozluznij(w, numerSali)
 	}
 	pr.zbudujGraf()
 	return pr
@@ -142,6 +147,11 @@ func (pr *problem) domenaSal(w *wezel, numerSali map[string]int) []int {
 			sale = append(sale, s)
 		}
 	}
+	return pr.numerySal(sale, numerSali)
+}
+
+// numerySal sortuje sale od najmniejszej pojemności i zwraca ich numery w problem.sale.
+func (pr *problem) numerySal(sale []*model.Sala, numerSali map[string]int) []int {
 	slices.SortStableFunc(sale, func(a, b *model.Sala) int { return a.Pojemnosc - b.Pojemnosc })
 	numery := make([]int, len(sale))
 	for i, s := range sale {
@@ -266,12 +276,22 @@ func wariantyTygodni(z *model.Zajecia) []model.Tygodnie {
 	return out
 }
 
-func wariantyWezla(w *wezel) []wariant {
+// wariantyWezla: iloczyn wariantów zajęć węzła. Gdy awaryjnie, zajęcia bez poprawnego wariantu
+// dostają dozwolone tygodnie (reguła 2 będzie złamana, ale plan jest pełny).
+func wariantyWezla(w *wezel, awaryjnie bool) []wariant {
 	out := []wariant{{}}
 	for _, z := range w.zajecia {
+		warianty := wariantyTygodni(z)
+		if len(warianty) == 0 && awaryjnie {
+			t := z.DozwoloneTygodnie()
+			if t == 0 {
+				t = model.WszystkieTygodnie
+			}
+			warianty = []model.Tygodnie{t}
+		}
 		var nowe []wariant
 		for _, wr := range out {
-			for _, t := range wariantyTygodni(z) {
+			for _, t := range warianty {
 				nowe = append(nowe, wariant{
 					tygodnie: append(slices.Clone(wr.tygodnie), t),
 					suma:     wr.suma | t,
@@ -281,6 +301,33 @@ func wariantyWezla(w *wezel) []wariant {
 		out = nowe
 	}
 	return out
+}
+
+// rozluznij zastępuje puste domeny węzła domenami awaryjnymi (ADR 0006): każda sala dostępna do planowania,
+// każdy start mieszczący się w dniu, dozwolone tygodnie. Każda rozluźniona domena to jedno naruszenie stałe.
+func (pr *problem) rozluznij(w *wezel, numerSali map[string]int) {
+	if len(w.sale) == 0 {
+		var sale []*model.Sala
+		for i := range pr.dane.Sale {
+			if s := &pr.dane.Sale[i]; s.DostepnaDoPlanowania && s.Pojemnosc > 0 {
+				sale = append(sale, s)
+			}
+		}
+		w.sale = pr.numerySal(sale, numerSali)
+		w.naruszeniaStale++
+	}
+	if w.liczbaStartow() == 0 {
+		for d := 1; d <= model.LiczbaDni; d++ {
+			for s := 1; s+w.dlugosc-1 <= model.LiczbaSlotow; s++ {
+				w.starty[d] |= 1 << (s - 1)
+			}
+		}
+		w.naruszeniaStale++
+	}
+	if len(w.warianty) == 0 {
+		w.warianty = wariantyWezla(w, true)
+		w.naruszeniaStale++
+	}
 }
 
 func (pr *problem) zbudujGraf() {

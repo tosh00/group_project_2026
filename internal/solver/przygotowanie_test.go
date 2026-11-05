@@ -109,8 +109,8 @@ func TestPrzygotujPrawdziweDane(t *testing.T) {
 
 	t.Run("brak pustych domen", func(t *testing.T) {
 		for _, w := range pr.wezly {
-			if len(w.sale) == 0 || len(w.warianty) == 0 || w.liczbaStartow() == 0 {
-				t.Errorf("%s: sale %d, warianty %d, starty %d", w.nazwa(), len(w.sale), len(w.warianty), w.liczbaStartow())
+			if w.naruszeniaStale > 0 || len(w.sale) == 0 || len(w.warianty) == 0 || w.liczbaStartow() == 0 {
+				t.Errorf("%s: naruszenia stałe %d, sale %d, warianty %d, starty %d", w.nazwa(), w.naruszeniaStale, len(w.sale), len(w.warianty), w.liczbaStartow())
 			}
 		}
 	})
