@@ -62,7 +62,7 @@ wyświetla status, podświetla zajęcia z naruszeniami i pokazuje listę narusze
   "liczba_naruszen": 2,
   "naruszenia": [
     {
-      "regula": 3,
+      "regula": 5,
       "nazwa": "kolizja_grup",
       "zajecia_id": ["Z014", "Z087"],
       "dzien": 2,
@@ -73,7 +73,8 @@ wyświetla status, podświetla zajęcia z naruszeniami i pokazuje listę narusze
     }
   ],
   "koszt_miekki": 1234.5,
-  "koszt_kryteria": { "okienka_studentow": 420.0, "po_17": 96.0 }
+  "koszt_kryteria": { "okienka_studentow": 420.0, "po_17": 96.0 },
+  "walidator": "internal/validator"
 }
 ```
 
@@ -81,8 +82,9 @@ wyświetla status, podświetla zajęcia z naruszeniami i pokazuje listę narusze
 |---|---|
 | `status` | `poprawny` (0 naruszeń) albo `z_naruszeniami` |
 | `naruszenia` | **wszystkie** naruszenia, nie tylko pierwsze; jedno naruszenie na parę (regułę i zestaw zajęć) |
-| `regula` | numer reguły twardej 1–10 z `data/README.md`; `nazwa` to stały identyfikator reguły |
+| `regula` | numer reguły twardej 1–10 z `data/README.md`; `nazwa` to stały identyfikator reguły (lista w [api.md](api.md#nazwy-reguł-w-raporcie-naruszenienazwa)) |
 | `zajecia_id` | zajęcia biorące udział w naruszeniu (1 lub więcej) |
 | `dzien`, `sloty`, `sala_id`, `tygodnie` | gdzie występuje naruszenie: dzień, wspólne sloty, sala (jeśli dotyczy), wspólne tygodnie |
 | `opis` | jedno zdanie po polsku do wyświetlenia w UI |
 | `koszt_miekki`, `koszt_kryteria` | koszt miękki całkowity i rozbicie na kryteria; liczone zawsze, także przy naruszeniach |
+| `walidator` | kto wystawił raport: `internal/validator` albo `atrapa` (backend do czasu merge'a walidatora, [api.md](api.md)); raport `atrapa` nie jest dowodem poprawności |

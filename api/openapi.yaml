@@ -1,0 +1,543 @@
+openapi: 3.1.0
+info:
+  title: Planer zajęć WFiIS
+  version: 0.1.0
+  description: |
+    Kontrakt backend ↔ frontend (SZKIC, wersja 0.1). Opis słowny: `docs/contracts/api.md`.
+
+    Przepływ: wgranie danych (`POST /zestawy`) → uruchomienie solvera (`POST /zestawy/{id}/uruchomienia`)
+    → postęp na żywo (`GET /uruchomienia/{id}/postep`, SSE) → plan i raport walidatora.
+
+    Zakres MVP bez ręcznej edycji planu i bez logowania (ADR 0010).
+    Typy TypeScript generujemy z tego pliku (openapi-typescript), nie piszemy ich ręcznie.
+servers:
+  - url: /api
+
+# Bez logowania w MVP (ADR 0010).
+security: []
+
+tags:
+  - name: system
+    description: Stan serwera i ustawienia domyślne.
+  - name: zestawy
+    description: Wgrane pliki z danymi wejściowymi (`dane_planu.json`).
+  - name: uruchomienia
+    description: Uruchomienia solvera, plany i raporty walidatora.
+
+paths:
+  /zdrowie:
+    get:
+      tags: [system]
+      operationId: zdrowie
+      summary: Stan serwera i bazy
+      responses:
+        "200":
+          description: Serwer działa
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Zdrowie" }
+        "503":
+          description: Baza niedostępna
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Zdrowie" }
+
+  /wagi/domyslne:
+    get:
+      tags: [system]
+      operationId: domyslneWagi
+      summary: Domyślne wagi kryteriów miękkich (tabela startowa z plan.md)
+      responses:
+        "200":
+          description: Wagi
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Wagi" }
+
+  /zestawy:
+    get:
+      tags: [zestawy]
+      operationId: listaZestawow
+      summary: Lista wgranych zestawów danych (najnowsze pierwsze)
+      responses:
+        "200":
+          description: Zestawy
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Zestaw" }
+    post:
+      tags: [zestawy]
+      operationId: wgrajZestaw
+      summary: Wgranie pliku dane_planu.json
+      description: |
+        Treść żądania to plik `dane_planu.json` bez zmian (format: `data/README.md`). Serwer sprawdza
+        spójność danych (`model.Dekoduj`) i zapisuje oryginalną treść. Limit rozmiaru: 10 MB.
+      parameters:
+        - name: nazwa
+          in: query
+          required: false
+          description: Nazwa zestawu do wyświetlenia; domyślnie `meta.opis` z pliku.
+          schema: { type: string, maxLength: 200 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Zawartość dane_planu.json.
+      responses:
+        "201":
+          description: Zestaw zapisany
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Zestaw" }
+        "400": { $ref: "#/components/responses/Blad" }
+        "413": { $ref: "#/components/responses/Blad" }
+        "422":
+          description: |
+            Plik jest poprawnym JSON-em, ale dane są niezgodne z formatem lub niespójne
+            (kod `niespojne_dane`). `szczegoly` zawiera wszystkie znalezione problemy.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
+  /zestawy/{zestawId}:
+    parameters:
+      - $ref: "#/components/parameters/ZestawId"
+    get:
+      tags: [zestawy]
+      operationId: pobierzZestaw
+      summary: Podsumowanie zestawu
+      responses:
+        "200":
+          description: Zestaw
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Zestaw" }
+        "404": { $ref: "#/components/responses/Blad" }
+
+  /zestawy/{zestawId}/dane:
+    parameters:
+      - $ref: "#/components/parameters/ZestawId"
+    get:
+      tags: [zestawy]
+      operationId: pobierzDaneZestawu
+      summary: Oryginalna treść dane_planu.json
+      description: Frontend bierze stąd nazwy przedmiotów, sal, prowadzących i grup do kart w kalendarzu.
+      responses:
+        "200":
+          description: Dane w formacie dane_planu.json
+          content:
+            application/json:
+              schema: { type: object }
+        "404": { $ref: "#/components/responses/Blad" }
+
+  /zestawy/{zestawId}/uruchomienia:
+    parameters:
+      - $ref: "#/components/parameters/ZestawId"
+    post:
+      tags: [uruchomienia]
+      operationId: uruchomSolver
+      summary: Nowe uruchomienie solvera dla zestawu
+      description: |
+        Uruchomienie trafia do kolejki (status `w_kolejce`), a pula workerów uruchamia je, gdy jest miejsce.
+        Odpowiedź wraca od razu; postęp śledzimy przez `GET /uruchomienia/{id}/postep`.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NoweUruchomienie" }
+      responses:
+        "202":
+          description: Uruchomienie przyjęte
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Uruchomienie" }
+        "400": { $ref: "#/components/responses/Blad" }
+        "404": { $ref: "#/components/responses/Blad" }
+        "503":
+          description: Kolejka pełna (kod `kolejka_pelna`), spróbuj później
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
+  /uruchomienia:
+    get:
+      tags: [uruchomienia]
+      operationId: listaUruchomien
+      summary: Lista uruchomień (najnowsze pierwsze)
+      parameters:
+        - name: zestaw_id
+          in: query
+          required: false
+          description: Tylko uruchomienia danego zestawu.
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Uruchomienia
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Uruchomienie" }
+        "400": { $ref: "#/components/responses/Blad" }
+
+  /uruchomienia/{uruchomienieId}:
+    parameters:
+      - $ref: "#/components/parameters/UruchomienieId"
+    get:
+      tags: [uruchomienia]
+      operationId: pobierzUruchomienie
+      summary: Stan uruchomienia
+      responses:
+        "200":
+          description: Uruchomienie
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Uruchomienie" }
+        "404": { $ref: "#/components/responses/Blad" }
+
+  /uruchomienia/{uruchomienieId}/zatrzymaj:
+    parameters:
+      - $ref: "#/components/parameters/UruchomienieId"
+    post:
+      tags: [uruchomienia]
+      operationId: zatrzymajUruchomienie
+      summary: Zatrzymanie uruchomienia
+      description: |
+        Uruchomienie w kolejce kończy się od razu ze statusem `blad`. Trwające: jeśli konstrukcja się
+        skończyła, solver oddaje najlepszy dotychczasowy plan (status `poprawny` / `z_naruszeniami`,
+        `zatrzymane: true`); jeśli nie, status `blad` (ADR 0006). Odpowiedź wraca od razu, a końcowy stan
+        przychodzi zdarzeniem `koniec` w SSE.
+      responses:
+        "202":
+          description: Zatrzymanie przyjęte
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Uruchomienie" }
+        "404": { $ref: "#/components/responses/Blad" }
+        "409":
+          description: Uruchomienie już się zakończyło (kod `zakonczone`)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
+  /uruchomienia/{uruchomienieId}/postep:
+    parameters:
+      - $ref: "#/components/parameters/UruchomienieId"
+    get:
+      tags: [uruchomienia]
+      operationId: postepUruchomienia
+      summary: Postęp na żywo (Server-Sent Events)
+      description: |
+        Strumień `text/event-stream`. Zdarzenia (pole `event:`, w `data:` jeden obiekt JSON):
+
+        | `event` | `data` | Kiedy |
+        |---|---|---|
+        | `stan` | `Uruchomienie` | zaraz po połączeniu i przy każdej zmianie statusu |
+        | `postep` | `Postep` | w trakcie, najwyżej kilka razy na sekundę |
+        | `koniec` | `Uruchomienie` | po zakończeniu; serwer zamyka strumień |
+
+        Połączenie z zakończonym uruchomieniem dostaje od razu `stan` i `koniec`.
+        Co 15 s serwer wysyła komentarz `: ping`, żeby pośrednicy nie zamykali połączenia.
+      responses:
+        "200":
+          description: Strumień zdarzeń
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: Zdarzenia SSE; `data` to `Uruchomienie` albo `Postep`.
+        "404": { $ref: "#/components/responses/Blad" }
+
+  /uruchomienia/{uruchomienieId}/plan:
+    parameters:
+      - $ref: "#/components/parameters/UruchomienieId"
+    get:
+      tags: [uruchomienia]
+      operationId: pobierzPlan
+      summary: Wygenerowany plan (plan.json v1)
+      responses:
+        "200":
+          description: Plan
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Plan" }
+        "404":
+          description: Brak uruchomienia (`nie_znaleziono`) albo planu, bo uruchomienie trwa lub skończyło się błędem (`brak_planu`)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
+  /uruchomienia/{uruchomienieId}/raport:
+    parameters:
+      - $ref: "#/components/parameters/UruchomienieId"
+    get:
+      tags: [uruchomienia]
+      operationId: pobierzRaport
+      summary: Raport walidatora dla planu
+      responses:
+        "200":
+          description: Raport
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Raport" }
+        "404":
+          description: Jak w `GET /uruchomienia/{id}/plan`
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
+components:
+  parameters:
+    ZestawId:
+      name: zestawId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    UruchomienieId:
+      name: uruchomienieId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+  responses:
+    Blad:
+      description: Błąd (kody w `Blad.kod`)
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Blad" }
+
+  schemas:
+    Blad:
+      type: object
+      required: [kod, komunikat]
+      properties:
+        kod:
+          type: string
+          description: |
+            Stały identyfikator: `zle_zadanie`, `za_duze`, `niespojne_dane`, `nie_znaleziono`,
+            `brak_planu`, `zakonczone`, `kolejka_pelna`, `blad_serwera`.
+        komunikat:
+          type: string
+          description: Jedno zdanie po polsku.
+        szczegoly:
+          type: array
+          items: { type: string }
+          description: Lista problemów (np. wszystkie niespójności danych).
+
+    Zdrowie:
+      type: object
+      required: [status, baza, walidator]
+      properties:
+        status: { type: string, enum: [ok, blad] }
+        baza: { type: string, enum: [ok, blad] }
+        walidator:
+          type: string
+          enum: [atrapa, internal/validator]
+          description: Który walidator ocenia plany (atrapa do czasu merge'a `internal/validator`).
+
+    Wagi:
+      type: object
+      description: Wagi kryteriów miękkich (`solver.Wagi`, docs/contracts/solver.md). Brakujące pola przyjmują wartość domyślną.
+      additionalProperties: false
+      properties:
+        okienka_studentow: { type: number, minimum: 0 }
+        przeciazony_dzien: { type: number, minimum: 0 }
+        okienka_prowadzacych: { type: number, minimum: 0 }
+        po_17: { type: number, minimum: 0 }
+        przed_9: { type: number, minimum: 0 }
+        za_duza_sala: { type: number, minimum: 0 }
+        preferencja_dni: { type: number, minimum: 0 }
+        nie_po_17: { type: number, minimum: 0 }
+        dzien_wolny: { type: number, minimum: 0 }
+        przerwa_max_2h: { type: number, minimum: 0 }
+        pora_dnia: { type: number, minimum: 0 }
+        sale_a: { type: number, minimum: 0 }
+        wyklady_rocznika: { type: number, minimum: 0 }
+
+    Podsumowanie:
+      type: object
+      required: [zajecia, sale, sale_do_planowania, prowadzacy, roczniki, grupy, studenci]
+      properties:
+        zajecia: { type: integer }
+        sale: { type: integer }
+        sale_do_planowania: { type: integer }
+        prowadzacy: { type: integer }
+        roczniki: { type: integer }
+        grupy: { type: integer }
+        studenci: { type: integer }
+
+    Ostrzezenie:
+      type: object
+      description: Uwaga do danych, która nie blokuje generowania.
+      required: [kod, opis]
+      properties:
+        kod:
+          type: string
+          description: "`pojemnosc_szacowana`"
+        opis: { type: string }
+        sala_id: { type: string }
+
+    Zestaw:
+      type: object
+      required: [id, nazwa, utworzono, podsumowanie, ostrzezenia]
+      properties:
+        id: { type: string, format: uuid }
+        nazwa: { type: string }
+        utworzono: { type: string, format: date-time }
+        podsumowanie: { $ref: "#/components/schemas/Podsumowanie" }
+        ostrzezenia:
+          type: array
+          items: { $ref: "#/components/schemas/Ostrzezenie" }
+
+    NoweUruchomienie:
+      type: object
+      additionalProperties: false
+      properties:
+        wagi: { $ref: "#/components/schemas/Wagi" }
+        seed:
+          type: integer
+          format: int64
+          description: Ziarno losowania; domyślnie losowe. Ten sam seed i ustawienia dają ten sam plan.
+        iteracje:
+          type: integer
+          minimum: 0
+          maximum: 20000000
+          description: Iteracje wyżarzania na workera; domyślnie 1 000 000; 0 = sama konstrukcja.
+
+    StatusUruchomienia:
+      type: string
+      enum: [w_kolejce, trwa, poprawny, z_naruszeniami, blad]
+      description: |
+        `poprawny` / `z_naruszeniami` według raportu walidatora (ADR 0006). `blad` tylko przy przerwaniu
+        przed końcem konstrukcji, zatrzymaniu w kolejce albo restarcie serwera w trakcie.
+
+    Faza:
+      type: string
+      enum: [konstrukcja, optymalizacja, walidacja]
+      description: Faza trwającego uruchomienia (przygotowanie domen liczy się do konstrukcji).
+
+    Uruchomienie:
+      type: object
+      required: [id, zestaw_id, status, wagi, seed, iteracje, zatrzymane, utworzono]
+      properties:
+        id: { type: string, format: uuid }
+        zestaw_id: { type: string, format: uuid }
+        status: { $ref: "#/components/schemas/StatusUruchomienia" }
+        faza:
+          $ref: "#/components/schemas/Faza"
+          description: Tylko gdy `status = trwa`.
+        wagi: { $ref: "#/components/schemas/Wagi" }
+        seed: { type: integer, format: int64 }
+        iteracje: { type: integer }
+        zatrzymane:
+          type: boolean
+          description: Użytkownik zatrzymał uruchomienie (plan może być niepełnie zoptymalizowany).
+        liczba_naruszen:
+          type: [integer, "null"]
+          description: Z raportu walidatora; `null`, dopóki nie ma planu.
+        koszt:
+          type: [number, "null"]
+          description: Koszt miękki planu (`meta.koszt`); `null`, dopóki nie ma planu.
+        blad:
+          type: [string, "null"]
+          description: Opis błędu przy `status = blad`.
+        utworzono: { type: string, format: date-time }
+        rozpoczeto: { type: [string, "null"], format: date-time }
+        zakonczono: { type: [string, "null"], format: date-time }
+
+    Postep:
+      type: object
+      required: [faza, iteracja, iteracji, koszt, naruszenia, czas_ms]
+      properties:
+        faza: { $ref: "#/components/schemas/Faza" }
+        iteracja:
+          type: integer
+          description: Suma wykonanych iteracji wszystkich workerów.
+        iteracji:
+          type: integer
+          description: Suma wszystkich iteracji (iteracje × workery); `iteracja / iteracji` to postęp 0–1.
+        koszt:
+          type: number
+          description: Najlepszy bieżący koszt miękki spośród workerów.
+        naruszenia:
+          type: integer
+          description: Liczba naruszeń twardych w najlepszym bieżącym planie (wg solvera; ostatnie słowo ma walidator).
+        czas_ms:
+          type: integer
+          description: Czas od rozpoczęcia uruchomienia.
+
+    Plan:
+      type: object
+      description: Format plan.json v1 (ADR 0003, docs/contracts/plan-format.md).
+      required: [meta, przypisania]
+      properties:
+        meta:
+          type: object
+          required: [wersja_formatu, silnik, seed, koszt, utworzono]
+          properties:
+            wersja_formatu: { type: integer, const: 1 }
+            silnik: { type: string }
+            seed: { type: integer, format: int64 }
+            koszt: { type: number }
+            utworzono: { type: string, format: date-time }
+        przypisania:
+          type: array
+          items: { $ref: "#/components/schemas/Przypisanie" }
+
+    Przypisanie:
+      type: object
+      required: [zajecia_id, dzien, slot_start, sala_id, tygodnie]
+      properties:
+        zajecia_id: { type: string }
+        dzien: { type: integer, minimum: 1, maximum: 5 }
+        slot_start: { type: integer, minimum: 1, maximum: 12 }
+        sala_id: { type: string }
+        tygodnie:
+          type: array
+          items: { type: integer, minimum: 1, maximum: 14 }
+        zablokowane: { type: boolean, default: false }
+
+    Raport:
+      type: object
+      description: Raport walidatora (SZKIC z docs/contracts/plan-format.md).
+      required: [status, liczba_naruszen, naruszenia, koszt_miekki, koszt_kryteria, walidator]
+      properties:
+        status: { type: string, enum: [poprawny, z_naruszeniami] }
+        liczba_naruszen: { type: integer }
+        naruszenia:
+          type: array
+          items: { $ref: "#/components/schemas/Naruszenie" }
+        koszt_miekki: { type: number }
+        koszt_kryteria:
+          type: object
+          additionalProperties: { type: number }
+          description: Klucze jak pola `Wagi`.
+        walidator:
+          type: string
+          enum: [atrapa, internal/validator]
+          description: Który walidator wystawił raport. Raport `atrapa` nie jest dowodem poprawności planu.
+
+    Naruszenie:
+      type: object
+      required: [regula, nazwa, zajecia_id, opis]
+      properties:
+        regula: { type: integer, minimum: 1, maximum: 10 }
+        nazwa:
+          type: string
+          description: Stały identyfikator reguły, np. `kolizja_grup`.
+        zajecia_id:
+          type: array
+          items: { type: string }
+        dzien: { type: integer, minimum: 1, maximum: 5 }
+        sloty:
+          type: array
+          items: { type: integer }
+        sala_id: { type: string }
+        tygodnie:
+          type: array
+          items: { type: integer }
+        opis: { type: string }
