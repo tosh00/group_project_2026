@@ -45,7 +45,9 @@ Katalog `data/` jest tylko do odczytu. Nie zmieniaj danych wejściowych.
 
 - Backend i solver: Go 1.23+, `gofmt`, `golangci-lint`, testy tabelaryczne, `go test ./...`.
 - Frontend: React + TypeScript + Vite w `web/`, Vitest.
-- Baza: PostgreSQL 16, migracje goose w `migrations/`.
+- Baza: PostgreSQL 16, migracje goose w `migrations/`, zapytania sqlc, router chi (ADR 0007–0009, proponowane).
+- Ustawienia lokalne w `.env` (wzór `.env.example`, poza repo). Testy z bazą potrzebują `TEST_DATABASE_URL`,
+  bez niej są pomijane, więc „zielone” `go test ./...` bez bazy nie sprawdza backendu. Szczegóły: `README.md`.
 - Nazwy domenowe po polsku, tak jak w danych (`zajecia`, `sala`, `prowadzacy`), kod i identyfikatory bez polskich znaków.
 - Czas: dzień 1–5 (pon–pt), slot 1–12, tydzień 1–14 jako maska bitowa `uint16` (bit 0 = tydzień 1).
 

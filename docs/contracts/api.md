@@ -60,8 +60,13 @@ Numeracja z `data/README.md`, sekcja 5 (tak samo jak stałe w `internal/validato
 | 4 | `kolizja_sali` | 9 | `blokady_stale` |
 | 5 | `kolizja_grup` | 10 | `powiazania` |
 
-Uwaga: przykład w szkicu raportu w `plan-format.md` ma `"regula": 3, "nazwa": "kolizja_grup"`,
-a kolizja grup (studentów) to reguła 5. Do poprawienia przy przyjmowaniu formatu raportu.
+Przykład w szkicu raportu w `plan-format.md` miał `"regula": 3` przy `kolizja_grup`; poprawione na 5 (2026-11-18).
+
+## Różnice względem briefu frontendu
+
+`docs/design/claude-design-brief.md` używa ścieżki `POST /api/runs/{id}/sprawdz-ruch`. W API ścieżki są po polsku
+(`/api/uruchomienia/...`, konwencja z CLAUDE.md), a sprawdzanie ruchu wraca jako dodatek po MVP (ADR 0010),
+docelowo jako `POST /api/uruchomienia/{id}/sprawdz-ruch`.
 
 ## Uruchomienie lokalne
 
