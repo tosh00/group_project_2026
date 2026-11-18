@@ -30,3 +30,13 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
   per klasa, a nie per grupa. Po wyżarzaniu (domyślne wagi) najwięcej kosztu dają `za_duza_sala` (~180, dużo zajęć
   ma do wyboru tylko duże sale) i `preferencja_dni` (~110); okienka studentów i prowadzących schodzą prawie do 0
   (2026-11-05).
+
+## Backend (2026-11-18)
+
+- `jsonb` nie zachowuje kolejności kluczy ani formatowania: `GET /api/zestawy/{id}/dane` zwraca te same dane,
+  ale nie bajt w bajt ten sam plik. `model.Dekoduj` przyjmuje je bez problemu.
+- Losowy seed uruchomienia jest < 2^53, bo frontend czyta liczby JSON jako `number` (double).
+  Seed podany ręcznie może być dowolnym int64; większych niż 2^53 frontend nie odczyta dokładnie.
+- Solver nie zgłasza postępu w konstrukcji (tylko co 10 000 iteracji wyżarzania), więc faza `konstrukcja`
+  w API trwa do pierwszego zdarzenia `postep`. Przy `iteracje: 0` nie ma żadnego zdarzenia `postep`.
+- Na pełnych danych solver z 20 000 iteracji kończy w ok. 60 ms, więc testy API uruchamiają prawdziwy solver.

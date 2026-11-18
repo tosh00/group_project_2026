@@ -47,3 +47,29 @@ Rozjazd do uzgodnienia z @tosh00: `validator.Naruszenie` na gałęzi `validator/
 Każdy błąd to `{ "kod": "...", "komunikat": "...", "szczegoly": [...] }`. Kody: `zle_zadanie` (400),
 `za_duze` (413), `niespojne_dane` (422), `nie_znaleziono` / `brak_planu` (404), `zakonczone` (409),
 `kolejka_pelna` (503), `blad_serwera` (500).
+
+## Nazwy reguł w raporcie (`Naruszenie.nazwa`)
+
+Numeracja z `data/README.md`, sekcja 5 (tak samo jak stałe w `internal/validator`):
+
+| Nr | `nazwa` | Nr | `nazwa` |
+|---|---|---|---|
+| 1 | `przypisanie` | 6 | `typ_sali` |
+| 2 | `tygodnie` | 7 | `pojemnosc` |
+| 3 | `kolizja_prowadzacego` | 8 | `dezyderaty` |
+| 4 | `kolizja_sali` | 9 | `blokady_stale` |
+| 5 | `kolizja_grup` | 10 | `powiazania` |
+
+Uwaga: przykład w szkicu raportu w `plan-format.md` ma `"regula": 3, "nazwa": "kolizja_grup"`,
+a kolizja grup (studentów) to reguła 5. Do poprawienia przy przyjmowaniu formatu raportu.
+
+## Uruchomienie lokalne
+
+```sh
+docker run -d --name planer-pg -e POSTGRES_USER=planer -e POSTGRES_PASSWORD=planer -p 55432:5432 postgres:16
+DATABASE_URL='postgres://planer:planer@localhost:55432/planer?sslmode=disable' go run ./cmd/server
+curl -X POST --data-binary @data/dane_planu.json localhost:8080/api/zestawy
+```
+
+Testy z bazą: `TEST_DATABASE_URL=<ten sam adres> go test ./...` (każdy test dostaje własną, tymczasową bazę).
+Bez `TEST_DATABASE_URL` testy z bazą są pomijane.
