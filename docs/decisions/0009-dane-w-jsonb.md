@@ -26,7 +26,8 @@ koszt, liczba naruszeń), są zwykłe kolumny w tabeli `uruchomienia`.
 
 ## Konsekwencje
 
-- Import: `model.Dekoduj` sprawdza plik, a do bazy trafia oryginalna treść żądania (bez zmian).
-- Frontend dostaje dane zestawu przez API w oryginalnym formacie (`GET /api/zestawy/{id}/dane`).
+- Import: `model.Dekoduj` sprawdza plik, a do bazy trafia treść żądania. `jsonb` zachowuje wartości,
+  ale nie formatowanie ani kolejność kluczy w obiektach (kolejność elementów tablic zostaje).
+- Frontend dostaje dane zestawu przez API w tym samym formacie (`GET /api/zestawy/{id}/dane`).
 - Gdy pojawi się edycja danych w UI (np. własne ograniczenia użytkownika z `plan.md`), można przejść
   na tabele osobną migracją, bez zmiany API.
