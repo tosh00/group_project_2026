@@ -67,9 +67,11 @@ a kolizja grup (studentów) to reguła 5. Do poprawienia przy przyjmowaniu forma
 
 ```sh
 docker run -d --name planer-pg -e POSTGRES_USER=planer -e POSTGRES_PASSWORD=planer -p 55432:5432 postgres:16
-DATABASE_URL='postgres://planer:planer@localhost:55432/planer?sslmode=disable' go run ./cmd/server
+cp .env.example .env          # raz; DATABASE_URL, TEST_DATABASE_URL, ADDR, WORKERY, KOLEJKA
+go run ./cmd/server
 curl -X POST --data-binary @data/dane_planu.json localhost:8080/api/zestawy
 ```
 
-Testy z bazą: `TEST_DATABASE_URL=<ten sam adres> go test ./...` (każdy test dostaje własną, tymczasową bazę).
-Bez `TEST_DATABASE_URL` testy z bazą są pomijane.
+`cmd/server` i testy wczytują `.env` z katalogu repo same; zmienna ustawiona w środowisku wygrywa z plikiem.
+Testy z bazą (`go test ./...`) potrzebują `TEST_DATABASE_URL`; każdy test dostaje własną, tymczasową bazę.
+Bez tej zmiennej testy z bazą są pomijane.

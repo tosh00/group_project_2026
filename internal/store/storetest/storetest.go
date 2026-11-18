@@ -1,9 +1,11 @@
 // Package storetest daje testom świeżą bazę PostgreSQL z migracjami.
 //
-// Testy z bazą uruchamiają się tylko z ustawionym TEST_DATABASE_URL (w przeciwnym razie są pomijane), np.:
+// Testy z bazą uruchamiają się tylko z ustawionym TEST_DATABASE_URL (w przeciwnym razie są pomijane).
+// Zmienna może przyjść ze środowiska albo z pliku .env w katalogu repo (wzór: .env.example), np.:
 //
 //	docker run -d --name planer-pg -e POSTGRES_USER=planer -e POSTGRES_PASSWORD=planer -p 55432:5432 postgres:16
-//	TEST_DATABASE_URL=postgres://planer:planer@localhost:55432/planer?sslmode=disable go test ./...
+//	cp .env.example .env
+//	go test ./...
 package storetest
 
 import (
@@ -17,12 +19,16 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 
+	"github.com/tosh00/group_project_2026/internal/api/dotenv"
 	"github.com/tosh00/group_project_2026/internal/store"
 )
 
 // NowaBaza tworzy osobną bazę dla testu, stosuje migracje i usuwa bazę po teście.
 func NowaBaza(t testing.TB) *store.Store {
 	t.Helper()
+	if err := dotenv.WczytajZRepo(".env"); err != nil {
+		t.Fatalf("plik .env: %v", err)
+	}
 	adres := os.Getenv("TEST_DATABASE_URL")
 	if adres == "" {
 		t.Skip("brak TEST_DATABASE_URL: pomijam test z bazą")

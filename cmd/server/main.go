@@ -2,7 +2,8 @@
 //
 //	DATABASE_URL=postgres://planer:planer@localhost:55432/planer?sslmode=disable go run ./cmd/server
 //
-// Ustawienia (zmienne środowiskowe albo flagi; flaga wygrywa):
+// Ustawienia (zmienne środowiskowe albo flagi; flaga wygrywa). Przy starcie serwer wczytuje
+// plik .env z katalogu repo, jeśli istnieje (wzór: .env.example); zmienne ze środowiska wygrywają z plikiem.
 //
 //	DATABASE_URL  -db       adres PostgreSQL (wymagany)
 //	ADDR          -addr     adres nasłuchu, domyślnie :8080
@@ -27,10 +28,15 @@ import (
 	"time"
 
 	"github.com/tosh00/group_project_2026/internal/api"
+	"github.com/tosh00/group_project_2026/internal/api/dotenv"
 	"github.com/tosh00/group_project_2026/internal/store"
 )
 
 func main() {
+	if err := dotenv.WczytajZRepo(".env"); err != nil {
+		fmt.Fprintln(os.Stderr, "server: plik .env:", err)
+		os.Exit(1)
+	}
 	addr := flag.String("addr", env("ADDR", ":8080"), "adres nasłuchu")
 	dbURL := flag.String("db", os.Getenv("DATABASE_URL"), "adres PostgreSQL")
 	workery := flag.Int("workery", envInt("WORKERY", 1), "równoległe uruchomienia solvera")
