@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router";
+import { ZnacznikSerwera } from "./ZnacznikSerwera.tsx";
 import styles from "./Uklad.module.css";
 
 export function Uklad() {
@@ -8,6 +9,7 @@ export function Uklad() {
         <Link to="/" className={styles.nazwa}>
           Planer zajęć WFiIS
         </Link>
+        <ZnacznikSerwera />
       </header>
       <main className={styles.tresc}>
         <Outlet />

@@ -1,0 +1,37 @@
+.znacznik {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--odstep-2);
+  padding: 2px var(--odstep-3);
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.znacznik::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.ok {
+  color: var(--kolor-ok);
+  background: var(--kolor-ok-tlo);
+  border-color: var(--kolor-ok-ramka);
+}
+
+.neutralny {
+  color: var(--kolor-neutralny);
+  background: var(--kolor-neutralny-tlo);
+  border-color: var(--kolor-neutralny-ramka);
+}
+
+.blad {
+  color: var(--kolor-blad);
+  background: var(--kolor-blad-tlo);
+  border-color: var(--kolor-blad-ramka);
+}
