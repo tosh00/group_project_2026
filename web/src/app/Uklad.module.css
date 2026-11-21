@@ -1,0 +1,56 @@
+.uklad {
+  min-height: 100vh;
+}
+
+.naglowek {
+  background: var(--kolor-powierzchnia);
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.naglowekWnetrze {
+  max-width: var(--szerokosc-tresci);
+  margin: 0 auto;
+  padding: 0 var(--odstep-6);
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--odstep-6);
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+}
+
+.logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.tresc {
+  max-width: var(--szerokosc-tresci);
+  margin: 0 auto;
+  padding: var(--odstep-8) var(--odstep-6) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.szeroki .naglowekWnetrze,
+.szeroki .tresc {
+  max-width: none;
+}
+
+.szeroki .tresc {
+  padding: 16px 24px 32px;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .naglowekWnetrze,
+  .tresc {
+    padding-inline: var(--odstep-4);
+  }
+}

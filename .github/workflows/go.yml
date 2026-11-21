@@ -1,0 +1,77 @@
+name: go
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - "migrations/**"
+      - "api/openapi.yaml"
+      - "data/**"
+      - ".golangci.yml"
+      - "Dockerfile"
+      - "web/Dockerfile"
+      - "docker-compose.yml"
+      - ".github/workflows/go.yml"
+  pull_request:
+    paths:
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
+      - "migrations/**"
+      - "api/openapi.yaml"
+      - "data/**"
+      - ".golangci.yml"
+      - "Dockerfile"
+      - "web/Dockerfile"
+      - "docker-compose.yml"
+      - ".github/workflows/go.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: planer
+          POSTGRES_PASSWORD: planer
+          POSTGRES_DB: planer
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U planer -d planer"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 30
+    env:
+      # Z tą zmienną testy internal/store i internal/api z bazą się uruchamiają, a nie są pomijane.
+      TEST_DATABASE_URL: postgres://planer:planer@localhost:5432/planer?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go vet ./...
+      - run: go test -race -count=1 ./...
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # Konfiguracja: .golangci.yml (także gofmt).
+      - uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.1.6
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Obrazy backendu i frontendu się budują
+        run: docker compose build

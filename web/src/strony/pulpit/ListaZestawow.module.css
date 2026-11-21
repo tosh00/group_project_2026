@@ -1,0 +1,123 @@
+.sekcja {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.naglowek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tytul {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lista {
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-karta);
+  overflow: hidden;
+}
+
+.wiersz {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+}
+
+.wiersz + .wiersz {
+  border-top: 1px solid var(--kolor-ramka);
+}
+
+.ikona {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--promien);
+  background: var(--kolor-tlo);
+  color: var(--kolor-tekst-cichy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opis {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.nazwa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.cichy {
+  display: block;
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}
+
+.status {
+  flex: 0 0 230px;
+}
+
+.wygenerowany {
+  flex: 0 0 130px;
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .wiersz {
+    padding-inline: 16px;
+  }
+
+  .status,
+  .wygenerowany {
+    flex-basis: auto;
+  }
+}
+
+.ostrzezenia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid var(--kolor-ostrzezenie-ramka);
+  background: var(--kolor-ostrzezenie-tlo);
+  color: var(--kolor-ostrzezenie);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.usun {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--promien-maly);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--kolor-tekst-cichy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.usun:hover {
+  border-color: var(--kolor-blad-ramka);
+  background: var(--kolor-blad-tlo);
+  color: var(--kolor-blad);
+}

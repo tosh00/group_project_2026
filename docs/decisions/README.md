@@ -18,3 +18,4 @@ Otwarte kwestie czekające na decyzję: `../open-questions.md`.
 | 0008 | [Warstwa SQL: sqlc + pgx, migracje goose](0008-sqlc-pgx-goose.md) | proponowana |
 | 0009 | [Dane wejściowe, plan i raport w `jsonb`](0009-dane-w-jsonb.md) | proponowana |
 | 0010 | [MVP bez ręcznej edycji planu i bez logowania](0010-mvp-bez-edycji-i-logowania.md) | proponowana |
+| 0011 | [Stack frontendu: React + Vite, typy z OpenAPI, własna siatka kalendarza](0011-stack-frontendu.md) | proponowana |

@@ -20,6 +20,13 @@ const (
 	FazaWalidacja     = "walidacja"
 )
 
+// Zdrowie: schemat Zdrowie (GET /zdrowie, także przy 503).
+type Zdrowie struct {
+	Status    string `json:"status"`
+	Baza      string `json:"baza"`
+	Walidator string `json:"walidator"`
+}
+
 // Zestaw: schemat Zestaw.
 type Zestaw struct {
 	ID           uuid.UUID       `json:"id"`
@@ -32,6 +39,9 @@ type Zestaw struct {
 func zestawDTO(z store.Zestaw) Zestaw {
 	return Zestaw{ID: z.ID, Nazwa: z.Nazwa, Utworzono: z.Utworzono, Podsumowanie: z.Podsumowanie, Ostrzezenia: z.Ostrzezenia}
 }
+
+// TypGrupyCalyRocznik to typ pozycji w tabeli `grupy`, która oznacza cały rocznik, a nie grupę.
+const TypGrupyCalyRocznik = "rocznik"
 
 // Podsumowanie: schemat Podsumowanie.
 type Podsumowanie struct {
@@ -54,9 +64,15 @@ type Ostrzezenie struct {
 func podsumuj(d *model.Dane) (Podsumowanie, []Ostrzezenie) {
 	p := Podsumowanie{
 		Zajecia: len(d.Zajecia), Sale: len(d.Sale), Prowadzacy: len(d.Prowadzacy),
-		Roczniki: len(d.Roczniki), Grupy: len(d.Grupy), Studenci: len(d.Studenci),
+		Roczniki: len(d.Roczniki), Studenci: len(d.Studenci),
 	}
 	ostrzezenia := []Ostrzezenie{}
+	for _, g := range d.Grupy {
+		// Pozycja typu „rocznik” to cały rocznik (np. INF1-R1-ALL), nie grupa studentów.
+		if g.Typ != TypGrupyCalyRocznik {
+			p.Grupy++
+		}
+	}
 	for _, s := range d.Sale {
 		if s.DostepnaDoPlanowania {
 			p.SaleDoPlanowania++

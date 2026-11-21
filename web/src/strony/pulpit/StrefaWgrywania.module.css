@@ -1,0 +1,110 @@
+.sekcja {
+  max-width: 760px;
+  width: 100%;
+  margin: 8px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sekcjaPusta {
+  composes: sekcja;
+  margin-top: 24px;
+}
+
+.naglowek {
+  text-align: center;
+}
+
+.tytul {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.podtytul {
+  margin-top: 6px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.strefa {
+  background: var(--kolor-powierzchnia);
+  border: 2px dashed var(--kolor-marka-ramka);
+  border-radius: var(--promien-karta);
+  padding: 56px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.strefaAktywna {
+  border-color: var(--kolor-marka);
+  background: var(--kolor-marka-tlo);
+}
+
+.ikona {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--promien-karta);
+  background: var(--kolor-marka-tlo);
+  color: var(--kolor-marka-tekst);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.przeciagnij {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+.uwaga {
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+  max-width: 460px;
+}
+
+.kroki {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.krok {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: var(--promien-kafel);
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+}
+
+.numer {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--kolor-marka-tlo);
+  color: var(--kolor-marka-tekst);
+  font-weight: 800;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.krokTytul {
+  display: block;
+}
+
+.krokOpis {
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}

@@ -1,0 +1,65 @@
+.pasek {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid;
+  font-weight: 800;
+}
+
+.naruszenia {
+  composes: status;
+  color: var(--kolor-blad);
+  background: var(--kolor-blad-tlo);
+  border-color: var(--kolor-blad-ramka);
+}
+
+.poprawny {
+  composes: status;
+  color: var(--kolor-ok);
+  background: var(--kolor-ok-tlo);
+  border-color: var(--kolor-ok-ramka);
+}
+
+.niesprawdzony {
+  composes: status;
+  color: var(--kolor-tekst);
+  background: var(--kolor-powierzchnia-2);
+  border-color: var(--kolor-ramka-mocna);
+}
+
+.zatrzymany {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid var(--kolor-ramka-mocna);
+  font-weight: 600;
+}
+
+.wstecz {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--promien-maly);
+  border: 1px solid var(--kolor-ramka);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

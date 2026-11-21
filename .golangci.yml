@@ -1,0 +1,15 @@
+# golangci-lint v2 (CI: .github/workflows/go.yml). Lokalnie bez instalacji:
+#   docker run --rm -v "$PWD":/app -w /app golangci/golangci-lint:v2.1.6 golangci-lint run ./...
+version: "2"
+
+linters:
+  default: standard
+  exclusions:
+    # Standardowe wyjątki errcheck: Close, Flush, fmt.Fprint*, os.(Un)Setenv, os.Remove.
+    # Błąd zamknięcia pliku do odczytu albo zapisu do rozłączonego klienta SSE nic nie zmienia.
+    presets:
+      - std-error-handling
+
+formatters:
+  enable:
+    - gofmt

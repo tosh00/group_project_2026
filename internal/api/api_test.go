@@ -188,6 +188,22 @@ func TestWgranieDanych(t *testing.T) {
 	}
 }
 
+func TestUsuniecieZestawu(t *testing.T) {
+	s := nowe(t, api.UstawieniaPuli{})
+	z := s.wgraj()
+
+	if kod := s.zadanie("DELETE", "/zestawy/"+z.ID.String(), nil, nil); kod != http.StatusNoContent {
+		t.Fatalf("usunięcie: kod %d", kod)
+	}
+	if kod := s.zadanie("GET", "/zestawy/"+z.ID.String(), nil, nil); kod != http.StatusNotFound {
+		t.Errorf("zestaw po usunięciu: kod %d", kod)
+	}
+	var b api.Blad
+	if kod := s.zadanie("DELETE", "/zestawy/"+z.ID.String(), nil, &b); kod != http.StatusNotFound || b.Kod != "nie_znaleziono" {
+		t.Errorf("ponowne usunięcie: kod %d, %+v", kod, b)
+	}
+}
+
 func TestWgranieBledy(t *testing.T) {
 	s := nowe(t, api.UstawieniaPuli{})
 	testy := []struct {

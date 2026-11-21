@@ -1,0 +1,75 @@
+/*
+ * Tokeny z designu (canvas „Planer zajęć WFiIS”, artboard „1 · Pulpit”).
+ * Na start tylko jasny motyw (ADR 0011). Kolory w komponentach wyłącznie przez te zmienne,
+ * więc ciemny motyw to później jeden blok :root[data-theme="dark"] { ... } w tym pliku.
+ *
+ * Semantyka: czerwony tylko dla naruszeń twardych, zielony tylko dla „0 naruszeń”,
+ * żółty dla ostrzeżeń w danych, neutralny dla kosztu i stanu „niesprawdzony”.
+ */
+:root {
+  color-scheme: light;
+
+  --kolor-tlo: #faf7f4;
+  --kolor-powierzchnia: #ffffff;
+  --kolor-ramka: #ede4db;
+  --kolor-tekst: #1f1a16;
+  --kolor-tekst-cichy: #6b5e53;
+  --kolor-wyciszone-tlo: #f3efea;
+
+  --kolor-marka: #a86121;
+  --kolor-marka-tekst: #8a4c17;
+  --kolor-marka-tlo: #f8eee4;
+  --kolor-marka-ramka: #e5c9ae;
+
+  --kolor-blad: #b42318;
+  --kolor-blad-tlo: #fef3f2;
+  --kolor-blad-ramka: #fecdca;
+
+  --kolor-ok: #067647;
+  --kolor-ok-tlo: #ecfdf3;
+  --kolor-ok-ramka: #abefc6;
+
+  --kolor-neutralny: #475467;
+  --kolor-neutralny-tlo: #f2f4f7;
+  --kolor-neutralny-ramka: #d0d5dd;
+
+  --kolor-ostrzezenie: #713f12;
+  --kolor-ostrzezenie-tlo: #fef7c3;
+  --kolor-ostrzezenie-ramka: #f0d774;
+
+  --font-tekst: Inter, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --odstep-1: 4px;
+  --odstep-2: 8px;
+  --odstep-3: 12px;
+  --odstep-4: 16px;
+  --odstep-6: 24px;
+  --odstep-8: 32px;
+
+  --promien-karta: 16px;
+  --promien-kafel: 12px;
+  --promien: 10px;
+  --promien-maly: 8px;
+  --promien-pigulka: 999px;
+
+  /* Kalendarz („2 · Kalendarz”) */
+  --kolor-powierzchnia-2: #f4efea;
+  --kolor-ramka-mocna: #d5c8bb;
+  --kolor-tekst-karty: #4a3f36;
+  --kolor-slot-niechciany: #f7f3ee;
+  --kolor-kreskowanie: rgba(31, 26, 22, 0.08);
+  --kolor-dzien-wolny: #fbf9f6;
+  --kolor-odznaka: #1f1a16;
+  --kolor-odznaka-tekst: #ffffff;
+  --kolor-etykieta-tyg: rgba(255, 255, 255, 0.8);
+  --kolor-trafienie: #f6dec4;
+  --kolor-obwodka: #1f1a16;
+  --cien-dymka: 0 10px 28px rgba(31, 26, 22, 0.16);
+  --wysokosc-slotu: 52px;
+
+  --szerokosc-tresci: 1120px;
+  --cien-okna: 0 24px 60px rgba(0, 0, 0, 0.3);
+  --kolor-zaslona: rgba(28, 18, 10, 0.5);
+  --kolor-na-marce: #ffffff;
+}

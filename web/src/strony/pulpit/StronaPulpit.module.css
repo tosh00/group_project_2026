@@ -1,0 +1,8 @@
+.ladowanie {
+  color: var(--kolor-tekst-cichy);
+}
+
+.blad {
+  color: var(--kolor-blad);
+  font-weight: 600;
+}

@@ -1,0 +1,116 @@
+.karta {
+  max-width: 760px;
+  width: 100%;
+  margin: 24px auto 0;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-karta);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kartaBlad {
+  border-color: var(--kolor-blad-ramka);
+}
+
+.gora {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.opis {
+  flex: 1;
+  min-width: 240px;
+}
+
+.nadtytul,
+.nadtytulBlad {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--kolor-marka-tekst);
+}
+
+.nadtytulBlad {
+  color: var(--kolor-blad);
+}
+
+.tytul {
+  margin: 4px 0 2px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+@keyframes nieokreslony {
+  0% {
+    left: -40%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.pasek {
+  position: relative;
+  height: 6px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-marka-tlo);
+  overflow: hidden;
+}
+
+.pasekNieokreslony,
+.pasekWypelnienie {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-marka);
+}
+
+.pasekNieokreslony {
+  width: 40%;
+  animation: nieokreslony 1.3s ease-in-out infinite;
+}
+
+.pasekWypelnienie {
+  left: 0;
+  transition: width 0.3s;
+}
+
+.kroki {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.gotowy::before {
+  content: "✓ ";
+}
+
+.trwa {
+  font-weight: 700;
+}
+
+.trwa::before {
+  content: "● ";
+  color: var(--kolor-marka);
+}
+
+.czeka {
+  color: var(--kolor-tekst-cichy);
+}
+
+.czeka::before {
+  content: "○ ";
+}

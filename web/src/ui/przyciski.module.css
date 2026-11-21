@@ -1,0 +1,97 @@
+/* Przyciski i chipy z makiety, wspólne dla wszystkich ekranów. */
+
+.przycisk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--odstep-2);
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--promien);
+  border: 1px solid transparent;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.przycisk:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.glowny {
+  composes: przycisk;
+  background: var(--kolor-marka);
+  color: var(--kolor-na-marce);
+}
+
+.duzy {
+  min-height: 46px;
+  padding: 0 22px;
+}
+
+.obrys {
+  composes: przycisk;
+  background: var(--kolor-powierzchnia);
+  border: 1.5px solid var(--kolor-marka);
+  color: var(--kolor-marka-tekst);
+}
+
+.cichy {
+  composes: przycisk;
+  background: transparent;
+  border-color: var(--kolor-ramka);
+  color: var(--kolor-tekst);
+  font-weight: 600;
+}
+
+.miekki {
+  composes: przycisk;
+  min-height: 38px;
+  padding: 0 14px;
+  gap: var(--odstep-1);
+  border-radius: var(--promien-maly);
+  background: var(--kolor-marka-tlo);
+  color: var(--kolor-marka-tekst);
+  font-size: 13px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chip_blad {
+  composes: chip;
+  color: var(--kolor-blad);
+  background: var(--kolor-blad-tlo);
+  border-color: var(--kolor-blad-ramka);
+}
+
+.chip_ok {
+  composes: chip;
+  color: var(--kolor-ok);
+  background: var(--kolor-ok-tlo);
+  border-color: var(--kolor-ok-ramka);
+}
+
+.chip_neutralny {
+  composes: chip;
+  color: var(--kolor-neutralny);
+  background: var(--kolor-neutralny-tlo);
+  border-color: var(--kolor-neutralny-ramka);
+}
+
+.chip_brak {
+  composes: chip;
+  color: var(--kolor-tekst-cichy);
+  background: transparent;
+  border-color: var(--kolor-ramka);
+}

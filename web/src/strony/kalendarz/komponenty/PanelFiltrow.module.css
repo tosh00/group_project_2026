@@ -1,0 +1,168 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+}
+
+.wiersz {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--kolor-ramka);
+}
+
+.segmenty {
+  display: flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--kolor-powierzchnia-2);
+}
+
+.segment,
+.segmentWlaczony {
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 7px;
+  border: 0;
+  background: transparent;
+  color: var(--kolor-tekst-cichy);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.segmentWlaczony {
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.grupa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.forma,
+.formaWylaczona {
+  min-width: 38px;
+  min-height: 30px;
+  padding: 0 8px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid var(--kolor-ramka-mocna);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.formaWylaczona {
+  border-color: var(--kolor-ramka);
+  background: var(--kolor-powierzchnia-2);
+  color: var(--kolor-tekst-cichy);
+  text-decoration: line-through;
+}
+
+.tygodnie {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.etykietaTygodni {
+  color: var(--kolor-tekst-cichy);
+  margin-right: 4px;
+}
+
+.tydzien,
+.tydzienWybrany {
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 7px;
+  border: 1px solid var(--kolor-ramka);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tydzienWybrany {
+  border-color: var(--kolor-marka);
+  background: var(--kolor-marka);
+  color: var(--kolor-na-marce);
+  font-weight: 800;
+}
+
+.numer {
+  min-width: 30px;
+  padding: 0;
+}
+
+.prawo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.przelacznik {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--kolor-tekst);
+}
+
+.tor,
+.torWlaczony {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-ramka-mocna);
+  transition: background 0.15s;
+}
+
+.torWlaczony {
+  background: var(--kolor-blad);
+}
+
+.galka {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: left 0.15s;
+}
+
+.torWlaczony .galka {
+  left: 16px;
+}
+
+.zakres {
+  font-weight: 700;
+  white-space: nowrap;
+}

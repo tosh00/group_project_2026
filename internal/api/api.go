@@ -24,6 +24,7 @@ type Repozytorium interface {
 	ListaZestawow(ctx context.Context) ([]store.Zestaw, error)
 	Zestaw(ctx context.Context, id uuid.UUID) (store.Zestaw, error)
 	DaneZestawu(ctx context.Context, id uuid.UUID) (json.RawMessage, error)
+	UsunZestaw(ctx context.Context, id uuid.UUID) error
 	DodajUruchomienie(ctx context.Context, zestawID uuid.UUID, wagi json.RawMessage, seed int64, iteracje int32) (store.Uruchomienie, error)
 	Uruchomienie(ctx context.Context, id uuid.UUID) (store.Uruchomienie, error)
 	ListaUruchomien(ctx context.Context, zestawID *uuid.UUID) ([]store.Uruchomienie, error)
@@ -73,6 +74,7 @@ func (s *Serwer) Handler() http.Handler {
 		r.Get("/zestawy", s.listaZestawow)
 		r.Post("/zestawy", s.wgrajZestaw)
 		r.Get("/zestawy/{zestawId}", s.pobierzZestaw)
+		r.Delete("/zestawy/{zestawId}", s.usunZestaw)
 		r.Get("/zestawy/{zestawId}/dane", s.pobierzDaneZestawu)
 		r.Post("/zestawy/{zestawId}/uruchomienia", s.uruchomSolver)
 
@@ -112,11 +114,7 @@ func (s *Serwer) bladSerwera(w http.ResponseWriter, r *http.Request, err error) 
 }
 
 func (s *Serwer) zdrowie(w http.ResponseWriter, r *http.Request) {
-	odp := struct {
-		Status    string `json:"status"`
-		Baza      string `json:"baza"`
-		Walidator string `json:"walidator"`
-	}{"ok", "ok", s.walidator.Nazwa()}
+	odp := Zdrowie{Status: "ok", Baza: "ok", Walidator: s.walidator.Nazwa()}
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 	defer cancel()
 	if err := s.repo.Ping(ctx); err != nil {

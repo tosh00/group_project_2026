@@ -129,3 +129,22 @@ func (q *Queries) PobierzZestaw(ctx context.Context, id uuid.UUID) (PobierzZesta
 	)
 	return i, err
 }
+
+const usunZestaw = `-- name: UsunZestaw :execrows
+DELETE FROM zestawy_danych z
+WHERE z.id = $1
+  AND NOT EXISTS (
+    SELECT 1 FROM uruchomienia u
+    WHERE u.zestaw_id = z.id AND u.status IN ('w_kolejce', 'trwa')
+  )
+`
+
+// Usuwa zestaw z uruchomieniami i planami (ON DELETE CASCADE), ale nie w trakcie generowania:
+// zestaw z uruchomieniem w kolejce albo trwającym zostaje (0 usuniętych wierszy).
+func (q *Queries) UsunZestaw(ctx context.Context, id uuid.UUID) (int64, error) {
+	result, err := q.db.Exec(ctx, usunZestaw, id)
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected(), nil
+}

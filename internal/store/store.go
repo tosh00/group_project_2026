@@ -28,6 +28,8 @@ var (
 	ErrNieZnaleziono = errors.New("nie znaleziono")
 	// ErrZlyStan: uruchomienie nie jest w stanie, który pozwala na zmianę (np. już zakończone).
 	ErrZlyStan = errors.New("niedozwolona zmiana stanu uruchomienia")
+	// ErrTrwaGenerowanie: zestawu nie można usunąć, bo ma uruchomienie w kolejce albo trwające.
+	ErrTrwaGenerowanie = errors.New("trwa generowanie planu dla zestawu")
 )
 
 // Statusy uruchomienia (kolumna uruchomienia.status, API: StatusUruchomienia).
@@ -143,6 +145,23 @@ func (s *Store) Zestaw(ctx context.Context, id uuid.UUID) (Zestaw, error) {
 func (s *Store) DaneZestawu(ctx context.Context, id uuid.UUID) (json.RawMessage, error) {
 	d, err := s.q.PobierzDaneZestawu(ctx, id)
 	return d, mapuj(err)
+}
+
+// UsunZestaw usuwa zestaw razem z uruchomieniami i planami. Zestaw, dla którego trwa generowanie,
+// zostaje (ErrTrwaGenerowanie); brak zestawu to ErrNieZnaleziono.
+func (s *Store) UsunZestaw(ctx context.Context, id uuid.UUID) error {
+	usuniete, err := s.q.UsunZestaw(ctx, id)
+	if err != nil {
+		return err
+	}
+	if usuniete > 0 {
+		return nil
+	}
+
+	if _, err := s.q.PobierzZestaw(ctx, id); err != nil {
+		return mapuj(err)
+	}
+	return ErrTrwaGenerowanie
 }
 
 // DodajUruchomienie tworzy uruchomienie w kolejce. Brak zestawu to ErrNieZnaleziono.

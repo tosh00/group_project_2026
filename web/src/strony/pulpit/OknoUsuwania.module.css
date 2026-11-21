@@ -1,0 +1,84 @@
+.zaslona {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--kolor-zaslona);
+}
+
+.okno {
+  position: fixed;
+  z-index: 101;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 480px;
+  background: var(--kolor-powierzchnia);
+  border-radius: var(--promien-karta);
+  box-shadow: var(--cien-okna);
+  padding: 22px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gora {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ikona {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--promien);
+  background: var(--kolor-blad-tlo);
+  color: var(--kolor-blad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tytul {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.opis {
+  margin: 4px 0 0;
+  color: var(--kolor-tekst-cichy);
+}
+
+.blad {
+  padding: 10px 12px;
+  border-radius: var(--promien-maly);
+  background: var(--kolor-blad-tlo);
+  border: 1px solid var(--kolor-blad-ramka);
+  color: var(--kolor-blad);
+  font-weight: 600;
+}
+
+.stopka {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.usun {
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: var(--promien);
+  border: 0;
+  background: var(--kolor-blad);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.usun:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}

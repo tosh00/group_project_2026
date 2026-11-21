@@ -1,0 +1,172 @@
+.legenda {
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tytul {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.sekcja {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--kolor-tekst-cichy);
+  margin-bottom: 6px;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.pozycja {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: var(--promien-maly);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--kolor-tekst);
+  text-align: left;
+}
+
+.pozycja:disabled {
+  cursor: default;
+}
+
+.wcisnieta {
+  border-color: var(--kolor-ramka-mocna);
+  background: var(--kolor-powierzchnia-2);
+}
+
+.nieaktywna {
+  opacity: 0.55;
+}
+
+.probka {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--probka-tlo);
+  border: 1px solid var(--probka-ramka);
+  box-shadow: inset 0 3px 0 var(--probka-pasek);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.opisPozycji {
+  flex: 1;
+  min-width: 0;
+}
+
+.etykieta {
+  display: block;
+  font-weight: 600;
+}
+
+.podpis {
+  display: block;
+  font-size: 11.5px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.licznik {
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
+  white-space: nowrap;
+}
+
+.formy {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 10px;
+}
+
+.forma {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.odznaka {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 3px;
+  background: var(--kolor-odznaka);
+  color: var(--kolor-odznaka-tekst);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.oznaczenia {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.oznaczenia li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wzor {
+  flex: none;
+  width: 22px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.wzorNiechciany {
+  background: var(--kolor-slot-niechciany);
+  border: 1px solid var(--kolor-ramka);
+}
+
+.wzorNaruszenie {
+  border: 2px solid var(--kolor-blad);
+}
+
+.wzorTygodnie {
+  border: 1px dashed var(--kolor-ramka-mocna);
+  background: var(--kolor-powierzchnia);
+}
+
+.wzorWykluczone {
+  border: 1px dashed var(--kolor-ramka-mocna);
+  background: repeating-linear-gradient(135deg, var(--kolor-kreskowanie) 0 6px, transparent 6px 12px);
+}
+
+.wzorOkienko {
+  border: 1.5px dashed var(--kolor-marka);
+}
+
+.wzorWolny {
+  background: var(--kolor-dzien-wolny);
+  border: 1px solid var(--kolor-ramka);
+}
+
+.uwaga {
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
+}

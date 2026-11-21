@@ -1,7 +1,17 @@
-# API HTTP (`api/openapi.yaml`) — SZKIC 0.1
+# API HTTP (`api/openapi.yaml`) — SZKIC 0.2
 
 Źródłem prawdy jest `api/openapi.yaml`; tu jest skrót i to, czego nie widać w schematach.
 Wszystkie ścieżki pod `/api`. Zakres MVP: bez edycji ręcznej i logowania (ADR 0010).
+
+Frontend generuje typy z tego pliku (`web/src/api/schema.gen.ts`, `pnpm gen:api`, ADR 0011). Zmiana
+`openapi.yaml` bez ponownego wygenerowania typów nie przejdzie CI frontendu, więc PR zmieniający kontrakt
+regeneruje też `schema.gen.ts`.
+
+Test `internal/api/kontrakt_test.go` (bez bazy, część `go test ./...` i CI) pilnuje, żeby schematy
+odpowiedzi i `DaneWejsciowe` miały dokładnie te pola, co typy Go (`internal/api`, `internal/model`), oraz żeby
+pola, które w `data/dane_planu.json` bywają `null`, miały w schemacie typ z `"null"`. Zmiana DTO albo modelu
+bez zmiany `openapi.yaml` kończy się czerwonym testem. Frontend (Vite w dev, nginx w Dockerze) jest pod tym samym originem co API,
+więc backend nie obsługuje CORS.
 
 | Metoda i ścieżka | Co robi |
 |---|---|
@@ -9,7 +19,8 @@ Wszystkie ścieżki pod `/api`. Zakres MVP: bez edycji ręcznej i logowania (ADR
 | `GET /wagi/domyslne` | `solver.DomyslneWagi()` jako JSON |
 | `POST /zestawy?nazwa=` | wgranie `dane_planu.json` (treść żądania = plik); 422 z listą niespójności |
 | `GET /zestawy`, `GET /zestawy/{id}` | podsumowanie (liczby) i ostrzeżenia (`pojemnosc_szacowana`) |
-| `GET /zestawy/{id}/dane` | oryginalny plik, z którego frontend bierze nazwy do kart |
+| `DELETE /zestawy/{id}` | usunięcie zestawu z uruchomieniami i planami (204); 409 `trwa_generowanie`, gdy generowanie trwa |
+| `GET /zestawy/{id}/dane` | dane wejściowe (`DaneWejsciowe`, 17 tabel), z których frontend bierze nazwy do kart i filtrów |
 | `POST /zestawy/{id}/uruchomienia` | `{wagi?, seed?, iteracje?}` → 202, uruchomienie w kolejce |
 | `GET /uruchomienia?zestaw_id=`, `GET /uruchomienia/{id}` | stan uruchomienia |
 | `POST /uruchomienia/{id}/zatrzymaj` | anulowanie; po konstrukcji zostaje najlepszy plan |
@@ -45,7 +56,7 @@ Rozjazd do uzgodnienia z @tosh00: `validator.Naruszenie` na gałęzi `validator/
 ## Błędy
 
 Każdy błąd to `{ "kod": "...", "komunikat": "...", "szczegoly": [...] }`. Kody: `zle_zadanie` (400),
-`za_duze` (413), `niespojne_dane` (422), `nie_znaleziono` / `brak_planu` (404), `zakonczone` (409),
+`za_duze` (413), `niespojne_dane` (422), `nie_znaleziono` / `brak_planu` (404), `zakonczone` / `trwa_generowanie` (409),
 `kolejka_pelna` (503), `blad_serwera` (500).
 
 ## Nazwy reguł w raporcie (`Naruszenie.nazwa`)

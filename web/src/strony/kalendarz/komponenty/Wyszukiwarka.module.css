@@ -1,0 +1,218 @@
+.wybor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 360px;
+  max-width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: var(--promien-maly);
+  border: 1px solid var(--kolor-ramka-mocna);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  text-align: left;
+}
+
+.wyborOtwarty {
+  border: 2px solid var(--kolor-marka);
+}
+
+.wyborNazwa {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.wyborPodpis {
+  flex: 1;
+  color: var(--kolor-tekst-cichy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.licznikNaruszen,
+.wynikNaruszenia {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--kolor-blad);
+}
+
+.wynikNaruszenia {
+  font-weight: 800;
+}
+
+.licznikZero {
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.okno {
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  z-index: 200;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka-mocna);
+  border-radius: var(--promien-kafel);
+  box-shadow: var(--cien-dymka);
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.pole {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.wejscie {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--kolor-tekst);
+  font-size: 14px;
+  min-height: 28px;
+}
+
+.wyczysc {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 0;
+  background: var(--kolor-powierzchnia-2);
+  color: var(--kolor-tekst-cichy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lista {
+  max-height: 440px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.sekcja {
+  padding: 8px 14px 4px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--kolor-tekst-cichy);
+}
+
+.notka {
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.wynik {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 14px;
+  color: var(--kolor-tekst);
+  cursor: pointer;
+}
+
+.wynik[data-selected="true"] {
+  background: var(--kolor-powierzchnia-2);
+  outline: 2px solid var(--kolor-marka);
+  outline-offset: -2px;
+}
+
+.wciety {
+  padding-left: 34px;
+}
+
+.biezacy {
+  background: var(--kolor-powierzchnia-2);
+}
+
+.probka,
+.probkaPusta {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.probka {
+  background: var(--probka-tlo);
+  box-shadow: inset 0 3px 0 var(--probka-pasek);
+  border: 1px solid var(--probka-ramka);
+}
+
+.wynikTekst {
+  flex: 1;
+  min-width: 0;
+}
+
+.wynikEtykieta {
+  display: block;
+  font-weight: 600;
+}
+
+.wynikOpis {
+  display: block;
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trafienie {
+  background: var(--kolor-trafienie);
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.teraz {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-powierzchnia-2);
+  color: var(--kolor-tekst-cichy);
+}
+
+.brak {
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--kolor-tekst-cichy);
+}
+
+.brakTytul {
+  font-weight: 700;
+  color: var(--kolor-tekst);
+  margin-bottom: 2px;
+}
+
+.stopka {
+  display: flex;
+  gap: 14px;
+  padding: 8px 14px;
+  border-top: 1px solid var(--kolor-ramka);
+  font-size: 11.5px;
+  color: var(--kolor-tekst-cichy);
+  background: var(--kolor-powierzchnia-2);
+}
+
+@media (max-width: 640px) {
+  .wybor {
+    min-width: 0;
+    width: 100%;
+  }
+}

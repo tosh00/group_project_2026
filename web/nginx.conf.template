@@ -1,0 +1,32 @@
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+
+    # Pliki z hashem w nazwie (dist/assets) można trzymać w cache długo.
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # API z tego samego originu, więc backend nie potrzebuje CORS (ADR 0011).
+    location /api/ {
+        proxy_pass ${API_UPSTREAM};
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        client_max_body_size 10m;
+
+        # SSE z postępem solvera (GET /api/uruchomienia/{id}/postep): bez buforowania i z długim timeoutem.
+        proxy_set_header Connection "";
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 1h;
+    }
+
+    # Routing po stronie klienta (React Router): nieznane ścieżki dostają index.html.
+    location / {
+        try_files $uri /index.html;
+    }
+}

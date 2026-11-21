@@ -1,0 +1,21 @@
+.znacznik {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--odstep-2);
+  padding: 2px var(--odstep-3);
+  border: 1px solid var(--kolor-blad-ramka);
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-blad-tlo);
+  color: var(--kolor-blad);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.znacznik::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}

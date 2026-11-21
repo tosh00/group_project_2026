@@ -1,0 +1,49 @@
+# Cała aplikacja lokalnie: docker compose up --build  →  http://localhost:8000
+# Baza jest też wystawiona na 55432 (jak w .env.example), więc `go run ./cmd/server` i testy z bazą
+# mogą używać tej samej bazy co compose.
+
+name: planer
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: planer
+      POSTGRES_PASSWORD: planer
+      POSTGRES_DB: planer
+    ports:
+      - "55432:5432"
+    volumes:
+      - db-dane:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U planer -d planer"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  server:
+    build: .
+    environment:
+      DATABASE_URL: postgres://planer:planer@db:5432/planer?sslmode=disable
+      ADDR: ":8080"
+      WORKERY: ${WORKERY:-1}
+      KOLEJKA: ${KOLEJKA:-16}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    environment:
+      API_UPSTREAM: http://server:8080
+    ports:
+      - "8000:80"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+volumes:
+  db-dane:

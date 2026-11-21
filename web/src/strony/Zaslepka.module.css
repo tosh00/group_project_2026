@@ -1,0 +1,16 @@
+.zaslepka {
+  display: flex;
+  flex-direction: column;
+  gap: var(--odstep-2);
+  padding: var(--odstep-6);
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien);
+  color: var(--kolor-tekst-cichy);
+}
+
+.tytul {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--kolor-tekst);
+}
