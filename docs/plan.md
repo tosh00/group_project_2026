@@ -68,7 +68,7 @@ Przejście między salami A i B nie wymaga przerwy, więc nie ma kary za „zmia
 
 ## Stack
 
-React 18 + TS + Vite (TanStack Query, React Router), Go 1.23+ (chi, pgx v5, sqlc, goose, slog),
+React 19 + TS + Vite (TanStack Query, React Router; szczegóły w ADR 0011), Go 1.23+ (chi, pgx v5, sqlc, goose, slog),
 PostgreSQL 16, Docker Compose, GitHub Actions (go test, golangci-lint, Vitest).
 
 ## Etapy
