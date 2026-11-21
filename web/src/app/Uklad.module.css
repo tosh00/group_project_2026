@@ -38,6 +38,16 @@
   gap: 28px;
 }
 
+.szeroki .naglowekWnetrze,
+.szeroki .tresc {
+  max-width: none;
+}
+
+.szeroki .tresc {
+  padding: 16px 24px 32px;
+  gap: 12px;
+}
+
 @media (max-width: 640px) {
   .naglowekWnetrze,
   .tresc {

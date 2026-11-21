@@ -20,6 +20,12 @@ export const handlers = [
     params.zestawId === dane.zestaw.id ? HttpResponse.json(dane.daneZestawu) : nieZnaleziono(),
   ),
   http.get("/api/uruchomienia", () => HttpResponse.json([dane.uruchomienie])),
+  http.get("/api/uruchomienia/:uruchomienieId/plan", ({ params }) =>
+    params.uruchomienieId === dane.uruchomienie.id ? HttpResponse.json(dane.plan) : nieZnaleziono(),
+  ),
+  http.get("/api/uruchomienia/:uruchomienieId/raport", ({ params }) =>
+    params.uruchomienieId === dane.uruchomienie.id ? HttpResponse.json(dane.raport) : nieZnaleziono(),
+  ),
   http.get("/api/uruchomienia/:uruchomienieId", ({ params }) =>
     params.uruchomienieId === dane.uruchomienie.id ? HttpResponse.json(dane.uruchomienie) : nieZnaleziono(),
   ),

@@ -108,7 +108,7 @@ describe("StronaPulpit", () => {
 
     await uzytkownik.click(await screen.findByRole("button", { name: "Generuj plan" }));
 
-    expect(await screen.findByRole("heading", { name: "Kalendarz planu" })).toBeInTheDocument();
+    expect(await screen.findByText("Plan rocznika INF1-R1")).toBeInTheDocument();
   });
 
   it("pokazuje komunikat, gdy kolejka solvera jest pełna", async () => {

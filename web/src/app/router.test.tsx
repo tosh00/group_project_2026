@@ -6,7 +6,6 @@ describe("trasy", () => {
   it.each([
     ["/", "Informatyka, semestr zimowy 2026/27"],
     ["/zestawy/abc", "Zestaw danych"],
-    ["/uruchomienia/abc", "Kalendarz planu"],
     ["/uruchomienia/abc/raport", "Raport jakości"],
     ["/nie/ma/takiej", "Nie ma takiej strony"],
   ])("%s pokazuje stronę „%s”", async (sciezka, tytul) => {

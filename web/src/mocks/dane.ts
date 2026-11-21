@@ -159,3 +159,25 @@ export const daneZestawu: Schematy["DaneWejsciowe"] = {
   dezyderaty_ogolne: [],
   dezyderaty_sale: [],
 };
+
+export const plan: Schematy["Plan"] = {
+  meta: { wersja_formatu: 1, silnik: "go-hybrid", seed: 42, koszt: 412.5, utworzono: "2026-11-21T09:31:04Z" },
+  przypisania: [
+    {
+      zajecia_id: "Z001",
+      dzien: 1,
+      slot_start: 3,
+      sala_id: "A281",
+      tygodnie: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+    },
+  ],
+};
+
+export const raport: Schematy["Raport"] = {
+  status: "poprawny",
+  liczba_naruszen: 0,
+  naruszenia: [],
+  koszt_miekki: 412.5,
+  koszt_kryteria: { za_duza_sala: 178.1, preferencja_dni: 176 },
+  walidator: "atrapa",
+};

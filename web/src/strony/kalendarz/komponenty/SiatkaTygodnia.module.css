@@ -1,0 +1,241 @@
+.siatka {
+  flex: 999 1 760px;
+  min-width: 0;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+  overflow: hidden;
+}
+
+.naglowek {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.tytuly {
+  min-width: 0;
+}
+
+.tytul {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+.pogrubiony {
+  font-weight: 700;
+}
+
+.zajetosc {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+}
+
+.miernik {
+  flex: 1;
+  height: 8px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-powierzchnia-2);
+  overflow: hidden;
+}
+
+.miernikWypelnienie {
+  height: 100%;
+  background: var(--kolor-marka);
+  border-radius: var(--promien-pigulka);
+}
+
+.statystyki {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pigulka {
+  padding: 3px 10px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-powierzchnia-2);
+}
+
+.przewijanie {
+  overflow-x: auto;
+}
+
+.wnetrze {
+  min-width: 760px;
+}
+
+.wierszDni,
+.tresc {
+  display: grid;
+  grid-template-columns: 76px repeat(5, minmax(0, 1fr));
+}
+
+.wierszDni {
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.tresc {
+  position: relative;
+}
+
+.etykietaSlot {
+  padding: 10px 8px;
+  font-size: 11px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.dzien {
+  padding: 10px;
+  border-left: 1px solid var(--kolor-ramka);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.dzienWolny {
+  background: var(--kolor-dzien-wolny);
+}
+
+.nazwaDnia {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.liczbaZajec {
+  font-size: 11px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.czas,
+.wiersz {
+  height: var(--wysokosc-slotu);
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.czas {
+  padding: 5px 6px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.niechciany {
+  background: var(--kolor-slot-niechciany);
+}
+
+.numerSlotu {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.godzina {
+  font-size: 10.5px;
+  letter-spacing: -0.01em;
+  color: var(--kolor-tekst-cichy);
+}
+
+.etykietaPory {
+  font-size: 9.5px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--kolor-tekst-cichy);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kolumna {
+  position: relative;
+  border-left: 1px solid var(--kolor-ramka);
+  height: calc(12 * var(--wysokosc-slotu));
+}
+
+.wykluczone,
+.okienko,
+.wolny {
+  position: absolute;
+  top: var(--blok-gora);
+  height: var(--blok-wysokosc);
+  left: 2px;
+  right: 2px;
+  border-radius: 7px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  pointer-events: none;
+}
+
+.wykluczone {
+  border: 1px dashed var(--kolor-ramka-mocna);
+  background: repeating-linear-gradient(135deg, var(--kolor-kreskowanie) 0 6px, transparent 6px 12px);
+  z-index: 2;
+}
+
+.okienko {
+  border: 1.5px dashed var(--kolor-marka);
+  background: rgba(168, 97, 33, 0.07);
+  z-index: 2;
+}
+
+.wolny {
+  background: var(--kolor-dzien-wolny);
+  align-items: center;
+  padding-top: 14px;
+  z-index: 1;
+}
+
+.blokTytul {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.blokOpis {
+  font-size: 10.5px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.pustyNakladka {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.pusty {
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+  padding: 24px 28px;
+  text-align: center;
+  box-shadow: var(--cien-dymka);
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.pusty button {
+  margin-top: 10px;
+}
+
+.pustyTytul {
+  font-weight: 800;
+  font-size: 15px;
+}

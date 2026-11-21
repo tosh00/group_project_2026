@@ -53,6 +53,21 @@
   --promien-maly: 8px;
   --promien-pigulka: 999px;
 
+  /* Kalendarz („2 · Kalendarz”) */
+  --kolor-powierzchnia-2: #f4efea;
+  --kolor-ramka-mocna: #d5c8bb;
+  --kolor-tekst-karty: #4a3f36;
+  --kolor-slot-niechciany: #f7f3ee;
+  --kolor-kreskowanie: rgba(31, 26, 22, 0.08);
+  --kolor-dzien-wolny: #fbf9f6;
+  --kolor-odznaka: #1f1a16;
+  --kolor-odznaka-tekst: #ffffff;
+  --kolor-etykieta-tyg: rgba(255, 255, 255, 0.8);
+  --kolor-trafienie: #f6dec4;
+  --kolor-obwodka: #1f1a16;
+  --cien-dymka: 0 10px 28px rgba(31, 26, 22, 0.16);
+  --wysokosc-slotu: 52px;
+
   --szerokosc-tresci: 1120px;
   --cien-okna: 0 24px 60px rgba(0, 0, 0, 0.3);
   --kolor-zaslona: rgba(28, 18, 10, 0.5);

@@ -2,7 +2,6 @@ import type { RouteObject } from "react-router";
 import { Uklad } from "./Uklad.tsx";
 import { StronaPulpit } from "../strony/pulpit/StronaPulpit.tsx";
 import { StronaZestaw } from "../strony/StronaZestaw.tsx";
-import { StronaKalendarz } from "../strony/StronaKalendarz.tsx";
 import { StronaRaport } from "../strony/StronaRaport.tsx";
 import { StronaNieZnaleziono } from "../strony/StronaNieZnaleziono.tsx";
 
@@ -14,7 +13,14 @@ export const trasy: RouteObject[] = [
     children: [
       { index: true, element: <StronaPulpit /> },
       { path: "zestawy/:zestawId", element: <StronaZestaw /> },
-      { path: "uruchomienia/:uruchomienieId", element: <StronaKalendarz /> },
+      // Kalendarz zajmuje całą szerokość okna (makieta „2 · Kalendarz”), pozostałe ekrany 1120 px.
+      // Ładowany dopiero przy wejściu (Radix Popover, cmdk), żeby pulpit startował szybciej.
+      {
+        path: "uruchomienia/:uruchomienieId",
+        handle: { szeroki: true },
+        lazy: () =>
+          import("../strony/kalendarz/StronaKalendarz.tsx").then((m) => ({ Component: m.StronaKalendarz })),
+      },
       { path: "uruchomienia/:uruchomienieId/raport", element: <StronaRaport /> },
       { path: "*", element: <StronaNieZnaleziono /> },
     ],

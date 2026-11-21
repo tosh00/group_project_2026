@@ -1,0 +1,99 @@
+.pasek {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-kafel);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid;
+  font-weight: 800;
+}
+
+.naruszenia {
+  composes: status;
+  color: var(--kolor-blad);
+  background: var(--kolor-blad-tlo);
+  border-color: var(--kolor-blad-ramka);
+}
+
+.poprawny {
+  composes: status;
+  color: var(--kolor-ok);
+  background: var(--kolor-ok-tlo);
+  border-color: var(--kolor-ok-ramka);
+}
+
+.niesprawdzony {
+  composes: status;
+  color: var(--kolor-tekst);
+  background: var(--kolor-powierzchnia-2);
+  border-color: var(--kolor-ramka-mocna);
+}
+
+.zatrzymany {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: var(--promien-pigulka);
+  border: 1px solid var(--kolor-ramka-mocna);
+  font-weight: 600;
+}
+
+.koszt {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.kosztWartosc {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+.separator {
+  width: 1px;
+  height: 22px;
+  background: var(--kolor-ramka);
+}
+
+.seed {
+  color: var(--kolor-tekst);
+  font-family: var(--font-mono);
+}
+
+.akcje {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.raport {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--promien-maly);
+  background: var(--kolor-marka);
+  color: var(--kolor-na-marce);
+  text-decoration: none;
+  font-weight: 700;
+}

@@ -79,3 +79,63 @@ export function useUruchomSolver() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["uruchomienia"] }),
   });
 }
+
+// Statusy, po których uruchomienie się nie zmieni (ADR 0006: plan jest przy `poprawny` i `z_naruszeniami`).
+const statusyZPlanem: ReadonlySet<Schematy["StatusUruchomienia"]> = new Set(["poprawny", "z_naruszeniami"]);
+
+export function maPlan(uruchomienie: Schematy["Uruchomienie"] | undefined): boolean {
+  return uruchomienie !== undefined && statusyZPlanem.has(uruchomienie.status);
+}
+
+// Stan uruchomienia. W trakcie aktualizuje go SSE (`usePostepUruchomienia`), więc bez odpytywania.
+export function useUruchomienie(uruchomienieId: string) {
+  return useQuery({
+    queryKey: klucze.uruchomienie(uruchomienieId),
+    queryFn: () =>
+      BladApi.dane(api.GET("/uruchomienia/{uruchomienieId}", { params: { path: { uruchomienieId } } })),
+  });
+}
+
+export function useZestaw(zestawId: string | undefined) {
+  return useQuery({
+    queryKey: klucze.zestaw(zestawId ?? ""),
+    queryFn: () =>
+      BladApi.dane(api.GET("/zestawy/{zestawId}", { params: { path: { zestawId: zestawId! } } })),
+    enabled: zestawId !== undefined,
+    staleTime: Infinity,
+  });
+}
+
+// Plan i raport istnieją dopiero po zakończeniu uruchomienia i już się nie zmieniają.
+export function usePlan(uruchomienie: Schematy["Uruchomienie"] | undefined) {
+  const uruchomienieId = uruchomienie?.id ?? "";
+  return useQuery({
+    queryKey: [...klucze.uruchomienie(uruchomienieId), "plan"],
+    queryFn: () =>
+      BladApi.dane(api.GET("/uruchomienia/{uruchomienieId}/plan", { params: { path: { uruchomienieId } } })),
+    enabled: maPlan(uruchomienie),
+    staleTime: Infinity,
+  });
+}
+
+export function useRaport(uruchomienie: Schematy["Uruchomienie"] | undefined) {
+  const uruchomienieId = uruchomienie?.id ?? "";
+  return useQuery({
+    queryKey: [...klucze.uruchomienie(uruchomienieId), "raport"],
+    queryFn: () =>
+      BladApi.dane(
+        api.GET("/uruchomienia/{uruchomienieId}/raport", { params: { path: { uruchomienieId } } }),
+      ),
+    enabled: maPlan(uruchomienie),
+    staleTime: Infinity,
+  });
+}
+
+export function useZatrzymajUruchomienie() {
+  return useMutation({
+    mutationFn: (uruchomienieId: string) =>
+      BladApi.dane(
+        api.POST("/uruchomienia/{uruchomienieId}/zatrzymaj", { params: { path: { uruchomienieId } } }),
+      ),
+  });
+}

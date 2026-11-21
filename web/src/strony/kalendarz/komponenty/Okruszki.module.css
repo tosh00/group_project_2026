@@ -1,0 +1,40 @@
+.okruszki {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.wstecz {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--promien-maly);
+  border: 1px solid var(--kolor-ramka);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nawigacja {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  color: var(--kolor-tekst-cichy);
+}
+
+.nawigacja a {
+  text-decoration: none;
+}
+
+.nawigacja a:hover {
+  text-decoration: underline;
+}
+
+.biezacy {
+  color: var(--kolor-tekst);
+  font-weight: 700;
+}
