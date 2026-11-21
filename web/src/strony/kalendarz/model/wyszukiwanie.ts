@@ -14,12 +14,13 @@ export type Wynik = {
   naruszen: number;
   kolor?: string;
   wciecie?: boolean;
+  rocznik?: string; // rocznik grupy: bez frazy lista rozwija grupy tylko bieżącego rocznika
 };
 
 export type SekcjaWynikow = { tytul: string; notka: string; wyniki: Wynik[] };
 
-// Limity z makiety: bez frazy krótka lista na sekcję, z frazą do 8 wyników.
-const LIMIT_BEZ_FRAZY = 8;
+// Limity z makiety: bez frazy wszystkie roczniki (z grupami bieżącego) i krótka lista prowadzących i sal,
+// z frazą do 8 wyników na sekcję.
 const LIMIT_PROWADZACYCH_SAL = 4;
 const LIMIT_Z_FRAZA = 8;
 
@@ -50,6 +51,7 @@ export class Wyszukiwarka {
           naruszen: liczba("grupa", g.id),
           kolor: indeks.kolorGrupy.get(g.id),
           wciecie: true,
+          rocznik: r.id,
         })),
       ];
     });
@@ -114,18 +116,19 @@ export class Wyszukiwarka {
     ];
   }
 
-  szukaj(fraza: string): SekcjaWynikow[] {
+  // rozwinietyRocznik: rocznik bieżącego widoku; bez frazy pokazujemy tylko jego grupy.
+  szukaj(fraza: string, rozwinietyRocznik = ""): SekcjaWynikow[] {
     const q = fraza.trim().toLowerCase();
     return this.sekcje
       .filter((s) => !s.tylkoZFraza || q)
       .map((s) => {
-        const limit = q
-          ? LIMIT_Z_FRAZA
-          : s.tytul === "Roczniki i grupy"
-            ? LIMIT_BEZ_FRAZY
-            : LIMIT_PROWADZACYCH_SAL;
+        const limit = q ? LIMIT_Z_FRAZA : s.tytul === "Roczniki i grupy" ? Infinity : LIMIT_PROWADZACYCH_SAL;
         const wyniki = s.wyniki
-          .filter((w) => !q || `${w.etykieta} ${w.opis} ${w.cel.id}`.toLowerCase().includes(q))
+          .filter((w) =>
+            q
+              ? `${w.etykieta} ${w.opis} ${w.cel.id}`.toLowerCase().includes(q)
+              : !w.rocznik || w.rocznik === rozwinietyRocznik,
+          )
           .slice(0, limit);
         return { tytul: s.tytul, notka: q ? `${wyniki.length} wyn.` : s.notka, wyniki };
       })

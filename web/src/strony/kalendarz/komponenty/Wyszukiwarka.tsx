@@ -19,7 +19,7 @@ type WyszukiwarkaProps = {
 export function Wyszukiwarka({ zrodlo, filtry, opis, naruszenWidoku, onWybierz }: WyszukiwarkaProps) {
   const [otwarta, setOtwarta] = useState(false);
   const [fraza, setFraza] = useState("");
-  const sekcje = useMemo(() => zrodlo.szukaj(fraza), [zrodlo, fraza]);
+  const sekcje = useMemo(() => zrodlo.szukaj(fraza, opis.rocznik), [zrodlo, fraza, opis.rocznik]);
 
   const wybierz = (cel: Cel) => {
     setOtwarta(false);

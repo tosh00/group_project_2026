@@ -50,6 +50,7 @@ export type OpisWidoku = {
   podpis: string;
   tytul: string;
   podtytul: string;
+  rocznik: string; // rocznik widoku (dla prowadzącego i sali pusty)
 };
 
 export type StatystykiProwadzacego = { slotow: number; dniWolne: string[]; okienek: number };
@@ -135,6 +136,7 @@ export class WidokPlanu {
           podpis: `${r?.nazwa ?? ""} · ${r?.liczba_studentow ?? 0} os.`,
           tytul: `Plan rocznika ${id}`,
           podtytul: `${r?.nazwa ?? ""} · ${Format.ilosc(r?.liczba_studentow ?? 0, "student", "studentów", "studentów")} · ${Format.ilosc(grup, "grupa", "grupy", "grup")} · ${liczba}`,
+          rocznik: id,
         };
       }
       case "grupa": {
@@ -145,6 +147,7 @@ export class WidokPlanu {
           podpis: `${g?.podzial ?? g?.typ ?? "grupa"} · ${g?.liczba_studentow ?? 0} os.`,
           tytul: `Plan grupy ${id}`,
           podtytul: `Zajęcia grupy i grup ze wspólnymi studentami · ${liczba}`,
+          rocznik: g?.rocznik ?? "",
         };
       }
       case "prowadzacy": {
@@ -158,6 +161,7 @@ export class WidokPlanu {
           podpis: `${p?.jednostka ?? ""} · ${Format.ilosc(przedmiotow, "przedmiot", "przedmioty", "przedmiotów")}`,
           tytul: `Plan prowadzącego ${nazwa}`,
           podtytul: `${liczba} w ${Format.ilosc(rocznikow, "roczniku", "rocznikach", "rocznikach")}`,
+          rocznik: "",
         };
       }
       case "sala": {
@@ -169,6 +173,7 @@ export class WidokPlanu {
           podpis: opisSali,
           tytul: `Plan sali ${id}${s?.nazwa ? ` · ${s.nazwa}` : ""}`,
           podtytul: `${NAZWY_TYPOW_SAL[s?.typ ?? ""] ?? ""} · ${Format.ilosc(this.zajeciaWidoku.length, "zajęcia", "zajęcia", "zajęć")} w tygodniu`,
+          rocznik: "",
         };
       }
     }

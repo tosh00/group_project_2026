@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Schematy } from "../../../api/klient.ts";
 import { NAZWY_FORM } from "../model/kolory.ts";
 import { FORMY, type Filtry, type Wymiar } from "../model/typy.ts";
 import styles from "./PanelFiltrow.module.css";
@@ -7,9 +8,12 @@ type PanelFiltrowProps = {
   filtry: Filtry;
   widokStudentow: boolean;
   zakresTygodnia: string; // np. „23.11–27.11”
+  roczniki: Schematy["Rocznik"][];
+  biezacyRocznik: string; // rocznik bieżącego widoku (pusty dla prowadzącego i sali)
   wyszukiwarka: ReactNode;
   onWymiar: (wymiar: Wymiar) => void;
   onZmien: (zmiana: Partial<Filtry>) => void;
+  onRocznik: (rocznikId: string) => void;
 };
 
 const WYMIARY: { wymiar: Wymiar; etykieta: string }[] = [
@@ -26,9 +30,12 @@ export function PanelFiltrow({
   filtry,
   widokStudentow,
   zakresTygodnia,
+  roczniki,
+  biezacyRocznik,
   wyszukiwarka,
   onWymiar,
   onZmien,
+  onRocznik,
 }: PanelFiltrowProps) {
   const przelaczForme = (forma: (typeof FORMY)[number]) => {
     const ukryte = new Set(filtry.ukryteFormy);
@@ -75,6 +82,22 @@ export function PanelFiltrow({
               </button>
             );
           })}
+        </div>
+        <span className={styles.separator} aria-hidden="true" />
+        <div role="group" aria-label="Rocznik" className={styles.grupa}>
+          <span className={styles.cichy}>Rocznik</span>
+          {roczniki.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              aria-pressed={r.id === biezacyRocznik}
+              title={r.nazwa}
+              className={r.id === biezacyRocznik ? styles.tydzienWybrany : styles.tydzien}
+              onClick={() => onRocznik(r.id)}
+            >
+              {r.id}
+            </button>
+          ))}
         </div>
       </div>
       <div className={styles.wiersz}>

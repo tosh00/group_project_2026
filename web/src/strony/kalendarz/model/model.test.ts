@@ -149,6 +149,15 @@ describe("Wyszukiwarka", () => {
     expect(wyszukiwarka.szukaj("analiza").map((s) => s.tytul)).toContain("Przedmioty");
   });
 
+  it("bez frazy pokazuje wszystkie roczniki, a grupy tylko rozwiniętego rocznika", () => {
+    const roczniki = indeks.roczniki.map((r) => r.id);
+    const [pierwszy] = roczniki;
+    const lista = wyszukiwarka.szukaj("", pierwszy).find((s) => s.tytul === "Roczniki i grupy")!.wyniki;
+
+    expect(lista.filter((w) => w.cel.wymiar === "rocznik").map((w) => w.cel.id)).toEqual(roczniki);
+    expect(lista.filter((w) => w.cel.wymiar === "grupa").every((w) => w.rocznik === pierwszy)).toBe(true);
+  });
+
   it("znajduje po kodzie i pokazuje liczbę naruszeń", () => {
     const sale = wyszukiwarka.szukaj("b15").find((s) => s.tytul === "Sale")!;
 

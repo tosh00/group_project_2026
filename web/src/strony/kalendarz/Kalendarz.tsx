@@ -119,8 +119,11 @@ export function Kalendarz({
         filtry={filtry}
         widokStudentow={widok.widokStudentow}
         zakresTygodnia={tydzien.zakres}
+        roczniki={indeks.roczniki}
+        biezacyRocznik={opis.rocznik}
         onWymiar={(wymiar) => wymiar !== filtry.wymiar && przejdz(wymiar, domyslnyCel(wymiar))}
         onZmien={onZmien}
+        onRocznik={(rocznikId) => przejdz("rocznik", rocznikId)}
         wyszukiwarka={
           <Wyszukiwarka
             zrodlo={wyszukiwarka}
