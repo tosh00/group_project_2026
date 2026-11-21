@@ -402,8 +402,8 @@ export interface components {
       slot_start: number;
       sala_id: string;
       tygodnie: number[];
-      /** @default false */
-      zablokowane: boolean;
+      /** @description Przypięte ręcznie (ADR 0003). Pole pojawia się tylko z wartością `true`; brak oznacza `false`. */
+      zablokowane?: boolean;
     };
     /** @description Raport walidatora (SZKIC z docs/contracts/plan-format.md). */
     Raport: {

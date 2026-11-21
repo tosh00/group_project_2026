@@ -497,7 +497,9 @@ components:
         tygodnie:
           type: array
           items: { type: integer, minimum: 1, maximum: 14 }
-        zablokowane: { type: boolean, default: false }
+        zablokowane:
+          type: boolean
+          description: Przypięte ręcznie (ADR 0003). Pole pojawia się tylko z wartością `true`; brak oznacza `false`.
 
     Raport:
       type: object

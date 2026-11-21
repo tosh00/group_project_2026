@@ -27,6 +27,8 @@ const (
 
 type schemat struct {
 	Type       any                 `yaml:"type"`
+	Default    any                 `yaml:"default"`
+	Required   []string            `yaml:"required"`
 	Ref        string              `yaml:"$ref"`
 	Properties map[string]*schemat `yaml:"properties"`
 	Items      *schemat            `yaml:"items"`
@@ -102,6 +104,17 @@ func (sch schematy) porownaj(t *testing.T, sciezka string, typ reflect.Type, s *
 		t.Errorf("%s: pola z openapi.yaml, których nie ma w Go: %v", sciezka, wSchemacie)
 	}
 
+	// Pole z `omitempty` może nie przyjść, więc nie może być wymagane. Nie może też mieć `default`:
+	// openapi-typescript robi z takiego pola wymagane, a frontend zakładałby, że zawsze jest.
+	for nazwa := range polaOmitempty(typ) {
+		if slices.Contains(s.Required, nazwa) {
+			t.Errorf("%s.%s: Go pomija puste pole (omitempty), a openapi.yaml ma je w required", sciezka, nazwa)
+		}
+		if podschemat, ok := s.Properties[nazwa]; ok && sch.rozwin(t, podschemat).Default != nil {
+			t.Errorf("%s.%s: Go pomija puste pole (omitempty), a openapi.yaml daje mu default", sciezka, nazwa)
+		}
+	}
+
 	for nazwa, poleTyp := range pola {
 		podschemat, ok := s.Properties[nazwa]
 		if !ok {
@@ -130,6 +143,18 @@ func polaJSON(typ reflect.Type) map[string]reflect.Type {
 			ft = ft.Elem()
 		}
 		pola[nazwa] = ft
+	}
+	return pola
+}
+
+// polaOmitempty to pola, których Go nie wysyła przy wartości zerowej (tag `omitempty`).
+func polaOmitempty(typ reflect.Type) map[string]bool {
+	pola := map[string]bool{}
+	for i := range typ.NumField() {
+		nazwa, opcje, _ := strings.Cut(typ.Field(i).Tag.Get("json"), ",")
+		if strings.Contains(","+opcje+",", ",omitempty,") {
+			pola[nazwa] = true
+		}
 	}
 	return pola
 }
