@@ -1,0 +1,39 @@
+name: web
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "api/openapi.yaml", ".github/workflows/web.yml"]
+  pull_request:
+    paths: ["web/**", "api/openapi.yaml", ".github/workflows/web.yml"]
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      # Wersja pnpm z pola packageManager w web/package.json.
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: web/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - run: pnpm install --frozen-lockfile
+
+      # Typy z api/openapi.yaml muszą być aktualne (ADR 0011): po zmianie kontraktu uruchom `pnpm gen:api`.
+      - name: Typy API zgodne z openapi.yaml
+        run: pnpm gen:api:check
+
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
