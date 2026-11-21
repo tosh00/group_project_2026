@@ -1,0 +1,37 @@
+.uklad {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.naglowek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--odstep-4);
+  padding: var(--odstep-3) var(--odstep-6);
+  background: var(--kolor-powierzchnia);
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.nazwa {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--kolor-tekst);
+  text-decoration: none;
+}
+
+.tresc {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--odstep-6);
+}
+
+@media (max-width: 640px) {
+  .naglowek,
+  .tresc {
+    padding-inline: var(--odstep-4);
+  }
+}
