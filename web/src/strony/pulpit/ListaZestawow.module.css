@@ -1,0 +1,98 @@
+.sekcja {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.naglowek {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tytul {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lista {
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-karta);
+  overflow: hidden;
+}
+
+.wiersz {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 24px;
+}
+
+.wiersz + .wiersz {
+  border-top: 1px solid var(--kolor-ramka);
+}
+
+.ikona {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--promien);
+  background: var(--kolor-tlo);
+  color: var(--kolor-tekst-cichy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opis {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.nazwa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.aktywny {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-marka-tlo);
+  color: var(--kolor-marka-tekst);
+}
+
+.cichy {
+  display: block;
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}
+
+.status {
+  flex: 0 0 230px;
+}
+
+.koszt {
+  flex: 0 0 100px;
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .wiersz {
+    padding-inline: 16px;
+  }
+
+  .status,
+  .koszt {
+    flex-basis: auto;
+  }
+}

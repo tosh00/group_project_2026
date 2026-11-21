@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { api, BladApi } from "./klient.ts";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { api, BladApi, type Schematy } from "./klient.ts";
 
 // Wszystkie klucze zapytań w jednym miejscu, żeby unieważnianie było spójne.
 export const klucze = {
@@ -44,5 +44,38 @@ export function useDaneZestawu(zestawId: string | undefined) {
       BladApi.dane(api.GET("/zestawy/{zestawId}/dane", { params: { path: { zestawId: zestawId! } } })),
     enabled: zestawId !== undefined,
     staleTime: Infinity,
+  });
+}
+
+// Wszystkie uruchomienia (najnowsze pierwsze); pulpit bierze z nich ostatni plan każdego zestawu.
+export function useUruchomienia() {
+  return useQuery({
+    queryKey: klucze.uruchomienia(),
+    queryFn: () => BladApi.dane(api.GET("/uruchomienia")),
+  });
+}
+
+type WgranieZestawu = { dane: Schematy["DaneWejsciowe"]; nazwa?: string; sygnal?: AbortSignal };
+
+export function useWgrajZestaw() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ dane, nazwa, sygnal }: WgranieZestawu) =>
+      BladApi.dane(api.POST("/zestawy", { body: dane, params: { query: { nazwa } }, signal: sygnal })),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: klucze.zestawy }),
+  });
+}
+
+export function useUruchomSolver() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ zestawId, ustawienia }: { zestawId: string; ustawienia?: Schematy["NoweUruchomienie"] }) =>
+      BladApi.dane(
+        api.POST("/zestawy/{zestawId}/uruchomienia", {
+          params: { path: { zestawId } },
+          body: ustawienia ?? {},
+        }),
+      ),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["uruchomienia"] }),
   });
 }

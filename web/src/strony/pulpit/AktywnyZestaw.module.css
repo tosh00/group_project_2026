@@ -1,0 +1,181 @@
+.karta {
+  background: var(--kolor-powierzchnia);
+  border: 1px solid var(--kolor-ramka);
+  border-radius: var(--promien-karta);
+  overflow: hidden;
+}
+
+.gora {
+  padding: 24px 28px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--kolor-ramka);
+}
+
+.nazwa {
+  flex: 1;
+  min-width: 280px;
+}
+
+.nadtytul {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--kolor-marka-tekst);
+}
+
+.tytul {
+  margin: 4px 0 2px;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.cichy {
+  color: var(--kolor-tekst-cichy);
+}
+
+.znaczniki {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.bezBledow,
+.ostrzezenia {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: var(--promien-pigulka);
+  font-size: 13px;
+}
+
+.bezBledow {
+  background: var(--kolor-wyciszone-tlo);
+  color: var(--kolor-tekst);
+  font-weight: 600;
+}
+
+.ostrzezenia {
+  border: 1px solid var(--kolor-ostrzezenie-ramka);
+  background: var(--kolor-ostrzezenie-tlo);
+  color: var(--kolor-ostrzezenie);
+  font-weight: 700;
+}
+
+.dol {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.zawartosc {
+  flex: 999 1 520px;
+  min-width: 0;
+  padding: 20px 28px 24px;
+}
+
+.etykietaSekcji {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kolor-tekst-cichy);
+  margin-bottom: 10px;
+}
+
+.statystyki {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.statystyka {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--promien-kafel);
+  background: var(--kolor-tlo);
+}
+
+.statystykaIkona {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--promien);
+  background: var(--kolor-marka-tlo);
+  color: var(--kolor-marka-tekst);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statystykaTekst {
+  min-width: 0;
+}
+
+.wartosc {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.etykieta {
+  display: block;
+  color: var(--kolor-tekst-cichy);
+  font-size: 12.5px;
+}
+
+.plan {
+  flex: 1 1 280px;
+  padding: 20px 28px 24px;
+  background: var(--kolor-marka-tlo);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.planEtykieta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kolor-marka-tekst);
+}
+
+.planTytul {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.planOpis {
+  color: var(--kolor-tekst-cichy);
+  font-size: 13px;
+}
+
+.planPrzycisk {
+  margin-top: auto;
+  min-height: 46px;
+}
+
+.bladGenerowania {
+  color: var(--kolor-blad);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .statystyki {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gora,
+  .zawartosc,
+  .plan {
+    padding-inline: 20px;
+  }
+}

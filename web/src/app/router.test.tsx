@@ -4,7 +4,7 @@ import { renderTrase } from "../test/render.tsx";
 
 describe("trasy", () => {
   it.each([
-    ["/", "Zestawy danych"],
+    ["/", "Informatyka, semestr zimowy 2026/27"],
     ["/zestawy/abc", "Zestaw danych"],
     ["/uruchomienia/abc", "Kalendarz planu"],
     ["/uruchomienia/abc/raport", "Raport jakości"],

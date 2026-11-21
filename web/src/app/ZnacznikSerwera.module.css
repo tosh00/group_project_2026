@@ -3,10 +3,12 @@
   align-items: center;
   gap: var(--odstep-2);
   padding: 2px var(--odstep-3);
-  border: 1px solid;
-  border-radius: 999px;
+  border: 1px solid var(--kolor-blad-ramka);
+  border-radius: var(--promien-pigulka);
+  background: var(--kolor-blad-tlo);
+  color: var(--kolor-blad);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -16,22 +18,4 @@
   height: 6px;
   border-radius: 50%;
   background: currentColor;
-}
-
-.ok {
-  color: var(--kolor-ok);
-  background: var(--kolor-ok-tlo);
-  border-color: var(--kolor-ok-ramka);
-}
-
-.neutralny {
-  color: var(--kolor-neutralny);
-  background: var(--kolor-neutralny-tlo);
-  border-color: var(--kolor-neutralny-ramka);
-}
-
-.blad {
-  color: var(--kolor-blad);
-  background: var(--kolor-blad-tlo);
-  border-color: var(--kolor-blad-ramka);
 }

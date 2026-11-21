@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router";
 import { Uklad } from "./Uklad.tsx";
-import { StronaPulpit } from "../strony/StronaPulpit.tsx";
+import { StronaPulpit } from "../strony/pulpit/StronaPulpit.tsx";
 import { StronaZestaw } from "../strony/StronaZestaw.tsx";
 import { StronaKalendarz } from "../strony/StronaKalendarz.tsx";
 import { StronaRaport } from "../strony/StronaRaport.tsx";

@@ -1,0 +1,102 @@
+.zaslona {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--kolor-zaslona);
+}
+
+.okno {
+  position: fixed;
+  z-index: 101;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 580px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  background: var(--kolor-powierzchnia);
+  border-radius: var(--promien-karta);
+  box-shadow: var(--cien-okna);
+}
+
+.gora {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px 24px 16px;
+}
+
+.ikona {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--promien);
+  background: var(--kolor-ostrzezenie-tlo);
+  color: var(--kolor-ostrzezenie);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.opis {
+  flex: 1;
+}
+
+.tytul {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.cichy {
+  margin: 2px 0 0;
+  color: var(--kolor-tekst-cichy);
+}
+
+.zamknij {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--promien-maly);
+  border: 0;
+  background: transparent;
+  color: var(--kolor-tekst-cichy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lista {
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pozycja {
+  padding: 12px 14px;
+  border-radius: var(--promien);
+  background: var(--kolor-tlo);
+  border: 1px solid var(--kolor-ramka);
+}
+
+.pozycjaOpis {
+  font-weight: 600;
+}
+
+.miejsce {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
+}
+
+.stopka {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 20px 24px;
+  margin-top: 12px;
+  border-top: 1px solid var(--kolor-ramka);
+  flex-wrap: wrap;
+}

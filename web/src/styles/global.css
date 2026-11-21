@@ -15,7 +15,8 @@ body {
   color: var(--kolor-tekst);
   font-family: var(--font-tekst);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -27,7 +28,18 @@ p {
 }
 
 a {
-  color: var(--kolor-marka-tekst);
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 button,

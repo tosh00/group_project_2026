@@ -1,36 +1,45 @@
 .uklad {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .naglowek {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--odstep-4);
-  padding: var(--odstep-3) var(--odstep-6);
   background: var(--kolor-powierzchnia);
   border-bottom: 1px solid var(--kolor-ramka);
 }
 
-.nazwa {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--kolor-tekst);
-  text-decoration: none;
+.naglowekWnetrze {
+  max-width: var(--szerokosc-tresci);
+  margin: 0 auto;
+  padding: 0 var(--odstep-6);
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--odstep-6);
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+}
+
+.logo img {
+  height: 44px;
+  width: auto;
+  display: block;
 }
 
 .tresc {
-  flex: 1;
-  width: 100%;
-  max-width: 1440px;
+  max-width: var(--szerokosc-tresci);
   margin: 0 auto;
-  padding: var(--odstep-6);
+  padding: var(--odstep-8) var(--odstep-6) 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 @media (max-width: 640px) {
-  .naglowek,
+  .naglowekWnetrze,
   .tresc {
     padding-inline: var(--odstep-4);
   }

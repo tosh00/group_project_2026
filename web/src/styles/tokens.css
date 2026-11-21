@@ -47,6 +47,14 @@
   --odstep-6: 24px;
   --odstep-8: 32px;
 
-  --promien: 8px;
-  --promien-maly: 6px;
+  --promien-karta: 16px;
+  --promien-kafel: 12px;
+  --promien: 10px;
+  --promien-maly: 8px;
+  --promien-pigulka: 999px;
+
+  --szerokosc-tresci: 1120px;
+  --cien-okna: 0 24px 60px rgba(0, 0, 0, 0.3);
+  --kolor-zaslona: rgba(28, 18, 10, 0.5);
+  --kolor-na-marce: #ffffff;
 }

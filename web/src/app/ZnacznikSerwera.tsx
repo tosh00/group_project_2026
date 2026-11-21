@@ -1,23 +1,18 @@
 import { useZdrowie } from "../api/zapytania.ts";
 import styles from "./ZnacznikSerwera.module.css";
 
-type Wariant = "ok" | "neutralny" | "blad";
-
-// Stan backendu w nagłówku. Walidator „atrapa” to stan neutralny, nie zielony: status planów nie jest sprawdzony.
+// W makiecie nagłówek ma tylko logo. Znacznik pojawia się wyłącznie wtedy, gdy backend nie odpowiada,
+// bo bez serwera żaden ekran nie zadziała. Stan walidatora pokazują statusy planów, nie nagłówek.
 export function ZnacznikSerwera() {
-  const { data, isPending, isError } = useZdrowie();
+  const { data, isError } = useZdrowie();
 
-  const [wariant, tekst]: [Wariant, string] = isPending
-    ? ["neutralny", "Łączenie z serwerem…"]
-    : isError || data.baza !== "ok"
-      ? ["blad", "Serwer niedostępny"]
-      : data.walidator === "atrapa"
-        ? ["neutralny", "Walidator niepodłączony"]
-        : ["ok", "Serwer działa"];
+  if (!isError && data?.baza !== "blad") {
+    return null;
+  }
 
   return (
-    <span className={`${styles.znacznik} ${styles[wariant]}`} role="status">
-      {tekst}
+    <span className={styles.znacznik} role="status">
+      Serwer niedostępny
     </span>
   );
 }

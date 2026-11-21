@@ -5,22 +5,19 @@ import { server } from "../mocks/server.ts";
 import { renderTrase } from "../test/render.tsx";
 
 describe("Uklad", () => {
-  it("pokazuje, że walidator nie jest podłączony, gdy backend używa atrapy", async () => {
+  it("ma w nagłówku logo wydziału prowadzące do pulpitu", async () => {
     renderTrase("/");
 
-    expect(await screen.findByText("Walidator niepodłączony")).toBeInTheDocument();
+    const logo = await screen.findByRole("link", { name: "Pulpit" });
+    expect(logo).toHaveAttribute("href", "/");
+    expect(screen.getByAltText(/Wydział Fizyki i Informatyki Stosowanej/)).toBeInTheDocument();
   });
 
-  it("pokazuje „Serwer działa” z prawdziwym walidatorem", async () => {
-    server.use(
-      http.get("/api/zdrowie", () =>
-        HttpResponse.json({ status: "ok", baza: "ok", walidator: "internal/validator" }),
-      ),
-    );
-
+  it("nie pokazuje znacznika, gdy serwer działa", async () => {
     renderTrase("/");
 
-    expect(await screen.findByText("Serwer działa")).toBeInTheDocument();
+    await screen.findByRole("link", { name: "Pulpit" });
+    expect(screen.queryByText("Serwer niedostępny")).not.toBeInTheDocument();
   });
 
   it("pokazuje „Serwer niedostępny”, gdy baza nie odpowiada", async () => {
