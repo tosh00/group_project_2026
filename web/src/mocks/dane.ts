@@ -31,7 +31,7 @@ export const zestaw: Schematy["Zestaw"] = {
     sale_do_planowania: 30,
     prowadzacy: 50,
     roczniki: 6,
-    grupy: 51,
+    grupy: 45,
     studenci: 372,
   },
   ostrzezenia: [

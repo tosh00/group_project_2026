@@ -4,7 +4,7 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
 
 ## Dane (analiza z planu, 2026-10-24)
 
-- 174 zajęcia, 55 sal (30 dostępnych do planowania), 50 prowadzących, 6 roczników, 51 grup, 372 studentów.
+- 174 zajęcia, 55 sal (30 dostępnych do planowania), 50 prowadzących, 6 roczników, 51 grup (w tym 6 pozycji „cały rocznik”, więc 45 grup studentów), 372 studentów.
 - Import z `dane_planu.json`: listy są w nim tablicami, nie trzeba rozdzielać po `;`.
 - **Kolizje grup bierzemy z `kolizje_grup` / `studenci_grupy`, nie z hierarchii grup.**
   Grupy z różnych podziałów nie zawsze mają wspólnych studentów (np. `INF1-R2`).

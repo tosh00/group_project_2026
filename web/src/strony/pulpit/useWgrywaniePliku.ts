@@ -16,7 +16,8 @@ export function useWgrywaniePliku() {
   const [stan, setStan] = useState<StanWgrywania>({ etap: "bezczynny" });
   const przerwanie = useRef<AbortController | null>(null);
 
-  const wgraj = async (plik: File) => {
+  // Zwraca wgrany zestaw (podsumowanie policzone przez serwer z pliku) albo null przy błędzie i anulowaniu.
+  const wgraj = async (plik: File): Promise<Schematy["Zestaw"] | null> => {
     przerwanie.current?.abort();
     const kontroler = new AbortController();
     przerwanie.current = kontroler;
@@ -32,19 +33,20 @@ export function useWgrywaniePliku() {
         plik: plik.name,
         bledy: [{ miejsce: "plik", opis: `Niepoprawny JSON: ${opis}` }],
       });
-      return;
+      return null;
     }
     if (kontroler.signal.aborted) {
-      return;
+      return null;
     }
 
     setStan({ etap: "wgrywanie", plik: plik.name, krok: "serwer" });
     try {
-      await wgrajZestaw.mutateAsync({ dane, nazwa: plik.name, sygnal: kontroler.signal });
+      const zestaw = await wgrajZestaw.mutateAsync({ dane, nazwa: plik.name, sygnal: kontroler.signal });
       setStan({ etap: "bezczynny" });
+      return zestaw;
     } catch (blad) {
       if (kontroler.signal.aborted) {
-        return;
+        return null;
       }
 
       const bledy =
@@ -52,6 +54,7 @@ export function useWgrywaniePliku() {
           ? BledyPliku.zBleduApi(blad)
           : [{ miejsce: "serwer", opis: "Brak połączenia z serwerem." }];
       setStan({ etap: "blad", plik: plik.name, bledy });
+      return null;
     }
   };
 

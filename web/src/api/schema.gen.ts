@@ -302,6 +302,7 @@ export interface components {
       sale_do_planowania: number;
       prowadzacy: number;
       roczniki: number;
+      /** @description Grupy studentów bez pozycji „cały rocznik” (typ `rocznik` w tabeli `grupy`). */
       grupy: number;
       studenci: number;
     };

@@ -365,7 +365,9 @@ components:
         sale_do_planowania: { type: integer }
         prowadzacy: { type: integer }
         roczniki: { type: integer }
-        grupy: { type: integer }
+        grupy:
+          type: integer
+          description: Grupy studentów bez pozycji „cały rocznik” (typ `rocznik` w tabeli `grupy`).
         studenci: { type: integer }
 
     Ostrzezenie:

@@ -33,6 +33,35 @@ describe("StronaPulpit", () => {
     expect(screen.queryByText("Zawartość tego zestawu")).not.toBeInTheDocument();
   });
 
+  it("po wgraniu pliku pokazuje kafelki z liczbami policzonymi przez serwer, a potem pozwala wgrać kolejny", async () => {
+    bezPlanow();
+    const nowy = {
+      ...zestaw,
+      id: "11111111-2222-3333-4444-555555555555",
+      nazwa: "nowy.json",
+      podsumowanie: { ...zestaw.podsumowanie, zajecia: 31, grupy: 7, studenci: 118 },
+    };
+    server.use(
+      http.post("/api/zestawy", () => HttpResponse.json(nowy, { status: 201 })),
+      http.get("/api/zestawy", () => HttpResponse.json([nowy, zestaw])),
+    );
+    const uzytkownik = userEvent.setup();
+    const { container } = renderTrase("/");
+    await screen.findByRole("heading", { name: "Wgraj nowy zestaw danych" });
+
+    const plik = new File(["{}"], "nowy.json", { type: "application/json" });
+    await uzytkownik.upload(container.querySelector<HTMLInputElement>('input[type="file"]')!, plik);
+
+    const karta = await screen.findByRole("region", { name: "nowy.json" });
+    expect(within(karta).getByText("Wgrano nowy zestaw")).toBeInTheDocument();
+    expect(within(karta).getByText("31")).toBeInTheDocument();
+    expect(within(karta).getByText("7")).toBeInTheDocument();
+    expect(within(karta).getByText("118")).toBeInTheDocument();
+
+    await uzytkownik.click(within(karta).getByRole("button", { name: "Wgraj inny plik" }));
+    expect(screen.getByRole("heading", { name: "Wgraj nowy zestaw danych" })).toBeInTheDocument();
+  });
+
   it("otwiera okno ostrzeżeń z wiersza zestawu (1b)", async () => {
     bezPlanow();
     const uzytkownik = userEvent.setup();

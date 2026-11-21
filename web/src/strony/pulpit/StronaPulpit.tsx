@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { BladApi, type Schematy } from "../../api/klient.ts";
 import { useUruchomienia, useUruchomSolver, useZdrowie, useZestawy } from "../../api/zapytania.ts";
+import { AktywnyZestaw } from "./AktywnyZestaw.tsx";
 import { BledyWgrywania } from "./BledyWgrywania.tsx";
 import { ListaZestawow } from "./ListaZestawow.tsx";
 import { OknoOstrzezen } from "./OknoOstrzezen.tsx";
@@ -11,8 +12,9 @@ import { StrefaWgrywania } from "./StrefaWgrywania.tsx";
 import { useWgrywaniePliku } from "./useWgrywaniePliku.ts";
 import styles from "./StronaPulpit.module.css";
 
-// Pulpit: u góry zawsze pole do wgrania kolejnego pliku (makieta 1a/1e), pod nim lista zestawów i planów.
-// Stany wgrywania (1c) i błędu pliku (1d) zastępują pole, dopóki trwają.
+// Pulpit: u góry pole do wgrania pliku (makieta 1a/1e), pod nim lista zestawów i planów.
+// W miejscu pola: postęp wgrywania (1c), błędy pliku (1d), a po udanym wgraniu karta nowego zestawu
+// z kafelkami policzonymi przez serwer z pliku (1), dopóki użytkownik nie wybierze „Wgraj inny plik”.
 export function StronaPulpit() {
   const navigate = useNavigate();
   const zestawy = useZestawy();
@@ -22,6 +24,7 @@ export function StronaPulpit() {
   const { stan: wgrywanie, wgraj, anuluj } = useWgrywaniePliku();
 
   const wyborPliku = useRef<HTMLInputElement>(null);
+  const [wgranyId, setWgranyId] = useState<string | null>(null);
   const [ostrzezeniaZestawu, setOstrzezeniaZestawu] = useState<Schematy["Zestaw"] | null>(null);
   const [generowanyId, setGenerowanyId] = useState<string>();
   const [bladGenerowania, setBladGenerowania] = useState<string | null>(null);
@@ -38,13 +41,17 @@ export function StronaPulpit() {
   }
 
   const lista = zestawy.data;
+  // Dane z listy (odświeżanej po wgraniu), żeby karta miała ten sam stan co wiersz zestawu.
+  const wgrany = lista.find((z) => z.id === wgranyId);
   const ostatnie = StatusyPlanow.ostatnieWgZestawu(uruchomienia.data ?? []);
   const walidator = zdrowie.data?.walidator;
 
   const wybierzPlik = () => wyborPliku.current?.click();
-  const wgrajPlik = (plik: File) => {
+  const wgrajPlik = async (plik: File) => {
     setBladGenerowania(null);
-    void wgraj(plik);
+    setWgranyId(null);
+    const zestaw = await wgraj(plik);
+    setWgranyId(zestaw?.id ?? null);
   };
   const generuj = async (zestawId: string) => {
     setOstrzezeniaZestawu(null);
@@ -71,16 +78,27 @@ export function StronaPulpit() {
           const plik = zdarzenie.target.files?.[0];
           zdarzenie.target.value = "";
           if (plik) {
-            wgrajPlik(plik);
+            void wgrajPlik(plik);
           }
         }}
       />
 
-      {wgrywanie.etap === "bezczynny" && (
+      {wgrywanie.etap === "bezczynny" && wgrany && (
+        <AktywnyZestaw
+          zestaw={wgrany}
+          uruchomienie={ostatnie.get(wgrany.id)}
+          status={StatusyPlanow.zUruchomienia(ostatnie.get(wgrany.id), walidator)}
+          generowanie={{ trwa: generowanyId === wgrany.id, blad: null }}
+          onGeneruj={() => void generuj(wgrany.id)}
+          onPokazOstrzezenia={() => setOstrzezeniaZestawu(wgrany)}
+          onWgrajKolejny={() => setWgranyId(null)}
+        />
+      )}
+      {wgrywanie.etap === "bezczynny" && !wgrany && (
         <StrefaWgrywania
           wariant={lista.length ? "nowy" : "pusty"}
           onWybierzPlik={wybierzPlik}
-          onPlik={wgrajPlik}
+          onPlik={(plik) => void wgrajPlik(plik)}
         />
       )}
       {wgrywanie.etap === "wgrywanie" && (

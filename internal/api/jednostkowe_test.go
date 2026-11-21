@@ -81,7 +81,7 @@ func TestPodsumujPrawdziweDane(t *testing.T) {
 		t.Fatal(err)
 	}
 	p, o := podsumuj(d)
-	chce := Podsumowanie{Zajecia: 174, Sale: 55, SaleDoPlanowania: 30, Prowadzacy: 50, Roczniki: 6, Grupy: 51, Studenci: 372}
+	chce := Podsumowanie{Zajecia: 174, Sale: 55, SaleDoPlanowania: 30, Prowadzacy: 50, Roczniki: 6, Grupy: 45, Studenci: 372}
 	if p != chce {
 		t.Errorf("podsumowanie %+v, chcę %+v", p, chce)
 	}
