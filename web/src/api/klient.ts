@@ -4,7 +4,12 @@ import type { components, paths } from "./schema.gen.ts";
 export type Schematy = components["schemas"];
 
 // Jedyny klient HTTP aplikacji. Typy ścieżek i odpowiedzi pochodzą z api/openapi.yaml (`pnpm gen:api`).
-export const api = createClient<paths>({ baseUrl: "/api" });
+// Pełny adres (z originem strony), bo openapi-fetch tworzy `Request`, a ten w Node/testach nie przyjmuje ścieżki względnej.
+// `fetch` pobierany przy każdym żądaniu, nie przy imporcie: MSW podmienia go dopiero po starcie.
+export const api = createClient<paths>({
+  baseUrl: `${window.location.origin}/api`,
+  fetch: (zadanie) => globalThis.fetch(zadanie),
+});
 
 type OdpowiedzKlienta<T> = { data?: T; error?: unknown; response: Response };
 
