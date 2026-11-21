@@ -3,6 +3,11 @@
 Źródłem prawdy jest `api/openapi.yaml`; tu jest skrót i to, czego nie widać w schematach.
 Wszystkie ścieżki pod `/api`. Zakres MVP: bez edycji ręcznej i logowania (ADR 0010).
 
+Frontend generuje typy z tego pliku (`web/src/api/schema.gen.ts`, `pnpm gen:api`, ADR 0011). Zmiana
+`openapi.yaml` bez ponownego wygenerowania typów nie przejdzie CI frontendu, więc PR zmieniający kontrakt
+regeneruje też `schema.gen.ts`. Frontend (Vite w dev, nginx w Dockerze) jest pod tym samym originem co API,
+więc backend nie obsługuje CORS.
+
 | Metoda i ścieżka | Co robi |
 |---|---|
 | `GET /zdrowie` | stan serwera, bazy i rodzaj walidatora (`atrapa` / `internal/validator`) |

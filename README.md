@@ -17,13 +17,39 @@ Generator planu zajęć dla kierunku Informatyka (WFiIS UŁ, semestr zimowy 2026
 | Solver | `internal/solver/`, `cmd/solve/` | fazy 1–3 gotowe |
 | Walidator | `internal/validator/` | gałąź `validator/reguly-twarde`, jeszcze nie w `main`; backend używa atrapy |
 | Backend + baza | `cmd/server/`, `internal/api/`, `internal/store/`, `migrations/`, `api/` | MVP (szkic kontraktu 0.1) |
-| Frontend | `web/` | do zrobienia |
-| Docker Compose, CI | `docker-compose.yml`, `.github/workflows/` | do zrobienia |
+| Frontend | `web/` | szkielet: trasy, klient API z OpenAPI, mocki, testy (ADR 0011); ekrany do zrobienia |
+| Docker Compose, CI | `docker-compose.yml`, `Dockerfile`, `web/Dockerfile`, `.github/workflows/` | compose gotowy; CI tylko dla frontendu |
 
 ## Wymagania
 
 - Go 1.23+
-- Docker (PostgreSQL 16 dla backendu; opcjonalnie sqlc i lint OpenAPI bez instalacji)
+- Node 22+ i pnpm (frontend; `corepack enable` instaluje właściwą wersję pnpm)
+- Docker (PostgreSQL 16 dla backendu, całość przez `docker compose`; opcjonalnie sqlc i lint OpenAPI bez instalacji)
+
+## Szybki start: wszystko w Dockerze
+
+```sh
+docker compose up --build     # baza, serwer i frontend → http://localhost:8000
+docker compose down           # zatrzymanie (dane bazy zostają w wolumenie planer_db-dane)
+docker compose down -v        # zatrzymanie z usunięciem danych bazy
+```
+
+Frontend (nginx) przekazuje `/api` do serwera, a serwer jest też dostępny bezpośrednio na `:8080`.
+Baza z compose jest wystawiona na `55432`, tak jak `planer-pg` niżej, więc przed `docker compose up`
+zatrzymaj `planer-pg` (`docker stop planer-pg`). Wtedy `go run ./cmd/server` i testy z `.env` używają bazy z compose.
+
+## Szybki start: frontend
+
+```sh
+cd web
+corepack enable && pnpm install
+pnpm dev          # http://localhost:5173, /api przez proxy Vite do backendu na :8080
+pnpm dev:mock     # bez backendu: odpowiedzi z src/mocks (MSW)
+```
+
+Testy i kontrola: `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`. Po zmianie `api/openapi.yaml`
+uruchom `pnpm gen:api` i commituj `web/src/api/schema.gen.ts` (CI sprawdza, czy jest aktualny).
+Szczegóły: [`web/README.md`](web/README.md).
 
 ## Szybki start: backend
 
