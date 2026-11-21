@@ -112,11 +112,7 @@ func (s *Serwer) bladSerwera(w http.ResponseWriter, r *http.Request, err error) 
 }
 
 func (s *Serwer) zdrowie(w http.ResponseWriter, r *http.Request) {
-	odp := struct {
-		Status    string `json:"status"`
-		Baza      string `json:"baza"`
-		Walidator string `json:"walidator"`
-	}{"ok", "ok", s.walidator.Nazwa()}
+	odp := Zdrowie{Status: "ok", Baza: "ok", Walidator: s.walidator.Nazwa()}
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 	defer cancel()
 	if err := s.repo.Ping(ctx); err != nil {

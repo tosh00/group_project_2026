@@ -16,6 +16,9 @@ export const handlers = [
   http.get("/api/zestawy/:zestawId", ({ params }) =>
     params.zestawId === dane.zestaw.id ? HttpResponse.json(dane.zestaw) : nieZnaleziono(),
   ),
+  http.get("/api/zestawy/:zestawId/dane", ({ params }) =>
+    params.zestawId === dane.zestaw.id ? HttpResponse.json(dane.daneZestawu) : nieZnaleziono(),
+  ),
   http.get("/api/uruchomienia", () => HttpResponse.json([dane.uruchomienie])),
   http.get("/api/uruchomienia/:uruchomienieId", ({ params }) =>
     params.uruchomienieId === dane.uruchomienie.id ? HttpResponse.json(dane.uruchomienie) : nieZnaleziono(),

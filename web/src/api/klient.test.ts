@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { http, HttpResponse } from "msw";
 import { server } from "../mocks/server.ts";
-import { zestaw } from "../mocks/dane.ts";
+import { daneZestawu, zestaw } from "../mocks/dane.ts";
 import { api, BladApi } from "./klient.ts";
 
 describe("BladApi.dane", () => {
@@ -25,7 +25,7 @@ describe("BladApi.dane", () => {
       ),
     );
 
-    const blad = await BladApi.dane(api.POST("/zestawy", { body: {} })).catch((e: unknown) => e);
+    const blad = await BladApi.dane(api.POST("/zestawy", { body: daneZestawu })).catch((e: unknown) => e);
 
     expect(blad).toBeInstanceOf(BladApi);
     expect(blad).toMatchObject({

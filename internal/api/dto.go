@@ -20,6 +20,13 @@ const (
 	FazaWalidacja     = "walidacja"
 )
 
+// Zdrowie: schemat Zdrowie (GET /zdrowie, także przy 503).
+type Zdrowie struct {
+	Status    string `json:"status"`
+	Baza      string `json:"baza"`
+	Walidator string `json:"walidator"`
+}
+
 // Zestaw: schemat Zestaw.
 type Zestaw struct {
 	ID           uuid.UUID       `json:"id"`

@@ -433,6 +433,199 @@ export interface components {
       tygodnie?: number[];
       opis: string;
     };
+    /** @description Zawartość pliku dane_planu.json (17 tabel). Nieznane pola są błędem (422). */
+    DaneWejsciowe: {
+      meta: components["schemas"]["MetaDanych"];
+      kalendarz: components["schemas"]["DzienKalendarza"][];
+      sloty: components["schemas"]["Slot"][];
+      sale: components["schemas"]["Sala"][];
+      prowadzacy: components["schemas"]["Prowadzacy"][];
+      roczniki: components["schemas"]["Rocznik"][];
+      grupy: components["schemas"]["Grupa"][];
+      studenci: components["schemas"]["Student"][];
+      studenci_grupy: components["schemas"]["StudentGrupa"][];
+      kolizje_grup: components["schemas"]["KolizjaGrup"][];
+      przedmioty: components["schemas"]["Przedmiot"][];
+      zajecia: components["schemas"]["Zajecia"][];
+      blokady_stale: components["schemas"]["BlokadaStala"][];
+      rada_wydzialu: components["schemas"]["TerminRady"][];
+      dezyderaty_terminy: components["schemas"]["DezyderatTermin"][];
+      dezyderaty_ogolne: components["schemas"]["DezyderatOgolny"][];
+      dezyderaty_sale: components["schemas"]["DezyderatSali"][];
+    };
+    MetaDanych: {
+      opis: string;
+      wersja: string;
+      data: string;
+      /** @description Opis każdej tabeli. */
+      tabele: {
+        [key: string]: string;
+      };
+    };
+    /** @description Jeden dzień semestru. `plan_dnia` i `nr_tygodnia` są `null` w dni wolne. */
+    DzienKalendarza: {
+      /** Format: date */
+      data: string;
+      dzien_tygodnia: string;
+      /** @enum {string} */
+      typ_dnia: "zajęcia" | "wolne" | "odpracowanie";
+      /** @description 1–5, według planu którego dnia odbywają się zajęcia. */
+      plan_dnia: number | null;
+      /** @description 1–14, kolejne wystąpienie tego dnia planu (nie tydzień kalendarzowy). */
+      nr_tygodnia: number | null;
+      opis: string;
+    };
+    Slot: {
+      slot: number;
+      /** @description Np. "8:15". */
+      od: string;
+      /** @description Np. "9:00". */
+      do: string;
+    };
+    /** @enum {string} */
+    TypSali:
+      | "aula"
+      | "sala_dydaktyczna"
+      | "pracownia_komputerowa"
+      | "pracownia_robotyki"
+      | "pracownia_specjalistyczna";
+    /**
+     * @description W wykład, K konwersatorium, LI laboratorium informatyczne, P projekt/pracownia, LEK lektorat, SEM seminarium.
+     * @enum {string}
+     */
+    Forma: "W" | "K" | "LI" | "P" | "LEK" | "SEM";
+    Sala: {
+      /** @description Np. "A281", "B153". */
+      id: string;
+      nazwa: string | null;
+      budynek: string;
+      typ: components["schemas"]["TypSali"];
+      /** @description `null` tylko w salach niedostępnych do planowania. */
+      pojemnosc: number | null;
+      pojemnosc_szacowana: boolean;
+      metraz_m2: number;
+      wyposazenie: string[];
+      przeznaczenie: string | null;
+      dostepna_do_planowania: boolean;
+      uwagi: string | null;
+    };
+    Prowadzacy: {
+      id: string;
+      stopien: string;
+      nazwa: string;
+      jednostka: string;
+      czlonek_rady_wydzialu: boolean;
+    };
+    Rocznik: {
+      id: string;
+      kierunek: string;
+      stopien_studiow: string;
+      rok: number;
+      semestr: number;
+      nazwa: string;
+      liczba_studentow: number;
+      syntetyczny: boolean;
+    };
+    Grupa: {
+      id: string;
+      rocznik: string;
+      nazwa: string;
+      typ: string;
+      podzial: string | null;
+      grupa_nadrzedna: string | null;
+      liczba_studentow: number;
+    };
+    Student: {
+      id: string;
+      rocznik: string;
+    };
+    StudentGrupa: {
+      student: string;
+      grupa: string;
+    };
+    KolizjaGrup: {
+      grupa_a: string;
+      grupa_b: string;
+      wspolni_studenci: number;
+    };
+    Przedmiot: {
+      id: string;
+      rocznik: string;
+      nazwa: string;
+    };
+    Zajecia: {
+      id: string;
+      rocznik: string;
+      przedmiot_id: string;
+      przedmiot: string;
+      forma: components["schemas"]["Forma"];
+      forma_opis: string;
+      grupy: string[];
+      liczba_studentow: number;
+      laczone_z: string | null;
+      dodatkowi_studenci: number;
+      /** @description Wszyscy prowadzący muszą być wolni w terminie zajęć. */
+      prowadzacy: string[];
+      godziny_programowe: number;
+      liczba_spotkan: number;
+      sloty_na_spotkanie: number;
+      /** @enum {string} */
+      czestotliwosc: "co_tydzien" | "co_2_tygodnie" | "wybrane_tygodnie";
+      tydzien_od: number;
+      tydzien_do: number;
+      /** @description Dozwolone typy sal, gdy `dozwolone_sale` jest puste. */
+      typy_sal: components["schemas"]["TypSali"][];
+      /** @description Jeśli niepuste, zajęcia mogą być tylko w tych salach. */
+      dozwolone_sale: string[];
+      wymagane_wyposazenie: string[];
+      /** @enum {string} */
+      tryb: "stacjonarny" | "hybrydowy";
+      /** @description Zajęcia z tym samym `powiazanie` tworzą zestaw (`typ_powiazania`). */
+      powiazanie: string | null;
+      /** @enum {string|null} */
+      typ_powiazania: "rozne_dni" | "ten_sam_termin" | null;
+      tygodnie_niedostepne: number[];
+      uwagi: string | null;
+    };
+    /** @description Termin grupy ustalony poza wydziałem (np. WF), w każdym tygodniu. */
+    BlokadaStala: {
+      grupa: string;
+      dzien: number;
+      slot_od: number;
+      slot_do: number;
+      opis: string;
+    };
+    /** @description Rada Wydziału, blokuje prowadzących z `czlonek_rady_wydzialu`. */
+    TerminRady: {
+      dzien: number;
+      slot_od: number;
+      slot_do: number;
+      opis: string;
+    };
+    /** @description Jedna godzina (dzień + slot), w której prowadzący nie może prowadzić zajęć. */
+    DezyderatTermin: {
+      prowadzacy: string;
+      dzien: number;
+      slot: number;
+      /** @enum {string} */
+      typ: "wykluczony" | "rada_wydzialu";
+    };
+    DezyderatOgolny: {
+      prowadzacy: string;
+      liczba_godzin_wykluczonych: number;
+      powod_wykluczen: string | null;
+      /** @enum {string} */
+      preferencja_dni: "skumulowane" | "nieskumulowane" | "brak";
+      inne_uwagi: string | null;
+    };
+    /** @description Informacyjnie; te same wymagania są już w `Zajecia.dozwolone_sale` i `wymagane_wyposazenie`. */
+    DezyderatSali: {
+      prowadzacy: string;
+      przedmiot: string;
+      forma: components["schemas"]["Forma"];
+      rodzaj_sali_nr: string;
+      sprzet: string | null;
+    };
   };
   responses: {
     /** @description Błąd (kody w `Blad.kod`) */
@@ -473,7 +666,7 @@ export interface operations {
           "application/json": components["schemas"]["Zdrowie"];
         };
       };
-      /** @description Baza niedostępna */
+      /** @description Baza niedostępna (`status` i `baza` mają wartość `blad`) */
       503: {
         headers: {
           [name: string]: unknown;
@@ -536,7 +729,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": Record<string, never>;
+        "application/json": components["schemas"]["DaneWejsciowe"];
       };
     };
     responses: {
@@ -605,7 +798,7 @@ export interface operations {
           [name: string]: unknown;
         };
         content: {
-          "application/json": Record<string, never>;
+          "application/json": components["schemas"]["DaneWejsciowe"];
         };
       };
       404: components["responses"]["Blad"];

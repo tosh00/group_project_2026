@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
   title: Planer zajęć WFiIS
-  version: 0.1.0
+  version: 0.2.0
   description: |
-    Kontrakt backend ↔ frontend (SZKIC, wersja 0.1). Opis słowny: `docs/contracts/api.md`.
+    Kontrakt backend ↔ frontend (SZKIC, wersja 0.2). Opis słowny: `docs/contracts/api.md`.
 
     Przepływ: wgranie danych (`POST /zestawy`) → uruchomienie solvera (`POST /zestawy/{id}/uruchomienia`)
     → postęp na żywo (`GET /uruchomienia/{id}/postep`, SSE) → plan i raport walidatora.
@@ -37,7 +37,7 @@ paths:
             application/json:
               schema: { $ref: "#/components/schemas/Zdrowie" }
         "503":
-          description: Baza niedostępna
+          description: Baza niedostępna (`status` i `baza` mają wartość `blad`)
           content:
             application/json:
               schema: { $ref: "#/components/schemas/Zdrowie" }
@@ -84,9 +84,7 @@ paths:
         required: true
         content:
           application/json:
-            schema:
-              type: object
-              description: Zawartość dane_planu.json.
+            schema: { $ref: "#/components/schemas/DaneWejsciowe" }
       responses:
         "201":
           description: Zestaw zapisany
@@ -131,7 +129,7 @@ paths:
           description: Dane w formacie dane_planu.json
           content:
             application/json:
-              schema: { type: object }
+              schema: { $ref: "#/components/schemas/DaneWejsciowe" }
         "404": { $ref: "#/components/responses/Blad" }
 
   /zestawy/{zestawId}/uruchomienia:
@@ -541,3 +539,260 @@ components:
           type: array
           items: { type: integer }
         opis: { type: string }
+
+    # --- Dane wejściowe (dane_planu.json, format: data/README.md, struktury Go: internal/model/dane.go) ---
+    # Pola, które w danych bywają `null`, mają typ z "null". Test internal/api/kontrakt_test.go pilnuje,
+    # żeby pola tych schematów były takie same jak tagi json w internal/model i żeby `null` z danych był dozwolony.
+
+    DaneWejsciowe:
+      type: object
+      description: Zawartość pliku dane_planu.json (17 tabel). Nieznane pola są błędem (422).
+      additionalProperties: false
+      required:
+        [meta, kalendarz, sloty, sale, prowadzacy, roczniki, grupy, studenci, studenci_grupy, kolizje_grup,
+         przedmioty, zajecia, blokady_stale, rada_wydzialu, dezyderaty_terminy, dezyderaty_ogolne, dezyderaty_sale]
+      properties:
+        meta: { $ref: "#/components/schemas/MetaDanych" }
+        kalendarz: { type: array, items: { $ref: "#/components/schemas/DzienKalendarza" } }
+        sloty: { type: array, items: { $ref: "#/components/schemas/Slot" } }
+        sale: { type: array, items: { $ref: "#/components/schemas/Sala" } }
+        prowadzacy: { type: array, items: { $ref: "#/components/schemas/Prowadzacy" } }
+        roczniki: { type: array, items: { $ref: "#/components/schemas/Rocznik" } }
+        grupy: { type: array, items: { $ref: "#/components/schemas/Grupa" } }
+        studenci: { type: array, items: { $ref: "#/components/schemas/Student" } }
+        studenci_grupy: { type: array, items: { $ref: "#/components/schemas/StudentGrupa" } }
+        kolizje_grup: { type: array, items: { $ref: "#/components/schemas/KolizjaGrup" } }
+        przedmioty: { type: array, items: { $ref: "#/components/schemas/Przedmiot" } }
+        zajecia: { type: array, items: { $ref: "#/components/schemas/Zajecia" } }
+        blokady_stale: { type: array, items: { $ref: "#/components/schemas/BlokadaStala" } }
+        rada_wydzialu: { type: array, items: { $ref: "#/components/schemas/TerminRady" } }
+        dezyderaty_terminy: { type: array, items: { $ref: "#/components/schemas/DezyderatTermin" } }
+        dezyderaty_ogolne: { type: array, items: { $ref: "#/components/schemas/DezyderatOgolny" } }
+        dezyderaty_sale: { type: array, items: { $ref: "#/components/schemas/DezyderatSali" } }
+
+    MetaDanych:
+      type: object
+      required: [opis, wersja, data, tabele]
+      properties:
+        opis: { type: string }
+        wersja: { type: string }
+        data: { type: string }
+        tabele:
+          type: object
+          additionalProperties: { type: string }
+          description: Opis każdej tabeli.
+
+    DzienKalendarza:
+      type: object
+      description: Jeden dzień semestru. `plan_dnia` i `nr_tygodnia` są `null` w dni wolne.
+      required: [data, dzien_tygodnia, typ_dnia, plan_dnia, nr_tygodnia, opis]
+      properties:
+        data: { type: string, format: date }
+        dzien_tygodnia: { type: string }
+        typ_dnia: { type: string, enum: ["zajęcia", wolne, odpracowanie] }
+        plan_dnia:
+          type: [integer, "null"]
+          description: 1–5, według planu którego dnia odbywają się zajęcia.
+        nr_tygodnia:
+          type: [integer, "null"]
+          description: 1–14, kolejne wystąpienie tego dnia planu (nie tydzień kalendarzowy).
+        opis: { type: string }
+
+    Slot:
+      type: object
+      required: [slot, od, do]
+      properties:
+        slot: { type: integer, minimum: 1, maximum: 12 }
+        od: { type: string, description: 'Np. "8:15".' }
+        do: { type: string, description: 'Np. "9:00".' }
+
+    TypSali:
+      type: string
+      enum: [aula, sala_dydaktyczna, pracownia_komputerowa, pracownia_robotyki, pracownia_specjalistyczna]
+
+    Forma:
+      type: string
+      enum: [W, K, LI, P, LEK, SEM]
+      description: W wykład, K konwersatorium, LI laboratorium informatyczne, P projekt/pracownia, LEK lektorat, SEM seminarium.
+
+    Sala:
+      type: object
+      required:
+        [id, nazwa, budynek, typ, pojemnosc, pojemnosc_szacowana, metraz_m2, wyposazenie, przeznaczenie,
+         dostepna_do_planowania, uwagi]
+      properties:
+        id: { type: string, description: 'Np. "A281", "B153".' }
+        nazwa: { type: [string, "null"] }
+        budynek: { type: string }
+        typ: { $ref: "#/components/schemas/TypSali" }
+        pojemnosc:
+          type: [integer, "null"]
+          description: "`null` tylko w salach niedostępnych do planowania."
+        pojemnosc_szacowana: { type: boolean }
+        metraz_m2: { type: number }
+        wyposazenie: { type: array, items: { type: string } }
+        przeznaczenie: { type: [string, "null"] }
+        dostepna_do_planowania: { type: boolean }
+        uwagi: { type: [string, "null"] }
+
+    Prowadzacy:
+      type: object
+      required: [id, stopien, nazwa, jednostka, czlonek_rady_wydzialu]
+      properties:
+        id: { type: string }
+        stopien: { type: string }
+        nazwa: { type: string }
+        jednostka: { type: string }
+        czlonek_rady_wydzialu: { type: boolean }
+
+    Rocznik:
+      type: object
+      required: [id, kierunek, stopien_studiow, rok, semestr, nazwa, liczba_studentow, syntetyczny]
+      properties:
+        id: { type: string }
+        kierunek: { type: string }
+        stopien_studiow: { type: string }
+        rok: { type: integer }
+        semestr: { type: integer }
+        nazwa: { type: string }
+        liczba_studentow: { type: integer }
+        syntetyczny: { type: boolean }
+
+    Grupa:
+      type: object
+      required: [id, rocznik, nazwa, typ, podzial, grupa_nadrzedna, liczba_studentow]
+      properties:
+        id: { type: string }
+        rocznik: { type: string }
+        nazwa: { type: string }
+        typ: { type: string }
+        podzial: { type: [string, "null"] }
+        grupa_nadrzedna: { type: [string, "null"] }
+        liczba_studentow: { type: integer }
+
+    Student:
+      type: object
+      required: [id, rocznik]
+      properties:
+        id: { type: string }
+        rocznik: { type: string }
+
+    StudentGrupa:
+      type: object
+      required: [student, grupa]
+      properties:
+        student: { type: string }
+        grupa: { type: string }
+
+    KolizjaGrup:
+      type: object
+      required: [grupa_a, grupa_b, wspolni_studenci]
+      properties:
+        grupa_a: { type: string }
+        grupa_b: { type: string }
+        wspolni_studenci: { type: integer }
+
+    Przedmiot:
+      type: object
+      required: [id, rocznik, nazwa]
+      properties:
+        id: { type: string }
+        rocznik: { type: string }
+        nazwa: { type: string }
+
+    Zajecia:
+      type: object
+      required:
+        [id, rocznik, przedmiot_id, przedmiot, forma, forma_opis, grupy, liczba_studentow, laczone_z,
+         dodatkowi_studenci, prowadzacy, godziny_programowe, liczba_spotkan, sloty_na_spotkanie, czestotliwosc,
+         tydzien_od, tydzien_do, typy_sal, dozwolone_sale, wymagane_wyposazenie, tryb, powiazanie, typ_powiazania,
+         tygodnie_niedostepne, uwagi]
+      properties:
+        id: { type: string }
+        rocznik: { type: string }
+        przedmiot_id: { type: string }
+        przedmiot: { type: string }
+        forma: { $ref: "#/components/schemas/Forma" }
+        forma_opis: { type: string }
+        grupy: { type: array, items: { type: string } }
+        liczba_studentow: { type: integer }
+        laczone_z: { type: [string, "null"] }
+        dodatkowi_studenci: { type: integer }
+        prowadzacy:
+          type: array
+          items: { type: string }
+          description: Wszyscy prowadzący muszą być wolni w terminie zajęć.
+        godziny_programowe: { type: integer }
+        liczba_spotkan: { type: integer }
+        sloty_na_spotkanie: { type: integer, minimum: 1, maximum: 4 }
+        czestotliwosc: { type: string, enum: [co_tydzien, co_2_tygodnie, wybrane_tygodnie] }
+        tydzien_od: { type: integer, minimum: 1, maximum: 14 }
+        tydzien_do: { type: integer, minimum: 1, maximum: 14 }
+        typy_sal:
+          type: array
+          items: { $ref: "#/components/schemas/TypSali" }
+          description: Dozwolone typy sal, gdy `dozwolone_sale` jest puste.
+        dozwolone_sale:
+          type: array
+          items: { type: string }
+          description: Jeśli niepuste, zajęcia mogą być tylko w tych salach.
+        wymagane_wyposazenie: { type: array, items: { type: string } }
+        tryb: { type: string, enum: [stacjonarny, hybrydowy] }
+        powiazanie:
+          type: [string, "null"]
+          description: Zajęcia z tym samym `powiazanie` tworzą zestaw (`typ_powiazania`).
+        typ_powiazania: { type: [string, "null"], enum: [rozne_dni, ten_sam_termin, null] }
+        tygodnie_niedostepne: { type: array, items: { type: integer, minimum: 1, maximum: 14 } }
+        uwagi: { type: [string, "null"] }
+
+    BlokadaStala:
+      type: object
+      description: Termin grupy ustalony poza wydziałem (np. WF), w każdym tygodniu.
+      required: [grupa, dzien, slot_od, slot_do, opis]
+      properties:
+        grupa: { type: string }
+        dzien: { type: integer, minimum: 1, maximum: 5 }
+        slot_od: { type: integer, minimum: 1, maximum: 12 }
+        slot_do: { type: integer, minimum: 1, maximum: 12 }
+        opis: { type: string }
+
+    TerminRady:
+      type: object
+      description: Rada Wydziału, blokuje prowadzących z `czlonek_rady_wydzialu`.
+      required: [dzien, slot_od, slot_do, opis]
+      properties:
+        dzien: { type: integer, minimum: 1, maximum: 5 }
+        slot_od: { type: integer, minimum: 1, maximum: 12 }
+        slot_do: { type: integer, minimum: 1, maximum: 12 }
+        opis: { type: string }
+
+    DezyderatTermin:
+      type: object
+      description: Jedna godzina (dzień + slot), w której prowadzący nie może prowadzić zajęć.
+      required: [prowadzacy, dzien, slot, typ]
+      properties:
+        prowadzacy: { type: string }
+        dzien: { type: integer, minimum: 1, maximum: 5 }
+        slot: { type: integer, minimum: 1, maximum: 12 }
+        typ: { type: string, enum: [wykluczony, rada_wydzialu] }
+
+    DezyderatOgolny:
+      type: object
+      required: [prowadzacy, liczba_godzin_wykluczonych, powod_wykluczen, preferencja_dni, inne_uwagi]
+      properties:
+        prowadzacy: { type: string }
+        liczba_godzin_wykluczonych: { type: integer }
+        powod_wykluczen: { type: [string, "null"] }
+        preferencja_dni: { type: string, enum: [skumulowane, nieskumulowane, brak] }
+        inne_uwagi: { type: [string, "null"] }
+
+    DezyderatSali:
+      type: object
+      description: Informacyjnie; te same wymagania są już w `Zajecia.dozwolone_sale` i `wymagane_wyposazenie`.
+      required: [prowadzacy, przedmiot, forma, rodzaj_sali_nr, sprzet]
+      properties:
+        prowadzacy: { type: string }
+        przedmiot: { type: string }
+        forma: { $ref: "#/components/schemas/Forma" }
+        rodzaj_sali_nr: { type: string }
+        sprzet: { type: [string, "null"] }
