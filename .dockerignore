@@ -1,0 +1,13 @@
+# Kontekst obrazu backendu (Dockerfile w katalogu głównym): tylko kod Go.
+.git
+.github
+.idea
+.serena
+.claude
+.env
+web
+docs
+data
+out
+bin
+*.md
