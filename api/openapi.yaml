@@ -116,6 +116,21 @@ paths:
               schema: { $ref: "#/components/schemas/Zestaw" }
         "404": { $ref: "#/components/responses/Blad" }
 
+    delete:
+      tags: [zestawy]
+      operationId: usunZestaw
+      summary: Usunięcie zestawu razem z jego uruchomieniami i planami
+      description: Nieodwracalne. Nie działa, gdy dla zestawu trwa generowanie (uruchomienie w kolejce albo trwające).
+      responses:
+        "204":
+          description: Zestaw usunięty
+        "404": { $ref: "#/components/responses/Blad" }
+        "409":
+          description: Trwa generowanie planu dla zestawu (kod `trwa_generowanie`)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Blad" }
+
   /zestawy/{zestawId}/dane:
     parameters:
       - $ref: "#/components/parameters/ZestawId"
@@ -317,7 +332,7 @@ components:
           type: string
           description: |
             Stały identyfikator: `zle_zadanie`, `za_duze`, `niespojne_dane`, `nie_znaleziono`,
-            `brak_planu`, `zakonczone`, `kolejka_pelna`, `blad_serwera`.
+            `brak_planu`, `zakonczone`, `trwa_generowanie`, `kolejka_pelna`, `blad_serwera`.
         komunikat:
           type: string
           description: Jedno zdanie po polsku.

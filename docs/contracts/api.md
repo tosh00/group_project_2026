@@ -19,6 +19,7 @@ więc backend nie obsługuje CORS.
 | `GET /wagi/domyslne` | `solver.DomyslneWagi()` jako JSON |
 | `POST /zestawy?nazwa=` | wgranie `dane_planu.json` (treść żądania = plik); 422 z listą niespójności |
 | `GET /zestawy`, `GET /zestawy/{id}` | podsumowanie (liczby) i ostrzeżenia (`pojemnosc_szacowana`) |
+| `DELETE /zestawy/{id}` | usunięcie zestawu z uruchomieniami i planami (204); 409 `trwa_generowanie`, gdy generowanie trwa |
 | `GET /zestawy/{id}/dane` | dane wejściowe (`DaneWejsciowe`, 17 tabel), z których frontend bierze nazwy do kart i filtrów |
 | `POST /zestawy/{id}/uruchomienia` | `{wagi?, seed?, iteracje?}` → 202, uruchomienie w kolejce |
 | `GET /uruchomienia?zestaw_id=`, `GET /uruchomienia/{id}` | stan uruchomienia |
@@ -55,7 +56,7 @@ Rozjazd do uzgodnienia z @tosh00: `validator.Naruszenie` na gałęzi `validator/
 ## Błędy
 
 Każdy błąd to `{ "kod": "...", "komunikat": "...", "szczegoly": [...] }`. Kody: `zle_zadanie` (400),
-`za_duze` (413), `niespojne_dane` (422), `nie_znaleziono` / `brak_planu` (404), `zakonczone` (409),
+`za_duze` (413), `niespojne_dane` (422), `nie_znaleziono` / `brak_planu` (404), `zakonczone` / `trwa_generowanie` (409),
 `kolejka_pelna` (503), `blad_serwera` (500).
 
 ## Nazwy reguł w raporcie (`Naruszenie.nazwa`)

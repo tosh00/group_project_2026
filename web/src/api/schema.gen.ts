@@ -73,7 +73,11 @@ export interface paths {
     get: operations["pobierzZestaw"];
     put?: never;
     post?: never;
-    delete?: never;
+    /**
+     * Usunięcie zestawu razem z jego uruchomieniami i planami
+     * @description Nieodwracalne. Nie działa, gdy dla zestawu trwa generowanie (uruchomienie w kolejce albo trwające).
+     */
+    delete: operations["usunZestaw"];
     options?: never;
     head?: never;
     patch?: never;
@@ -261,7 +265,7 @@ export interface components {
     Blad: {
       /**
        * @description Stały identyfikator: `zle_zadanie`, `za_duze`, `niespojne_dane`, `nie_znaleziono`,
-       *     `brak_planu`, `zakonczone`, `kolejka_pelna`, `blad_serwera`.
+       *     `brak_planu`, `zakonczone`, `trwa_generowanie`, `kolejka_pelna`, `blad_serwera`.
        */
       kod: string;
       /** @description Jedno zdanie po polsku. */
@@ -780,6 +784,36 @@ export interface operations {
         };
       };
       404: components["responses"]["Blad"];
+    };
+  };
+  usunZestaw: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        zestawId: components["parameters"]["ZestawId"];
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Zestaw usunięty */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      404: components["responses"]["Blad"];
+      /** @description Trwa generowanie planu dla zestawu (kod `trwa_generowanie`) */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["Blad"];
+        };
+      };
     };
   };
   pobierzDaneZestawu: {

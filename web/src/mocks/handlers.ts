@@ -16,6 +16,9 @@ export const handlers = [
   http.get("/api/zestawy/:zestawId", ({ params }) =>
     params.zestawId === dane.zestaw.id ? HttpResponse.json(dane.zestaw) : nieZnaleziono(),
   ),
+  http.delete("/api/zestawy/:zestawId", ({ params }) =>
+    params.zestawId === dane.zestaw.id ? new HttpResponse(null, { status: 204 }) : nieZnaleziono(),
+  ),
   http.get("/api/zestawy/:zestawId/dane", ({ params }) =>
     params.zestawId === dane.zestaw.id ? HttpResponse.json(dane.daneZestawu) : nieZnaleziono(),
   ),

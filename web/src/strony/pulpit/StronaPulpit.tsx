@@ -6,6 +6,7 @@ import { AktywnyZestaw } from "./AktywnyZestaw.tsx";
 import { BledyWgrywania } from "./BledyWgrywania.tsx";
 import { ListaZestawow } from "./ListaZestawow.tsx";
 import { OknoOstrzezen } from "./OknoOstrzezen.tsx";
+import { OknoUsuwania } from "./OknoUsuwania.tsx";
 import { PostepWgrywania } from "./PostepWgrywania.tsx";
 import { StatusyPlanow } from "./statusPlanu.ts";
 import { StrefaWgrywania } from "./StrefaWgrywania.tsx";
@@ -25,6 +26,7 @@ export function StronaPulpit() {
 
   const wyborPliku = useRef<HTMLInputElement>(null);
   const [wgranyId, setWgranyId] = useState<string | null>(null);
+  const [usuwany, setUsuwany] = useState<Schematy["Zestaw"] | null>(null);
   const [ostrzezeniaZestawu, setOstrzezeniaZestawu] = useState<Schematy["Zestaw"] | null>(null);
   const [generowanyId, setGenerowanyId] = useState<string>();
   const [bladGenerowania, setBladGenerowania] = useState<string | null>(null);
@@ -121,6 +123,14 @@ export function StronaPulpit() {
           generowanyId={generowanyId}
           onGeneruj={(zestawId) => void generuj(zestawId)}
           onPokazOstrzezenia={setOstrzezeniaZestawu}
+          onUsun={setUsuwany}
+        />
+      )}
+      {usuwany && (
+        <OknoUsuwania
+          zestaw={usuwany}
+          liczbaPlanow={(uruchomienia.data ?? []).filter((u) => u.zestaw_id === usuwany.id).length}
+          onZamknij={() => setUsuwany(null)}
         />
       )}
       {ostrzezeniaZestawu && (

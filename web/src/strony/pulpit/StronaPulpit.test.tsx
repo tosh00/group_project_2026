@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http, HttpResponse } from "msw";
@@ -60,6 +60,50 @@ describe("StronaPulpit", () => {
 
     await uzytkownik.click(within(karta).getByRole("button", { name: "Wgraj inny plik" }));
     expect(screen.getByRole("heading", { name: "Wgraj nowy zestaw danych" })).toBeInTheDocument();
+  });
+
+  it("usuwa zestaw dopiero po potwierdzeniu w oknie", async () => {
+    let usunieto = false;
+    server.use(
+      http.delete("/api/zestawy/:zestawId", () => {
+        usunieto = true;
+        return new HttpResponse(null, { status: 204 });
+      }),
+    );
+    const uzytkownik = userEvent.setup();
+    renderTrase("/");
+
+    await uzytkownik.click(await screen.findByRole("button", { name: `Usuń ${zestaw.nazwa}` }));
+    const okno = await screen.findByRole("dialog", { name: `Usunąć „${zestaw.nazwa}”?` });
+    expect(within(okno).getByText(/1 wygenerowany plan/)).toBeInTheDocument();
+    await uzytkownik.click(within(okno).getByRole("button", { name: "Anuluj" }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(usunieto).toBe(false);
+
+    await uzytkownik.click(screen.getByRole("button", { name: `Usuń ${zestaw.nazwa}` }));
+    await uzytkownik.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Usuń" }));
+
+    await vi.waitFor(() => expect(usunieto).toBe(true));
+    await vi.waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+  });
+
+  it("gdy trwa generowanie, okno usuwania pokazuje komunikat serwera i zostaje otwarte", async () => {
+    server.use(
+      http.delete("/api/zestawy/:zestawId", () =>
+        HttpResponse.json(
+          { kod: "trwa_generowanie", komunikat: "Trwa generowanie planu dla tego zestawu." },
+          { status: 409 },
+        ),
+      ),
+    );
+    const uzytkownik = userEvent.setup();
+    renderTrase("/");
+
+    await uzytkownik.click(await screen.findByRole("button", { name: `Usuń ${zestaw.nazwa}` }));
+    const okno = await screen.findByRole("dialog");
+    await uzytkownik.click(within(okno).getByRole("button", { name: "Usuń" }));
+
+    expect(await within(okno).findByRole("alert")).toHaveTextContent("Trwa generowanie planu");
   });
 
   it("otwiera okno ostrzeżeń z wiersza zestawu (1b)", async () => {

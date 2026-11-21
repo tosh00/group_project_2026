@@ -139,3 +139,17 @@ export function useZatrzymajUruchomienie() {
       ),
   });
 }
+
+// Usuwa zestaw z jego uruchomieniami i planami (nieodwracalne; 409 `trwa_generowanie` w trakcie generowania).
+export function useUsunZestaw() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (zestawId: string) =>
+      BladApi.dane(api.DELETE("/zestawy/{zestawId}", { params: { path: { zestawId } } })),
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: klucze.zestawy }),
+        queryClient.invalidateQueries({ queryKey: ["uruchomienia"] }),
+      ]),
+  });
+}

@@ -93,6 +93,28 @@ func (s *Serwer) pobierzZestaw(w http.ResponseWriter, r *http.Request) {
 	zapiszJSON(w, http.StatusOK, zestawDTO(z))
 }
 
+// usunZestaw usuwa zestaw z jego uruchomieniami i planami (nieodwracalne). 409, gdy trwa generowanie.
+func (s *Serwer) usunZestaw(w http.ResponseWriter, r *http.Request) {
+	id, ok := idZeSciezki(w, r, "zestawId")
+	if !ok {
+		return
+	}
+	err := s.repo.UsunZestaw(r.Context(), id)
+	switch {
+	case errors.Is(err, store.ErrNieZnaleziono):
+		zapiszBlad(w, http.StatusNotFound, Blad{Kod: "nie_znaleziono", Komunikat: "Nie ma takiego zestawu danych."})
+	case errors.Is(err, store.ErrTrwaGenerowanie):
+		zapiszBlad(w, http.StatusConflict, Blad{
+			Kod:       "trwa_generowanie",
+			Komunikat: "Trwa generowanie planu dla tego zestawu. Zatrzymaj je albo poczekaj, aż się skończy.",
+		})
+	case err != nil:
+		s.bladSerwera(w, r, err)
+	default:
+		w.WriteHeader(http.StatusNoContent)
+	}
+}
+
 func (s *Serwer) pobierzDaneZestawu(w http.ResponseWriter, r *http.Request) {
 	id, ok := idZeSciezki(w, r, "zestawId")
 	if !ok {

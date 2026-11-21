@@ -14,6 +14,7 @@ type ListaZestawowProps = {
   generowanyId: string | undefined;
   onGeneruj: (zestawId: string) => void;
   onPokazOstrzezenia: (zestaw: Schematy["Zestaw"]) => void;
+  onUsun: (zestaw: Schematy["Zestaw"]) => void;
 };
 
 export function ListaZestawow({
@@ -23,6 +24,7 @@ export function ListaZestawow({
   generowanyId,
   onGeneruj,
   onPokazOstrzezenia,
+  onUsun,
 }: ListaZestawowProps) {
   return (
     <section aria-labelledby="zestawy-h" className={styles.sekcja}>
@@ -81,6 +83,15 @@ export function ListaZestawow({
                   <Ikona nazwa="dalej" rozmiar={14} grubosc={2.2} />
                 </button>
               )}
+              <button
+                type="button"
+                className={styles.usun}
+                aria-label={`Usuń ${zestaw.nazwa}`}
+                title="Usuń zestaw i jego plany"
+                onClick={() => onUsun(zestaw)}
+              >
+                <Ikona nazwa="kosz" rozmiar={18} grubosc={1.9} />
+              </button>
             </li>
           );
         })}

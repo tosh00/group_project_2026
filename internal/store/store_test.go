@@ -146,3 +146,58 @@ func TestMigracjePowtorne(t *testing.T) {
 		t.Fatalf("drugie Migruj: %v", err)
 	}
 }
+
+func TestUsunZestaw(t *testing.T) {
+	s := storetest.NowaBaza(t)
+	ctx := context.Background()
+	dodaj := func() store.Zestaw {
+		t.Helper()
+		z, err := s.DodajZestaw(ctx, "z", json.RawMessage(`{}`), json.RawMessage(`{}`), json.RawMessage(`[]`))
+		if err != nil {
+			t.Fatal(err)
+		}
+		return z
+	}
+
+	// Zakończone uruchomienie z planem znika razem z zestawem (ON DELETE CASCADE).
+	z := dodaj()
+	u, err := s.DodajUruchomienie(ctx, z.ID, json.RawMessage(`{}`), 1, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s.Rozpocznij(ctx, u.ID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := s.Zakoncz(ctx, store.Zakonczenie{ID: u.ID, Status: store.StatusPoprawny, Plan: json.RawMessage(`{}`), Raport: json.RawMessage(`{}`)}); err != nil {
+		t.Fatal(err)
+	}
+	if err := s.UsunZestaw(ctx, z.ID); err != nil {
+		t.Fatalf("UsunZestaw: %v", err)
+	}
+	if _, err := s.Zestaw(ctx, z.ID); !errors.Is(err, store.ErrNieZnaleziono) {
+		t.Errorf("zestaw po usunięciu: err = %v", err)
+	}
+	if _, err := s.Uruchomienie(ctx, u.ID); !errors.Is(err, store.ErrNieZnaleziono) {
+		t.Errorf("uruchomienie po usunięciu zestawu: err = %v", err)
+	}
+	if _, err := s.Plan(ctx, u.ID); !errors.Is(err, store.ErrNieZnaleziono) {
+		t.Errorf("plan po usunięciu zestawu: err = %v", err)
+	}
+
+	// Brak zestawu.
+	if err := s.UsunZestaw(ctx, uuid.New()); !errors.Is(err, store.ErrNieZnaleziono) {
+		t.Errorf("brak zestawu: err = %v, chcę ErrNieZnaleziono", err)
+	}
+
+	// Uruchomienie w kolejce blokuje usunięcie, a zestaw zostaje.
+	zajety := dodaj()
+	if _, err := s.DodajUruchomienie(ctx, zajety.ID, json.RawMessage(`{}`), 1, 0); err != nil {
+		t.Fatal(err)
+	}
+	if err := s.UsunZestaw(ctx, zajety.ID); !errors.Is(err, store.ErrTrwaGenerowanie) {
+		t.Errorf("w kolejce: err = %v, chcę ErrTrwaGenerowanie", err)
+	}
+	if _, err := s.Zestaw(ctx, zajety.ID); err != nil {
+		t.Errorf("zestaw w trakcie generowania został usunięty: %v", err)
+	}
+}

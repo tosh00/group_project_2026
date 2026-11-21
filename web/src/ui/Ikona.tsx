@@ -10,6 +10,7 @@ const sciezki = {
   ],
   zamknij: ["M6 6l12 12M18 6L6 18"],
   dalej: ["M9 6l6 6-6 6"],
+  kosz: ["M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"],
   kalendarz: [
     "M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z",
     "M3 9h18M8 2v4M16 2v4",
