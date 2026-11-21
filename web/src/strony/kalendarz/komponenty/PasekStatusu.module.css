@@ -52,48 +52,14 @@
   font-weight: 600;
 }
 
-.koszt {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.kosztWartosc {
-  font-size: 18px;
-  font-weight: 800;
-}
-
-.cichy {
-  color: var(--kolor-tekst-cichy);
-}
-
-.separator {
-  width: 1px;
-  height: 22px;
-  background: var(--kolor-ramka);
-}
-
-.seed {
-  color: var(--kolor-tekst);
-  font-family: var(--font-mono);
-}
-
-.akcje {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.raport {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 36px;
-  padding: 0 14px;
+.wstecz {
+  width: 34px;
+  height: 34px;
   border-radius: var(--promien-maly);
-  background: var(--kolor-marka);
-  color: var(--kolor-na-marce);
-  text-decoration: none;
-  font-weight: 700;
+  border: 1px solid var(--kolor-ramka);
+  background: var(--kolor-powierzchnia);
+  color: var(--kolor-tekst);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

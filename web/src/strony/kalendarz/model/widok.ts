@@ -2,6 +2,7 @@ import { Format } from "../../../lib/format.ts";
 import type { IndeksPlanu } from "./indeks.ts";
 import { KOLORY_FORM } from "./kolory.ts";
 import type { NaruszeniaPlanu } from "./naruszenia.ts";
+import type { DzienTygodnia, TydzienNaSiatce } from "./semestr.ts";
 import { UkladTorow } from "./uklad.ts";
 import { LICZBA_DNI, LICZBA_SLOTOW, type Filtry, type Wymiar, type ZajeciaWPlanie } from "./typy.ts";
 
@@ -28,7 +29,7 @@ export type KartaNaSiatce = {
 };
 
 export type BlokNaSiatce = {
-  rodzaj: "wykluczone" | "okienko" | "wolny";
+  rodzaj: "wykluczone" | "okienko" | "wolny" | "bezZajec";
   slotOd: number;
   slotDo: number;
   tytul: string;
@@ -40,6 +41,7 @@ export type DzienNaSiatce = {
   karty: KartaNaSiatce[];
   bloki: BlokNaSiatce[];
   wolny: boolean;
+  kalendarz: DzienTygodnia | null; // data i numer wystąpienia w wybranym tygodniu
 };
 
 export type OpisWidoku = {
@@ -62,13 +64,22 @@ export class WidokPlanu {
     private readonly indeks: IndeksPlanu,
     private readonly naruszenia: NaruszeniaPlanu,
     private readonly filtry: Filtry,
+    // Wybrany tydzień z kalendarza semestru; bez niego siatka pokazuje zajęcia ze wszystkich tygodni.
+    private readonly tydzien?: TydzienNaSiatce,
   ) {
     this.widokStudentow = filtry.wymiar === "rocznik" || filtry.wymiar === "grupa";
     this.zajeciaWidoku = WidokPlanu.zajeciaDla(indeks, filtry.wymiar, filtry.id);
-    this.widoczne = this.zajeciaWidoku.filter(
-      (z) =>
-        !filtry.ukryteFormy.has(z.forma) && (filtry.tydzien === 0 || z.tygodnie.includes(filtry.tydzien)),
-    );
+    this.widoczne = this.zajeciaWidoku.filter((z) => !filtry.ukryteFormy.has(z.forma) && this.wTygodniu(z));
+  }
+
+  // Każdy dzień planu ma w danym tygodniu własny numer wystąpienia (KalendarzSemestru).
+  private wTygodniu(z: ZajeciaWPlanie): boolean {
+    if (!this.tydzien) {
+      return true;
+    }
+
+    const numer = this.tydzien.dni[z.dzien - 1]?.numer ?? null;
+    return numer !== null && z.tygodnie.includes(numer);
   }
 
   static zajeciaDla(indeks: IndeksPlanu, wymiar: Wymiar, id: string): ZajeciaWPlanie[] {
@@ -93,9 +104,21 @@ export class WidokPlanu {
       const karty = UkladTorow.rozloz(zajeciaDnia, (z) => ({ start: z.slotStart, dlugosc: z.dlugosc })).map(
         ({ element, tor, torow }) => this.karta(element, tor, torow),
       );
+      const kalendarz = this.tydzien?.dni[dzien - 1] ?? null;
+      if (kalendarz && kalendarz.numer === null) {
+        const bezZajec: BlokNaSiatce = {
+          rodzaj: "bezZajec",
+          slotOd: 1,
+          slotDo: LICZBA_SLOTOW,
+          tytul: "Brak zajęć",
+          opis: kalendarz.uwaga,
+        };
+        return { dzien, karty, bloki: [bezZajec], wolny: false, kalendarz };
+      }
+
       const bloki =
         this.filtry.wymiar === "prowadzacy" ? this.blokiProwadzacego(dzien, wolne.has(dzien)) : [];
-      return { dzien, karty, bloki, wolny: wolne.has(dzien) };
+      return { dzien, karty, bloki, wolny: wolne.has(dzien), kalendarz };
     });
   }
 

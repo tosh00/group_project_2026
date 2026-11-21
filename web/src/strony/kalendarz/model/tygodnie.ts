@@ -34,6 +34,26 @@ export class Tygodnie {
     };
   }
 
+  // Do dymka: pełne słowa zamiast skrótów („Co drugi tydzień (parzyste)”, „Cały semestr”).
+  static opisDlaLudzi(tygodnie: readonly number[]): string {
+    const lista = [...new Set(tygodnie)].sort((a, b) => a - b);
+    const { pelny } = Tygodnie.opis(lista);
+    if (!pelny) {
+      return "Cały semestr";
+    }
+    if (pelny.startsWith("co 2 tyg.")) {
+      return `Co drugi tydzień (${pelny.includes("nieparz") ? "nieparzyste" : "parzyste"})`;
+    }
+    if (pelny.startsWith("tyg. ")) {
+      return `Tygodnie ${pelny.slice(5)}`;
+    }
+    if (pelny.startsWith("bez tyg. ")) {
+      return `Bez tygodnia ${pelny.slice(9)}`;
+    }
+
+    return `Tygodnie ${lista.join(", ")}`;
+  }
+
   // Do panelu naruszeń: „tyg. 1–14” zamiast pustego opisu.
   static opisZawsze(tygodnie: readonly number[]): string {
     return Tygodnie.opis(tygodnie).pelny || `tyg. 1–${WSZYSTKIE}`;

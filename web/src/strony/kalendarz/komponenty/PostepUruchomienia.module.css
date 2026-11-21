@@ -51,10 +51,6 @@
   color: var(--kolor-tekst-cichy);
 }
 
-.blad {
-  color: var(--kolor-blad);
-}
-
 @keyframes nieokreslony {
   0% {
     left: -40%;
@@ -117,42 +113,4 @@
 
 .czeka::before {
   content: "○ ";
-}
-
-.liczby {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-}
-
-.liczby div {
-  padding: 12px 14px;
-  border-radius: var(--promien-kafel);
-  background: var(--kolor-tlo);
-}
-
-.liczby dt {
-  color: var(--kolor-tekst-cichy);
-  font-size: 12.5px;
-}
-
-.liczby dd {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.wykres {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.wykres svg {
-  width: 100%;
-  height: 120px;
-  background: var(--kolor-tlo);
-  border-radius: var(--promien-kafel);
 }

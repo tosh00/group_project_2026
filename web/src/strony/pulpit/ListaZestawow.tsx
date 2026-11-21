@@ -60,10 +60,8 @@ export function ListaZestawow({
               <span className={styles.status}>
                 <ChipStatusu status={status} />
               </span>
-              <span className={styles.koszt}>
-                {uruchomienie?.koszt !== null && uruchomienie?.koszt !== undefined
-                  ? `koszt ${Format.liczba(uruchomienie.koszt)}`
-                  : ""}
+              <span className={styles.wygenerowany}>
+                {uruchomienie ? `plan z ${Format.dataWzgledna(uruchomienie.utworzono)}` : ""}
               </span>
               {uruchomienie ? (
                 <Link to={`/uruchomienia/${uruchomienie.id}`} className={przyciski.miekki}>

@@ -6,6 +6,7 @@ import styles from "./PanelFiltrow.module.css";
 type PanelFiltrowProps = {
   filtry: Filtry;
   widokStudentow: boolean;
+  zakresTygodnia: string; // np. „23.11–27.11”
   wyszukiwarka: ReactNode;
   onWymiar: (wymiar: Wymiar) => void;
   onZmien: (zmiana: Partial<Filtry>) => void;
@@ -21,7 +22,14 @@ const WYMIARY: { wymiar: Wymiar; etykieta: string }[] = [
 const TYGODNIE = Array.from({ length: 14 }, (_, i) => i + 1);
 
 // Pasek filtrów z makiety: wymiar widoku, wyszukiwarka, formy, tydzień, „tylko naruszenia”, kolor kart.
-export function PanelFiltrow({ filtry, widokStudentow, wyszukiwarka, onWymiar, onZmien }: PanelFiltrowProps) {
+export function PanelFiltrow({
+  filtry,
+  widokStudentow,
+  zakresTygodnia,
+  wyszukiwarka,
+  onWymiar,
+  onZmien,
+}: PanelFiltrowProps) {
   const przelaczForme = (forma: (typeof FORMY)[number]) => {
     const ukryte = new Set(filtry.ukryteFormy);
     if (ukryte.has(forma)) {
@@ -78,7 +86,7 @@ export function PanelFiltrow({ filtry, widokStudentow, wyszukiwarka, onWymiar, o
             className={filtry.tydzien === 0 ? styles.tydzienWybrany : styles.tydzien}
             onClick={() => onZmien({ tydzien: 0 })}
           >
-            Wszystkie
+            Obecny
           </button>
           {TYGODNIE.map((t) => (
             <button
@@ -96,6 +104,7 @@ export function PanelFiltrow({ filtry, widokStudentow, wyszukiwarka, onWymiar, o
             </button>
           ))}
         </div>
+        {zakresTygodnia && <span className={styles.zakres}>{zakresTygodnia}</span>}
         <div className={styles.prawo}>
           <button
             type="button"

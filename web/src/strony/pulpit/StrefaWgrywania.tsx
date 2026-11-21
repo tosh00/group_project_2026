@@ -13,7 +13,7 @@ type StrefaWgrywaniaProps = {
 const kroki = [
   { numer: 1, tytul: "Wgraj plik", opis: "Sprawdzimy format i spójność danych." },
   { numer: 2, tytul: "Wygeneruj plan", opis: "Algorytm ułoży zajęcia w siatce tygodnia." },
-  { numer: 3, tytul: "Sprawdź wynik", opis: "Kalendarz pokaże naruszenia i koszt planu." },
+  { numer: 3, tytul: "Sprawdź wynik", opis: "Kalendarz pokaże plan i ewentualne kolizje." },
 ];
 
 export function StrefaWgrywania({ wariant, onWybierzPlik, onPlik }: StrefaWgrywaniaProps) {

@@ -165,7 +165,8 @@
 
 .wykluczone,
 .okienko,
-.wolny {
+.wolny,
+.bezZajec {
   position: absolute;
   top: var(--blok-gora);
   height: var(--blok-wysokosc);
@@ -238,4 +239,19 @@
 .pustyTytul {
   font-weight: 800;
   font-size: 15px;
+}
+
+.bezZajec {
+  background: repeating-linear-gradient(135deg, var(--kolor-kreskowanie) 0 6px, transparent 6px 12px);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.data {
+  margin-left: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--kolor-tekst-cichy);
 }

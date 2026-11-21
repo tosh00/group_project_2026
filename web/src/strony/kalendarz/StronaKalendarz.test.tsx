@@ -24,13 +24,14 @@ describe("StronaKalendarz", () => {
 
     expect(await screen.findByText("Plan rocznika INF1-R1")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Status niesprawdzony/ })).toBeInTheDocument();
-    expect(screen.getByText("Walidator nie jest jeszcze podłączony")).toBeInTheDocument();
+    expect(screen.getByText("Plan nie został jeszcze sprawdzony")).toBeInTheDocument();
+    expect(screen.queryByText(/Koszt planu|Seed/)).not.toBeInTheDocument();
     expect(screen.getByLabelText(/Analiza matematyczna I, wykład, sala A281/)).toBeInTheDocument();
   });
 
   it("pokazuje naruszenia: status, czerwoną kartę i listę w panelu", async () => {
     planTestowy();
-    renderTrase(adres);
+    renderTrase(`${adres}?widok=rocznik&id=INF1-R1&tydzien=2`);
 
     expect(await screen.findByRole("button", { name: /Plan z naruszeniami · 1/ })).toBeInTheDocument();
     const panel = screen.getByRole("complementary", { name: "Panel statusu planu" });
@@ -76,7 +77,7 @@ describe("StronaKalendarz", () => {
     await uzytkownik.click(screen.getByRole("button", { name: "Wyczyść filtry zawężające" }));
 
     expect(screen.queryByText(/Brak zajęć dla/)).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Wszystkie", pressed: true })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Obecny", pressed: true })).toBeInTheDocument();
   });
 
   it("w trakcie generowania pokazuje postęp i pozwala zatrzymać", async () => {
@@ -112,7 +113,7 @@ describe("StronaKalendarz", () => {
     const uzytkownik = userEvent.setup();
     renderTrase(adres);
 
-    expect(await screen.findByRole("heading", { name: "Konstrukcja…" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Układanie zajęć…" })).toBeInTheDocument();
     expect(zrodla.map((z) => z.url)).toEqual([`/api/uruchomienia/${uruchomienie.id}/postep`]);
 
     await uzytkownik.click(screen.getByRole("button", { name: "Zatrzymaj" }));

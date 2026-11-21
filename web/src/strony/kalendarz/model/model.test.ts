@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { IndeksPlanu } from "./indeks.ts";
+import { KalendarzSemestru } from "./semestr.ts";
 import { NaruszeniaPlanu } from "./naruszenia.ts";
 import { Tygodnie } from "./tygodnie.ts";
 import { UkladTorow } from "./uklad.ts";
@@ -85,7 +86,8 @@ describe("WidokPlanu", () => {
   });
 
   it("filtr tygodnia i formy zawęża siatkę, ale nie opis widoku", () => {
-    const widok = new WidokPlanu(indeks, bezNaruszen, filtry({ tydzien: 3, ukryteFormy: new Set(["W"]) }));
+    const tydzien3 = new KalendarzSemestru(dane.kalendarz).numer(3);
+    const widok = new WidokPlanu(indeks, bezNaruszen, filtry({ ukryteFormy: new Set(["W"]) }), tydzien3);
 
     expect(widok.widoczne).toHaveLength(0);
     expect(widok.zajeciaWidoku).toHaveLength(3);
@@ -193,5 +195,74 @@ describe("ParametryFiltrow", () => {
     expect(ParametryFiltrow.odczytaj(new URLSearchParams("widok=xyz&tydzien=99&bez=Q"), "INF1-R1")).toEqual(
       filtry(),
     );
+  });
+});
+
+describe("KalendarzSemestru", () => {
+  const dzien = (data: string, plan: number | null, nr: number | null, typ = "zajęcia", opis = "") => ({
+    data,
+    dzien_tygodnia: "",
+    typ_dnia: typ as "zajęcia" | "wolne" | "odpracowanie",
+    plan_dnia: plan,
+    nr_tygodnia: nr,
+    opis,
+  });
+  // Fragment prawdziwego kalendarza: 11.11 święto, więc w tygodniu 9–13.11 środa nie ma zajęć,
+  // a w tygodniu 16–20.11 poniedziałek to 6., a piątek 8. wystąpienie.
+  const semestr = new KalendarzSemestru([
+    dzien("2026-11-09", 1, 5),
+    dzien("2026-11-10", 2, 6),
+    dzien("2026-11-11", null, null, "wolne", "Narodowe Święto Niepodległości"),
+    dzien("2026-11-12", 4, 6),
+    dzien("2026-11-13", 5, 7),
+    dzien("2026-11-16", 1, 6),
+    dzien("2026-11-17", 2, 7),
+    dzien("2026-11-18", 3, 6),
+    dzien("2026-11-19", 4, 7),
+    dzien("2026-11-20", 5, 8),
+    dzien("2027-01-08", 3, 11, "odpracowanie", "Zajęcia wg planu środy"),
+  ]);
+
+  it("obecny tydzień: każdy dzień ma własny numer wystąpienia i datę", () => {
+    const tydzien = semestr.obecny(new Date("2026-11-18T10:00:00"));
+
+    expect(tydzien.dni.map((d) => d.numer)).toEqual([6, 7, 6, 7, 8]);
+    expect(tydzien.zakres).toBe("16.11–20.11");
+  });
+
+  it("święto w tygodniu: dzień bez zajęć z opisem", () => {
+    const sroda = semestr.obecny(new Date("2026-11-10T10:00:00")).dni[2]!;
+
+    expect(sroda).toMatchObject({ numer: null, uwaga: "Narodowe Święto Niepodległości" });
+  });
+
+  it("w weekend pokazuje najbliższy tydzień, po semestrze ostatni", () => {
+    expect(semestr.obecny(new Date("2026-11-14T10:00:00")).zakres).toBe("16.11–20.11");
+    expect(semestr.obecny(new Date("2027-03-01T10:00:00")).dni[2]).toMatchObject({
+      numer: 11,
+      odrabianie: true,
+    });
+  });
+
+  it("tydzień o numerze n: daty n-tych wystąpień dni planu", () => {
+    expect(semestr.numer(6).dni.map((d) => d.data)).toEqual([
+      "2026-11-16",
+      "2026-11-10",
+      "2026-11-18",
+      "2026-11-12",
+      null,
+    ]);
+  });
+});
+
+describe("Tygodnie.opisDlaLudzi", () => {
+  it.each([
+    [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "Cały semestr"],
+    [[2, 4, 6, 8, 10, 12, 14], "Co drugi tydzień (parzyste)"],
+    [[1, 2, 3, 4, 5, 6, 7], "Tygodnie 1–7"],
+    [[1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14], "Bez tygodnia 6"],
+    [[1, 3, 8], "Tygodnie 1, 3, 8"],
+  ])("%j → „%s”", (tygodnie, opis) => {
+    expect(Tygodnie.opisDlaLudzi(tygodnie)).toBe(opis);
   });
 });

@@ -161,3 +161,8 @@
 .torWlaczony .galka {
   left: 16px;
 }
+
+.zakres {
+  font-weight: 700;
+  white-space: nowrap;
+}

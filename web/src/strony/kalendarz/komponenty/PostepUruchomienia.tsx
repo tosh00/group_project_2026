@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import type { Schematy } from "../../../api/klient.ts";
 import type { usePostepUruchomienia } from "../../../api/postep.ts";
-import { Format } from "../../../lib/format.ts";
 import przyciski from "../../../ui/przyciski.module.css";
 import styles from "./PostepUruchomienia.module.css";
 
@@ -13,9 +12,9 @@ type PostepUruchomieniaProps = {
 };
 
 const FAZY: { faza: Schematy["Faza"]; etykieta: string }[] = [
-  { faza: "konstrukcja", etykieta: "Konstrukcja" },
-  { faza: "optymalizacja", etykieta: "Optymalizacja" },
-  { faza: "walidacja", etykieta: "Walidacja" },
+  { faza: "konstrukcja", etykieta: "Układanie zajęć" },
+  { faza: "optymalizacja", etykieta: "Ulepszanie planu" },
+  { faza: "walidacja", etykieta: "Sprawdzanie" },
 ];
 
 const sekundy = new Intl.NumberFormat("pl-PL", { maximumFractionDigits: 1, minimumFractionDigits: 1 });
@@ -28,7 +27,7 @@ export function PostepUruchomienia({
   zatrzymywanie,
   onZatrzymaj,
 }: PostepUruchomieniaProps) {
-  const { historia, ostatni } = postep;
+  const { ostatni } = postep;
   const wKolejce = uruchomienie.status === "w_kolejce";
   const faza = ostatni?.faza ?? uruchomienie.faza ?? "konstrukcja";
   const indeksFazy = FAZY.findIndex((f) => f.faza === faza);
@@ -55,7 +54,7 @@ export function PostepUruchomienia({
 
       <div
         role="progressbar"
-        aria-label="Postęp optymalizacji"
+        aria-label="Postęp generowania"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={ulamek === null ? undefined : Math.round(ulamek * 100)}
@@ -82,59 +81,8 @@ export function PostepUruchomienia({
         ))}
       </ol>
 
-      {ostatni && (
-        <dl className={styles.liczby}>
-          <div>
-            <dt>Najlepszy koszt</dt>
-            <dd>{Format.liczba(ostatni.koszt)}</dd>
-          </div>
-          <div>
-            <dt>Naruszenia (wg solvera)</dt>
-            <dd className={ostatni.naruszenia > 0 ? styles.blad : undefined}>{ostatni.naruszenia}</dd>
-          </div>
-          <div>
-            <dt>Iteracje</dt>
-            <dd>
-              {Format.liczba(ostatni.iteracja)} z {Format.liczba(ostatni.iteracji)}
-            </dd>
-          </div>
-          <div>
-            <dt>Czas</dt>
-            <dd>{sekundy.format(ostatni.czas_ms / 1000)} s</dd>
-          </div>
-        </dl>
-      )}
-      {historia.length > 1 && <WykresKosztu historia={historia} />}
+      {ostatni && <p className={styles.cichy}>Trwa już {sekundy.format(ostatni.czas_ms / 1000)} s.</p>}
     </section>
-  );
-}
-
-function WykresKosztu({ historia }: { historia: Schematy["Postep"][] }) {
-  const koszty = historia.map((p) => p.koszt);
-  const min = Math.min(...koszty);
-  const max = Math.max(...koszty);
-  const zakres = max - min || 1;
-  const punkty = koszty
-    .map((k, i) => `${(i / (koszty.length - 1)) * 100},${100 - ((k - min) / zakres) * 100}`)
-    .join(" ");
-  return (
-    <figure className={styles.wykres}>
-      <figcaption className={styles.cichy}>Spadek kosztu w trakcie optymalizacji</figcaption>
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        role="img"
-        aria-label={`Koszt od ${Format.liczba(max)} do ${Format.liczba(min)}`}
-      >
-        <polyline
-          points={punkty}
-          fill="none"
-          stroke="var(--kolor-marka)"
-          strokeWidth="2"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-    </figure>
   );
 }
 

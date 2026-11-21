@@ -108,9 +108,7 @@ export function AktywnyZestaw({
             <>
               <div className={styles.planTytul}>{status.tekst}</div>
               <div className={styles.planOpis}>
-                {uruchomienie.koszt !== null && uruchomienie.koszt !== undefined
-                  ? `Koszt planu ${Format.liczba(uruchomienie.koszt)}, wygenerowany ${Format.dataWzgledna(uruchomienie.utworzono)}.`
-                  : "Plan jest w trakcie generowania."}
+                Wygenerowany {Format.dataWzgledna(uruchomienie.utworzono)}.
               </div>
               <Link
                 to={`/uruchomienia/${uruchomienie.id}`}

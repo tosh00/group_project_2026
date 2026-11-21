@@ -1,6 +1,5 @@
-import { Link } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import type { Schematy } from "../../../api/klient.ts";
-import { Format } from "../../../lib/format.ts";
 import type { StatusPlanu } from "../model/typy.ts";
 import styles from "./PasekStatusu.module.css";
 
@@ -12,27 +11,7 @@ type PasekStatusuProps = {
   onPrzelaczPanel: () => void;
 };
 
-const sekundy = new Intl.NumberFormat("pl-PL", { maximumFractionDigits: 1, minimumFractionDigits: 1 });
-const dataICzas = new Intl.DateTimeFormat("pl-PL", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-});
-
-class CzasUruchomienia {
-  static sekundy(uruchomienie: Schematy["Uruchomienie"]): string | null {
-    if (!uruchomienie.rozpoczeto || !uruchomienie.zakonczono) {
-      return null;
-    }
-
-    const ms = new Date(uruchomienie.zakonczono).getTime() - new Date(uruchomienie.rozpoczeto).getTime();
-    return `${sekundy.format(ms / 1000)} s`;
-  }
-}
-
-// Pasek nad siatką z makiety: status (otwiera panel), koszt, seed, data i czas trwania, raport jakości.
+// Pasek nad siatką: „Wstecz” i status planu (otwiera panel). Bez danych technicznych (koszt, seed, iteracje).
 export function PasekStatusu({
   uruchomienie,
   status,
@@ -40,7 +19,6 @@ export function PasekStatusu({
   panelOtwarty,
   onPrzelaczPanel,
 }: PasekStatusuProps) {
-  const czas = CzasUruchomienia.sekundy(uruchomienie);
   const tekst =
     status === "naruszenia"
       ? `Plan z naruszeniami · ${liczbaNaruszen}`
@@ -50,6 +28,7 @@ export function PasekStatusu({
 
   return (
     <section aria-label="Status planu" className={styles.pasek}>
+      <PrzyciskWstecz />
       <button
         type="button"
         className={styles[status]}
@@ -76,48 +55,41 @@ export function PasekStatusu({
       {uruchomienie.zatrzymane && (
         <span
           className={styles.zatrzymany}
-          title="Optymalizację przerwano ręcznie. Pokazano najlepszy dotychczasowy plan."
+          title="Generowanie przerwano ręcznie. Pokazano najlepszy plan znaleziony do tej chwili."
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <rect x="6" y="6" width="12" height="12" rx="1.5" />
-          </svg>
-          {czas ? `Zatrzymany po ${czas}` : "Zatrzymany"}
+          Generowanie przerwane wcześniej
         </span>
       )}
-      <div className={styles.koszt}>
-        <span className={styles.cichy}>Koszt planu</span>
-        <span className={styles.kosztWartosc}>
-          {uruchomienie.koszt === null ? "–" : Format.liczba(uruchomienie.koszt ?? 0)}
-        </span>
-      </div>
-      <span className={styles.separator} aria-hidden="true" />
-      <span className={styles.cichy}>
-        Seed <span className={styles.seed}>{uruchomienie.seed}</span>
-      </span>
-      <span className={styles.cichy}>
-        {dataICzas.format(new Date(uruchomienie.utworzono))}
-        {czas && ` · ${uruchomienie.zatrzymane ? `zatrzymano po ${czas}` : czas}`} ·{" "}
-        {Format.ilosc(uruchomienie.iteracje, "iteracja", "iteracje", "iteracji")}
-      </span>
-      <div className={styles.akcje}>
-        <Link to={`/uruchomienia/${uruchomienie.id}/raport`} className={styles.raport}>
-          Raport jakości
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </Link>
-      </div>
     </section>
+  );
+}
+
+// Zmiana widoku dodaje wpis w historii, więc „Wstecz” wraca do poprzedniego widoku.
+// Strona otwarta wprost z linku (pierwszy wpis, klucz „default”) wraca na pulpit.
+function PrzyciskWstecz() {
+  const navigate = useNavigate();
+  const { key } = useLocation();
+  return (
+    <button
+      type="button"
+      aria-label="Wstecz do poprzedniego widoku"
+      className={styles.wstecz}
+      onClick={() => void (key !== "default" ? navigate(-1) : navigate("/"))}
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
   );
 }
 

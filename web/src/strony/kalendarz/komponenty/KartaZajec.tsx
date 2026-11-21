@@ -170,15 +170,15 @@ export function KartaZajec({
             <span className={styles.dymekTytul}>{z.przedmiot}</span>
           </div>
           <div className={styles.dymekCichy}>
-            {z.id} · {NAZWY_FORM[z.forma]}
+            {NAZWY_FORM[z.forma].charAt(0).toUpperCase() + NAZWY_FORM[z.forma].slice(1)} ·{" "}
+            {indeks.czyCalyRocznik(z.grupaId) ? `cały rocznik ${z.rocznikId}` : `grupa ${z.grupaId}`}
           </div>
+          <div>
+            {NAZWY_DNI[z.dzien - 1]}, {indeks.godziny(z.slotStart, koniec)}
+          </div>
+          <div>{Tygodnie.opisDlaLudzi(z.tygodnie)}</div>
           <div>
             Sala {z.salaId} · {prowadzacy}
-          </div>
-          <div>Grupa: {indeks.czyCalyRocznik(z.grupaId) ? `${z.rocznikId} (cały rocznik)` : z.grupaId}</div>
-          <div>
-            {NAZWY_DNI[z.dzien - 1]}, sloty {z.slotStart}–{koniec} ({indeks.godziny(z.slotStart, koniec)}) ·{" "}
-            {Tygodnie.opisZawsze(z.tygodnie)}
           </div>
           {naruszenia.map((n) => (
             <div key={n.indeks} className={styles.dymekNaruszenie}>

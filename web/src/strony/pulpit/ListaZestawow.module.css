@@ -80,8 +80,8 @@
   flex: 0 0 230px;
 }
 
-.koszt {
-  flex: 0 0 100px;
+.wygenerowany {
+  flex: 0 0 130px;
   color: var(--kolor-tekst-cichy);
   font-size: 13px;
 }
@@ -92,7 +92,7 @@
   }
 
   .status,
-  .koszt {
+  .wygenerowany {
     flex-basis: auto;
   }
 }

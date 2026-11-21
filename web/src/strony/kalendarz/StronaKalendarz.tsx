@@ -8,20 +8,11 @@ import {
   useRaport,
   useUruchomienie,
   useZatrzymajUruchomienie,
-  useZestaw,
 } from "../../api/zapytania.ts";
 import { Kalendarz } from "./Kalendarz.tsx";
-import { Okruszki } from "./komponenty/Okruszki.tsx";
 import { BladUruchomienia, PostepUruchomienia } from "./komponenty/PostepUruchomienia.tsx";
 import { useFiltryKalendarza } from "./useFiltryKalendarza.ts";
 import styles from "./StronaKalendarz.module.css";
-
-const etykietaDaty = new Intl.DateTimeFormat("pl-PL", {
-  day: "2-digit",
-  month: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-});
 
 export function StronaKalendarz() {
   const { uruchomienieId = "" } = useParams();
@@ -30,7 +21,6 @@ export function StronaKalendarz() {
   const trwa = u?.status === "w_kolejce" || u?.status === "trwa";
   const postep = usePostepUruchomienia(trwa ? uruchomienieId : undefined);
   const zatrzymaj = useZatrzymajUruchomienie();
-  const zestaw = useZestaw(u?.zestaw_id);
   const dane = useDaneZestawu(maPlan(u) ? u?.zestaw_id : undefined);
   const plan = usePlan(u);
   const raport = useRaport(u);
@@ -52,13 +42,9 @@ export function StronaKalendarz() {
     );
   }
 
-  const etykieta = `Uruchomienie z ${etykietaDaty.format(new Date(u!.utworzono))}`;
-  const okruszkiZestawu = zestaw.data ? { id: zestaw.data.id, nazwa: zestaw.data.nazwa } : undefined;
-
   if (trwa) {
     return (
       <div className={styles.strona}>
-        <Okruszki zestaw={okruszkiZestawu} uruchomienie={etykieta} />
         <PostepUruchomienia
           uruchomienie={u!}
           postep={postep}
@@ -71,7 +57,6 @@ export function StronaKalendarz() {
   if (u!.status === "blad") {
     return (
       <div className={styles.strona}>
-        <Okruszki zestaw={okruszkiZestawu} uruchomienie={etykieta} />
         <BladUruchomienia uruchomienie={u!} />
       </div>
     );
@@ -99,8 +84,6 @@ export function StronaKalendarz() {
       onZmien={zmien}
       onPrzejdz={przejdz}
       onWyczyscFiltry={wyczyscZawezajace}
-      zestaw={okruszkiZestawu}
-      etykietaUruchomienia={etykieta}
     />
   );
 }

@@ -3,6 +3,7 @@ import { Format } from "../../../lib/format.ts";
 import przyciski from "../../../ui/przyciski.module.css";
 import type { IndeksPlanu } from "../model/indeks.ts";
 import type { NaruszeniaPlanu } from "../model/naruszenia.ts";
+import { KalendarzSemestru } from "../model/semestr.ts";
 import { LICZBA_SLOTOW, type Filtry, type Wymiar } from "../model/typy.ts";
 import { NAZWY_DNI, SKROTY_DNI, type OpisWidoku, type WidokPlanu } from "../model/widok.ts";
 import { KartaZajec } from "./KartaZajec.tsx";
@@ -55,9 +56,20 @@ export function SiatkaTygodnia({
             <div className={styles.etykietaSlot}>Slot</div>
             {dni.map((d) => (
               <div key={d.dzien} className={d.wolny ? `${styles.dzien} ${styles.dzienWolny}` : styles.dzien}>
-                <span className={styles.nazwaDnia}>{NAZWY_DNI[d.dzien - 1]}</span>
+                <span className={styles.nazwaDnia}>
+                  {NAZWY_DNI[d.dzien - 1]}
+                  {d.kalendarz?.data && d.kalendarz.numer !== null && (
+                    <span className={styles.data}>
+                      {d.kalendarz.odrabianie ? d.kalendarz.uwaga : KalendarzSemestru.data(d.kalendarz.data)}
+                    </span>
+                  )}
+                </span>
                 <span className={styles.liczbaZajec}>
-                  {d.wolny ? "dzień wolny" : Format.ilosc(d.karty.length, "zajęcia", "zajęcia", "zajęć")}
+                  {d.kalendarz?.numer === null
+                    ? "brak zajęć"
+                    : d.wolny
+                      ? "dzień wolny"
+                      : Format.ilosc(d.karty.length, "zajęcia", "zajęcia", "zajęć")}
                 </span>
               </div>
             ))}
@@ -125,7 +137,7 @@ export function SiatkaTygodnia({
                   <div className={styles.pustyTytul}>
                     {filtry.tydzien
                       ? `Brak zajęć dla ${opis.nazwa} w tygodniu ${filtry.tydzien}`
-                      : `Brak zajęć dla ${opis.nazwa} przy wybranych filtrach`}
+                      : `Brak zajęć dla ${opis.nazwa} w tym tygodniu`}
                   </div>
                   <div className={styles.cichy}>
                     Zmień tydzień lub formę zajęć albo wyczyść filtry zawężające.

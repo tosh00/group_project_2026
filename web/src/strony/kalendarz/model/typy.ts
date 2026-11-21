@@ -8,7 +8,7 @@ export type KolorKart = "grupa" | "forma";
 export type Filtry = {
   wymiar: Wymiar;
   id: string;
-  tydzien: number; // 0 = wszystkie tygodnie
+  tydzien: number; // 1–14 = n-te wystąpienie dnia planu; 0 = obecny tydzień kalendarzowy
   ukryteFormy: ReadonlySet<Forma>;
   tylkoNaruszenia: boolean;
   kolor: KolorKart;

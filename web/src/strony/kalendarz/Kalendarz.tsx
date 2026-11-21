@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Schematy } from "../../api/klient.ts";
 import { Legenda } from "./komponenty/Legenda.tsx";
-import { Okruszki } from "./komponenty/Okruszki.tsx";
 import { PanelFiltrow } from "./komponenty/PanelFiltrow.tsx";
 import { PanelStatusu } from "./komponenty/PanelStatusu.tsx";
 import { PasekStatusu } from "./komponenty/PasekStatusu.tsx";
@@ -9,6 +8,7 @@ import { SiatkaTygodnia } from "./komponenty/SiatkaTygodnia.tsx";
 import { Wyszukiwarka } from "./komponenty/Wyszukiwarka.tsx";
 import { IndeksPlanu } from "./model/indeks.ts";
 import { NaruszeniaPlanu, type Naruszenie } from "./model/naruszenia.ts";
+import { KalendarzSemestru } from "./model/semestr.ts";
 import type { Filtry, Wymiar } from "./model/typy.ts";
 import { WidokPlanu } from "./model/widok.ts";
 import { Wyszukiwarka as ZrodloWynikow } from "./model/wyszukiwanie.ts";
@@ -23,8 +23,6 @@ type KalendarzProps = {
   onZmien: (zmiana: Partial<Filtry>) => void;
   onPrzejdz: (wymiar: Wymiar, id: string, zmiana?: Partial<Filtry>) => void;
   onWyczyscFiltry: () => void;
-  zestaw: { id: string; nazwa: string } | undefined;
-  etykietaUruchomienia: string;
 };
 
 // Ekran „2 · Kalendarz” z makiety: pasek statusu, filtry, siatka tygodnia, legenda i panel statusu.
@@ -37,13 +35,13 @@ export function Kalendarz({
   onZmien,
   onPrzejdz,
   onWyczyscFiltry,
-  zestaw,
-  etykietaUruchomienia,
 }: KalendarzProps) {
   const indeks = useMemo(() => new IndeksPlanu(dane, plan), [dane, plan]);
   const naruszenia = useMemo(() => new NaruszeniaPlanu(raport), [raport]);
   const wyszukiwarka = useMemo(() => new ZrodloWynikow(indeks, naruszenia), [indeks, naruszenia]);
-  const widok = new WidokPlanu(indeks, naruszenia, filtry);
+  const semestr = useMemo(() => new KalendarzSemestru(dane.kalendarz), [dane.kalendarz]);
+  const tydzien = filtry.tydzien === 0 ? semestr.obecny() : semestr.numer(filtry.tydzien);
+  const widok = new WidokPlanu(indeks, naruszenia, filtry, tydzien);
   const opis = widok.opis();
 
   const [panelOtwarty, setPanelOtwarty] = useState(true);
@@ -95,14 +93,21 @@ export function Kalendarz({
 
     setWybraneNaruszenie(n);
     const pierwsze = naruszenia.zajeciaNaruszenia(n, indeks)[0];
-    if (pierwsze) {
-      onPrzejdz("rocznik", pierwsze.rocznikId, { tydzien: 0, ukryteFormy: new Set() });
+    if (!pierwsze) {
+      return;
     }
+
+    // Zostajemy w wybranym tygodniu, jeśli zajęcia w nim są; inaczej pierwszy tydzień, w którym się odbywają.
+    const numerWTygodniu = tydzien.dni[pierwsze.dzien - 1]?.numer ?? null;
+    const widoczneWTygodniu = numerWTygodniu !== null && pierwsze.tygodnie.includes(numerWTygodniu);
+    onPrzejdz("rocznik", pierwsze.rocznikId, {
+      tydzien: widoczneWTygodniu ? filtry.tydzien : (pierwsze.tygodnie[0] ?? 0),
+      ukryteFormy: new Set(),
+    });
   };
 
   return (
     <div className={styles.kalendarz}>
-      <Okruszki zestaw={zestaw} uruchomienie={etykietaUruchomienia} biezacy={opis.okruszek} />
       <PasekStatusu
         uruchomienie={uruchomienie}
         status={naruszenia.status}
@@ -113,6 +118,7 @@ export function Kalendarz({
       <PanelFiltrow
         filtry={filtry}
         widokStudentow={widok.widokStudentow}
+        zakresTygodnia={tydzien.zakres}
         onWymiar={(wymiar) => wymiar !== filtry.wymiar && przejdz(wymiar, domyslnyCel(wymiar))}
         onZmien={onZmien}
         wyszukiwarka={

@@ -71,10 +71,10 @@ export function PanelStatusu({ naruszenia, indeks, wybrane, onWybierz, onZamknij
       {status === "poprawny" && <div className={styles.ok}>Wszystkie reguły twarde są spełnione.</div>}
       {status === "niesprawdzony" && (
         <div className={styles.niesprawdzony}>
-          <div className={styles.pogrubiony}>Walidator nie jest jeszcze podłączony</div>
+          <div className={styles.pogrubiony}>Plan nie został jeszcze sprawdzony</div>
           <div className={styles.cichy}>
-            Plan ma wszystkie zajęcia na siatce, ale nikt nie sprawdził reguł twardych. Nie traktuj go jako
-            poprawnego.
+            Wszystkie zajęcia są na siatce, ale sprawdzanie kolizji nie jest jeszcze dostępne. Nie traktuj
+            planu jako ostatecznego.
           </div>
         </div>
       )}
