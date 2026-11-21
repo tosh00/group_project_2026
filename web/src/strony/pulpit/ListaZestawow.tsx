@@ -11,20 +11,18 @@ type ListaZestawowProps = {
   zestawy: Schematy["Zestaw"][];
   ostatnieUruchomienia: Map<string, Schematy["Uruchomienie"]>;
   walidator: Schematy["Zdrowie"]["walidator"] | undefined;
-  aktywnyId: string | undefined;
   generowanyId: string | undefined;
-  onWgrajNowy: () => void;
   onGeneruj: (zestawId: string) => void;
+  onPokazOstrzezenia: (zestaw: Schematy["Zestaw"]) => void;
 };
 
 export function ListaZestawow({
   zestawy,
   ostatnieUruchomienia,
   walidator,
-  aktywnyId,
   generowanyId,
-  onWgrajNowy,
   onGeneruj,
+  onPokazOstrzezenia,
 }: ListaZestawowProps) {
   return (
     <section aria-labelledby="zestawy-h" className={styles.sekcja}>
@@ -32,10 +30,6 @@ export function ListaZestawow({
         <h2 id="zestawy-h" className={styles.tytul}>
           Twoje zestawy i plany
         </h2>
-        <button type="button" className={przyciski.obrys} onClick={onWgrajNowy}>
-          <Ikona nazwa="wgraj" grubosc={2.2} />
-          Wgraj nowy zestaw
-        </button>
       </div>
       <ul className={styles.lista}>
         {zestawy.map((zestaw) => {
@@ -48,15 +42,23 @@ export function ListaZestawow({
                 <Ikona nazwa="kalendarz" rozmiar={20} grubosc={1.8} />
               </span>
               <span className={styles.opis}>
-                <span className={styles.nazwa}>
-                  {zestaw.nazwa}
-                  {zestaw.id === aktywnyId && <span className={styles.aktywny}>aktywny</span>}
-                </span>
+                <span className={styles.nazwa}>{zestaw.nazwa}</span>
                 <span className={styles.cichy}>
                   {Format.dataWzgledna(zestaw.utworzono)} ·{" "}
                   {Format.ilosc(zajecia, "zajęcie", "zajęcia", "zajęć")}
                 </span>
               </span>
+              {zestaw.ostrzezenia.length > 0 && (
+                <button
+                  type="button"
+                  className={styles.ostrzezenia}
+                  aria-haspopup="dialog"
+                  onClick={() => onPokazOstrzezenia(zestaw)}
+                >
+                  <Ikona nazwa="ostrzezenie" rozmiar={14} grubosc={2.2} />
+                  {Format.ilosc(zestaw.ostrzezenia.length, "uwaga", "uwagi", "uwag")} do danych
+                </button>
+              )}
               <span className={styles.status}>
                 <ChipStatusu status={status} />
               </span>

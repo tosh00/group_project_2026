@@ -38,7 +38,7 @@ export function StrefaWgrywania({ wariant, onWybierzPlik, onPlik }: StrefaWgrywa
         <p className={styles.podtytul}>
           {pusty
             ? "Nie masz jeszcze żadnego zestawu danych."
-            : "Albo wróć do jednego z wcześniejszych planów poniżej."}
+            : "Albo otwórz jeden z wcześniejszych planów poniżej."}
         </p>
       </div>
       <div

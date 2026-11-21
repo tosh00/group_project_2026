@@ -20,25 +20,25 @@ describe("StronaPulpit", () => {
     expect(screen.queryByRole("heading", { name: "Twoje zestawy i plany" })).not.toBeInTheDocument();
   });
 
-  it("pokazuje ostatni zestaw z podsumowaniem i listę zestawów (1)", async () => {
+  it("przy istniejących zestawach u góry jest pole na kolejny plik, a niżej lista bez „aktywny”", async () => {
     bezPlanow();
 
     renderTrase("/");
 
-    expect(await screen.findByRole("heading", { name: zestaw.nazwa })).toBeInTheDocument();
-    expect(screen.getByText("30 z 55")).toBeInTheDocument();
-    expect(screen.getByText("372")).toBeInTheDocument();
-    expect(screen.getByText("Jeszcze nie wygenerowany")).toBeInTheDocument();
-    const lista = screen.getByRole("list", { name: "" }).closest("section") ?? document.body;
-    expect(within(lista as HTMLElement).getByText("Brak planu")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Wgraj nowy zestaw danych" })).toBeInTheDocument();
+    const lista = screen.getByRole("region", { name: "Twoje zestawy i plany" });
+    expect(within(lista).getByText(zestaw.nazwa)).toBeInTheDocument();
+    expect(within(lista).getByText("Brak planu")).toBeInTheDocument();
+    expect(screen.queryByText("aktywny")).not.toBeInTheDocument();
+    expect(screen.queryByText("Zawartość tego zestawu")).not.toBeInTheDocument();
   });
 
-  it("otwiera okno ostrzeżeń z listą sal (1b)", async () => {
+  it("otwiera okno ostrzeżeń z wiersza zestawu (1b)", async () => {
     bezPlanow();
     const uzytkownik = userEvent.setup();
     renderTrase("/");
 
-    await uzytkownik.click(await screen.findByRole("button", { name: /3 ostrzeżenia · pokaż/ }));
+    await uzytkownik.click(await screen.findByRole("button", { name: /3 uwagi do danych/ }));
 
     const okno = await screen.findByRole("dialog", { name: "Ostrzeżenia w danych · 3" });
     expect(within(okno).getByText("sale[B151].pojemnosc")).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe("StronaPulpit", () => {
     );
     const uzytkownik = userEvent.setup();
     const { container } = renderTrase("/");
-    await screen.findByRole("heading", { name: zestaw.nazwa });
+    await screen.findByRole("heading", { name: "Wgraj nowy zestaw danych" });
 
     const plik = new File(['{"meta":{}}'], "zly.json", { type: "application/json" });
     await uzytkownik.upload(container.querySelector<HTMLInputElement>('input[type="file"]')!, plik);
@@ -87,7 +87,7 @@ describe("StronaPulpit", () => {
   it("zgłasza niepoprawny JSON bez wysyłania pliku", async () => {
     const uzytkownik = userEvent.setup();
     const { container } = renderTrase("/");
-    await screen.findByRole("heading", { name: zestaw.nazwa });
+    await screen.findByRole("heading", { name: "Wgraj nowy zestaw danych" });
 
     const plik = new File(["{nie json"], "zepsuty.json", { type: "application/json" });
     await uzytkownik.upload(container.querySelector<HTMLInputElement>('input[type="file"]')!, plik);
@@ -96,7 +96,7 @@ describe("StronaPulpit", () => {
     expect(screen.getByText(/Niepoprawny JSON/)).toBeInTheDocument();
   });
 
-  it("„Generuj plan” uruchamia solver i przechodzi do kalendarza", async () => {
+  it("„Generuj” uruchamia solver i przechodzi do kalendarza", async () => {
     bezPlanow();
     server.use(
       http.post("/api/zestawy/:zestawId/uruchomienia", () =>
@@ -106,7 +106,7 @@ describe("StronaPulpit", () => {
     const uzytkownik = userEvent.setup();
     renderTrase("/");
 
-    await uzytkownik.click(await screen.findByRole("button", { name: "Generuj plan" }));
+    await uzytkownik.click(await screen.findByRole("button", { name: "Generuj" }));
 
     expect(await screen.findByText("Plan rocznika INF1-R1")).toBeInTheDocument();
   });
@@ -124,7 +124,7 @@ describe("StronaPulpit", () => {
     const uzytkownik = userEvent.setup();
     renderTrase("/");
 
-    await uzytkownik.click(await screen.findByRole("button", { name: "Generuj plan" }));
+    await uzytkownik.click(await screen.findByRole("button", { name: "Generuj" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Kolejka uruchomień jest pełna");
   });
