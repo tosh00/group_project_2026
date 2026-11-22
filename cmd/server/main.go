@@ -71,9 +71,7 @@ func uruchom(log *slog.Logger, addr, dbURL string, workery, kolejka int) error {
 		log.Warn("uruchomienia przerwane poprzednim zamknięciem serwera", "liczba", n)
 	}
 
-	// Do czasu merge'a internal/validator (docs/contracts/api.md).
-	walidator := api.Atrapa{}
-	log.Warn("walidator: atrapa, raporty nie sprawdzają reguł twardych")
+	walidator := api.PelnyWalidator{}
 
 	pula := api.NowaPula(st, walidator, log, api.UstawieniaPuli{Workery: workery, Kolejka: kolejka})
 	serwer := api.Nowy(st, pula, walidator, log)

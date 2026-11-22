@@ -40,3 +40,9 @@ Wiedza, która przyda się innym. Dopisujcie krótko, z datą. Źródło liczb: 
 - Solver nie zgłasza postępu w konstrukcji (tylko co 10 000 iteracji wyżarzania), więc faza `konstrukcja`
   w API trwa do pierwszego zdarzenia `postep`. Przy `iteracje: 0` nie ma żadnego zdarzenia `postep`.
 - Na pełnych danych solver z 20 000 iteracji kończy w ok. 60 ms, więc testy API uruchamiają prawdziwy solver.
+
+## Walidator (2026-11-22)
+
+- `dezyderaty_terminy` ma dwa typy: `wykluczony` (240 wierszy) i `rada_wydzialu` (48). Oba blokują prowadzącego
+  (reguła 8). Rada jest też w tabeli `rada_wydzialu` dla członków rady, więc część slotów jest zablokowana dwa razy.
+- Plan z `cmd/solve` (seed 42, także `-iteracje 0`) przechodzi `cmd/waliduj` z 0 naruszeń.

@@ -9,6 +9,7 @@ na początku każda osoba (i jej agent) może pracować niezależnie.
 | Struktury danych w Go | `internal/model/`, opis: [model.md](model.md) | solver, walidator, backend | gotowe (etap 0) |
 | Plan wyjściowy | `plan.json`, opis: [plan-format.md](plan-format.md) | solver, walidator, backend, frontend | przyjęty, wersja 1 (ADR 0003) |
 | Interfejs solvera | `Solve(ctx, dane, wagi, opcje...) (Plan, error)` w `internal/solver`, opis: [solver.md](solver.md) | backend | gotowe (fazy 1–3) |
+| Naruszenia reguł twardych | `validator.Naruszenie` w `internal/validator`, format w [plan-format.md](plan-format.md#raport-walidatora) | backend, frontend | gotowe |
 | API HTTP | `api/openapi.yaml`, opis: [api.md](api.md) | backend, frontend | szkic 0.1 (2026-11-18), rozwijany równolegle z API |
 | Schemat bazy | `migrations/` (ADR 0008, 0009) | backend | szkic (2026-11-18) |
 

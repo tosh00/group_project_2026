@@ -113,3 +113,42 @@ func TestNazwyRegul(t *testing.T) {
 		}
 	}
 }
+
+func TestPelnyWalidator(t *testing.T) {
+	dane, err := model.Wczytaj("../../data/dane_planu.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := PelnyWalidator{}
+	if w.Nazwa() != "internal/validator" {
+		t.Errorf("nazwa %q", w.Nazwa())
+	}
+
+	// Pusty plan: każde zajęcia bez przypisania (reguła 1).
+	ns := w.Sprawdz(dane, &model.Plan{})
+	if len(ns) != len(dane.Zajecia) {
+		t.Fatalf("%d naruszeń, oczekiwano %d", len(ns), len(dane.Zajecia))
+	}
+	if n := ns[0]; n.Regula != 1 || n.Nazwa != "przypisanie" || len(n.ZajeciaID) != 1 || n.Opis == "" {
+		t.Errorf("naruszenie %+v", n)
+	}
+
+	// Dwa zajęcia w tej samej sali i terminie: naruszenie reguły 4 z położeniem.
+	z1, z2 := dane.Zajecia[0], dane.Zajecia[1]
+	plan := &model.Plan{Przypisania: []model.Przypisanie{
+		{ZajeciaID: z1.ID, Dzien: 1, SlotStart: 1, SalaID: "A281", Tygodnie: model.WszystkieTygodnie},
+		{ZajeciaID: z2.ID, Dzien: 1, SlotStart: 1, SalaID: "A281", Tygodnie: model.WszystkieTygodnie},
+	}}
+	var sala *Naruszenie
+	for _, n := range w.Sprawdz(dane, plan) {
+		if n.Regula == 4 {
+			sala = &n
+		}
+	}
+	if sala == nil {
+		t.Fatal("brak naruszenia reguły 4")
+	}
+	if sala.Nazwa != "kolizja_sali" || sala.Dzien != 1 || sala.SalaID != "A281" || len(sala.Sloty) == 0 || len(sala.Tygodnie) == 0 {
+		t.Errorf("naruszenie bez położenia: %+v", *sala)
+	}
+}

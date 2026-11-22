@@ -15,7 +15,7 @@ Generator planu zajęć dla kierunku Informatyka (WFiIS UŁ, semestr zimowy 2026
 |---|---|---|
 | Model danych + import | `internal/model/` | gotowe |
 | Solver | `internal/solver/`, `cmd/solve/` | fazy 1–3 gotowe |
-| Walidator | `internal/validator/` | gałąź `validator/reguly-twarde`, jeszcze nie w `main`; backend używa atrapy |
+| Walidator | `internal/validator/`, `cmd/waliduj/` | 10 reguł twardych z położeniem naruszeń; używany przez serwer |
 | Backend + baza | `cmd/server/`, `internal/api/`, `internal/store/`, `migrations/`, `api/` | MVP (szkic kontraktu 0.1) |
 | Frontend | `web/` | szkielet: trasy, klient API z OpenAPI, mocki, testy (ADR 0011); ekrany do zrobienia |
 | Docker Compose, CI | `docker-compose.yml`, `Dockerfile`, `web/Dockerfile`, `.github/workflows/` | compose gotowy; CI tylko dla frontendu |
@@ -123,6 +123,12 @@ go run ./cmd/solve -in data/dane_planu.json -out plan.json -seed 42 -v
 
 Flagi: `-iteracje` (na workera, domyślnie 1 000 000; 0 = sama konstrukcja), `-workery` (domyślnie 4),
 `-out -` (wynik na stdout), `-v` (czas i rozbicie kosztu na stderr). Opis interfejsu: [`docs/contracts/solver.md`](docs/contracts/solver.md).
+
+Sprawdzenie planu walidatorem (kod wyjścia 0 = poprawny, 1 = są naruszenia, 2 = błąd wczytywania):
+
+```sh
+go run ./cmd/waliduj -plan plan.json [-dane data/dane_planu.json] [-json]
+```
 
 ## Testy
 
