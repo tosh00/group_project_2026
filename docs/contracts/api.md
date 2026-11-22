@@ -42,16 +42,13 @@ w_kolejce ──► trwa (faza: konstrukcja → optymalizacja → walidacja) ─
 - Pula workerów ma stałą liczbę miejsc (`WORKERY`, domyślnie 1, bo jeden solver zajmuje 4 rdzenie)
   i ograniczoną kolejkę; pełna kolejka to 503 `kolejka_pelna`.
 
-## Walidator: atrapa do czasu merge'a `internal/validator`
+## Walidator
 
-Dopóki `internal/validator` nie jest w `main`, backend używa atrapy: zwraca 0 naruszeń, a raport
-i `/zdrowie` mają `walidator: "atrapa"`. Frontend powinien wtedy pokazywać, że status nie jest sprawdzony.
-Po merge'u podmieniamy atrapę na adapter `validator.Nowy(dane).Sprawdz(plan)` w `internal/api/walidacja.go`;
-kontrakt API się nie zmienia (pole `walidator` zmienia wartość).
-
-Rozjazd do uzgodnienia z @tosh00: `validator.Naruszenie` na gałęzi `validator/reguly-twarde` ma pola
-`regula`, `zajecia`, `opis`, a szkic raportu w `plan-format.md` także `nazwa`, `dzien`, `sloty`, `sala_id`,
-`tygodnie`. W API są one opcjonalne (poza `nazwa`, którą backend uzupełnia z numeru reguły).
+Serwer ocenia każdy plan przez `internal/validator` (adapter `api.PelnyWalidator` w `internal/api/walidacja.go`),
+więc raport i `/zdrowie` mają `walidator: "internal/validator"`. `api.Atrapa` (0 naruszeń, `walidator: "atrapa"`)
+została tylko do testów; frontend nadal powinien pokazywać, że raport `atrapa` nie jest sprawdzony.
+Naruszenia mają wszystkie pola z `plan-format.md` (`regula`, `nazwa`, `zajecia_id`, `dzien`, `sloty`, `sala_id`,
+`tygodnie`, `opis`); pola położenia są pomijane, gdy nie dotyczą naruszenia (tabela w `plan-format.md`).
 
 ## Błędy
 

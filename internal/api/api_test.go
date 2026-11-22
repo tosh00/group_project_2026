@@ -35,8 +35,8 @@ func nowe(t *testing.T, ust api.UstawieniaPuli) *srodowisko {
 	if ust.CoIlePostep == 0 {
 		ust.CoIlePostep = 10 * time.Millisecond
 	}
-	pula := api.NowaPula(st, api.Atrapa{}, log, ust)
-	srv := httptest.NewServer(api.Nowy(st, pula, api.Atrapa{}, log).Handler())
+	pula := api.NowaPula(st, api.PelnyWalidator{}, log, ust)
+	srv := httptest.NewServer(api.Nowy(st, pula, api.PelnyWalidator{}, log).Handler())
 	t.Cleanup(func() {
 		srv.CloseClientConnections()
 		srv.Close()
@@ -292,7 +292,7 @@ func TestUruchomienieDoKonca(t *testing.T) {
 	for _, v := range raport.KosztKryteria {
 		suma += v
 	}
-	if raport.Walidator != "atrapa" || raport.Status != "poprawny" || raport.Naruszenia == nil ||
+	if raport.Walidator != "internal/validator" || raport.Status != "poprawny" || raport.Naruszenia == nil ||
 		raport.KosztMiekki != plan.Meta.Koszt || len(raport.KosztKryteria) == 0 || fmt.Sprintf("%.3f", suma) != fmt.Sprintf("%.3f", raport.KosztMiekki) {
 		t.Errorf("raport %+v (suma kryteriów %.3f)", raport, suma)
 	}
@@ -410,7 +410,7 @@ func TestNieZnaleziono(t *testing.T) {
 func TestZdrowieIWagi(t *testing.T) {
 	s := nowe(t, api.UstawieniaPuli{})
 	var zdrowie map[string]string
-	if kod := s.zadanie("GET", "/zdrowie", nil, &zdrowie); kod != 200 || zdrowie["baza"] != "ok" || zdrowie["walidator"] != "atrapa" {
+	if kod := s.zadanie("GET", "/zdrowie", nil, &zdrowie); kod != 200 || zdrowie["baza"] != "ok" || zdrowie["walidator"] != "internal/validator" {
 		t.Errorf("zdrowie: kod %d, %v", kod, zdrowie)
 	}
 	var wagi map[string]float64

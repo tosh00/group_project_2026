@@ -1,21 +1,40 @@
 package api
 
-import "github.com/tosh00/group_project_2026/internal/model"
+import (
+	"github.com/tosh00/group_project_2026/internal/model"
+	"github.com/tosh00/group_project_2026/internal/validator"
+)
 
 // Walidator ocenia gotowy plan pod kątem reguł twardych 1–10 (ADR 0006: ma ostatnie słowo).
-//
-// Docelowo to adapter na internal/validator:
-//
-//	func (pelnyWalidator) Sprawdz(d *model.Dane, p *model.Plan) []Naruszenie {
-//		for _, n := range validator.Nowy(d).Sprawdz(p) { ... Naruszenie{Regula: n.Regula, ZajeciaID: n.Zajecia, Opis: n.Opis} }
-//	}
-//
-// Do czasu merge'a gałęzi validator/reguly-twarde używamy Atrapa (docs/contracts/api.md).
+// Serwer używa PelnyWalidator; Atrapa zostaje do testów, które nie sprawdzają reguł.
 type Walidator interface {
 	// Nazwa trafia do raportu i /api/zdrowie: "atrapa" albo "internal/validator".
 	Nazwa() string
 	// Sprawdz zwraca wszystkie naruszenia (pusta lista = plan poprawny). Musi być bezpieczna współbieżnie.
 	Sprawdz(dane *model.Dane, plan *model.Plan) []Naruszenie
+}
+
+// PelnyWalidator to adapter na internal/validator.
+type PelnyWalidator struct{}
+
+func (PelnyWalidator) Nazwa() string { return "internal/validator" }
+
+func (PelnyWalidator) Sprawdz(dane *model.Dane, plan *model.Plan) []Naruszenie {
+	ns := validator.Nowy(dane).Sprawdz(plan)
+	wynik := make([]Naruszenie, len(ns))
+	for i, n := range ns {
+		wynik[i] = Naruszenie{
+			Regula:    n.Regula,
+			Nazwa:     n.Nazwa,
+			ZajeciaID: n.Zajecia,
+			Dzien:     n.Dzien,
+			Sloty:     n.Sloty,
+			SalaID:    n.SalaID,
+			Tygodnie:  n.Tygodnie,
+			Opis:      n.Opis,
+		}
+	}
+	return wynik
 }
 
 // Atrapa udaje walidator i nie zgłasza żadnych naruszeń. Raport z atrapy nie jest dowodem poprawności planu.
@@ -34,8 +53,8 @@ type Raport struct {
 	Walidator      string             `json:"walidator"`
 }
 
-// Naruszenie to jedno złamanie reguły twardej. Pola położenia są opcjonalne,
-// bo internal/validator (gałąź validator/reguly-twarde) ich jeszcze nie zwraca.
+// Naruszenie to jedno złamanie reguły twardej (format z docs/contracts/plan-format.md).
+// Pola położenia są puste, gdy nie dotyczą naruszenia (np. zajęcia bez przypisania).
 type Naruszenie struct {
 	Regula    int      `json:"regula"`
 	Nazwa     string   `json:"nazwa"`
@@ -47,19 +66,5 @@ type Naruszenie struct {
 	Opis      string   `json:"opis"`
 }
 
-// nazwyRegul to stałe identyfikatory reguł twardych z data/README.md, sekcja 5.
-var nazwyRegul = map[int]string{
-	1:  "przypisanie",
-	2:  "tygodnie",
-	3:  "kolizja_prowadzacego",
-	4:  "kolizja_sali",
-	5:  "kolizja_grup",
-	6:  "typ_sali",
-	7:  "pojemnosc",
-	8:  "dezyderaty",
-	9:  "blokady_stale",
-	10: "powiazania",
-}
-
 // NazwaReguly zwraca identyfikator reguły 1–10 (pusty dla nieznanego numeru).
-func NazwaReguly(regula int) string { return nazwyRegul[regula] }
+func NazwaReguly(regula int) string { return validator.NazwaReguly(regula) }
