@@ -1,7 +1,10 @@
 package validator
 
 import (
+	"encoding/json"
+	"reflect"
 	"slices"
+	"strings"
 	"testing"
 
 	"github.com/tosh00/group_project_2026/internal/model"
@@ -185,5 +188,110 @@ func TestPustyPlanNaPrawdziwychDanych(t *testing.T) {
 	ns := Nowy(d).Sprawdz(&model.Plan{})
 	if len(ns) != len(d.Zajecia) || !slices.Equal(reguly(ns), []int{RegulaPrzypisanie}) {
 		t.Errorf("pusty plan: %d naruszeń reguł %v, oczekiwano %d naruszeń reguły 1", len(ns), reguly(ns), len(d.Zajecia))
+	}
+}
+
+// Położenie naruszenia (format raportu, docs/contracts/plan-format.md): dzień, sloty, sala i tygodnie.
+func TestPolozenieNaruszenia(t *testing.T) {
+	nieparzyste := model.WszystkieTygodnie.Nieparzyste().Lista()
+	wszystkie := model.WszystkieTygodnie.Lista()
+	przypadki := []struct {
+		nazwa string
+		zmien func(*model.Dane, *model.Plan)
+		chce  Naruszenie // bez Opis
+	}{
+		{"1: brak przypisania", func(_ *model.Dane, p *model.Plan) { p.Przypisania = p.Przypisania[:len(p.Przypisania)-1] },
+			Naruszenie{Regula: 1, Nazwa: "przypisanie", Zajecia: []string{"Z9"}}},
+		{"1: spotkanie wychodzi poza slot 12", przesun("Z1", 1, 12, "AULA"),
+			Naruszenie{Regula: 1, Nazwa: "przypisanie", Zajecia: []string{"Z1"}, Dzien: 1, Sloty: []int{12}, SalaID: "AULA", Tygodnie: wszystkie}},
+		{"1: dzień poza zakresem i nieznana sala", przesun("Z1", 6, 3, "C999"),
+			Naruszenie{Regula: 1, Nazwa: "przypisanie", Zajecia: []string{"Z1"}, Sloty: []int{3, 4}, Tygodnie: wszystkie}},
+		{"2: co_tydzien bez tygodnia 14", ustawTygodnie("Z1", model.Zakres(1, 13)),
+			Naruszenie{Regula: 2, Nazwa: "tygodnie", Zajecia: []string{"Z1"}, Dzien: 1, Sloty: []int{3, 4}, SalaID: "AULA", Tygodnie: []int{14}}},
+		{"2: wybrane_tygodnie z tygodniem niedostępnym", ustawTygodnie("Z4", model.Zakres(1, 9)),
+			Naruszenie{Regula: 2, Nazwa: "tygodnie", Zajecia: []string{"Z4"}, Dzien: 3, Sloty: []int{1}, SalaID: "S1", Tygodnie: []int{6}}},
+		{"3: prowadzący w dwóch salach", przesun("Z4", 2, 2, "S1"),
+			Naruszenie{Regula: 3, Nazwa: "kolizja_prowadzacego", Zajecia: []string{"Z3", "Z4"}, Dzien: 2, Sloty: []int{2},
+				Tygodnie: []int{1, 3, 5, 7, 9}}},
+		{"4: sala zajęta dwa razy", przesun("Z3", 1, 5, "S2"),
+			Naruszenie{Regula: 4, Nazwa: "kolizja_sali", Zajecia: []string{"Z2", "Z3"}, Dzien: 1, Sloty: []int{5, 6}, SalaID: "S2", Tygodnie: nieparzyste}},
+		{"5: student na dwóch zajęciach", przesun("Z5", 1, 2, "S1"),
+			Naruszenie{Regula: 5, Nazwa: "kolizja_grup", Zajecia: []string{"Z1", "Z5"}, Dzien: 1, Sloty: []int{3}, Tygodnie: wszystkie}},
+		{"7: za mała sala", func(d *model.Dane, _ *model.Plan) { d.Zajecia[1].DodatkowiStudenci = 19 },
+			Naruszenie{Regula: 7, Nazwa: "pojemnosc", Zajecia: []string{"Z2"}, Dzien: 1, Sloty: []int{5, 6}, SalaID: "S2", Tygodnie: wszystkie}},
+		{"8: godzina wykluczona", przesun("Z2", 1, 1, "S2"),
+			Naruszenie{Regula: 8, Nazwa: "dezyderaty", Zajecia: []string{"Z2"}, Dzien: 1, Sloty: []int{1}, SalaID: "S2", Tygodnie: wszystkie}},
+		{"8: Rada Wydziału", przesun("Z9", 2, 10, "X"),
+			Naruszenie{Regula: 8, Nazwa: "dezyderaty", Zajecia: []string{"Z9"}, Dzien: 2, Sloty: []int{10}, SalaID: "X", Tygodnie: wszystkie}},
+		{"9: blokada własnej grupy", przesun("Z3", 4, 3, "S2"),
+			Naruszenie{Regula: 9, Nazwa: "blokady_stale", Zajecia: []string{"Z3"}, Dzien: 4, Sloty: []int{3, 4}, SalaID: "S2", Tygodnie: nieparzyste}},
+		{"10: rozne_dni w tym samym dniu", przesun("Z6", 3, 5, "S1"),
+			Naruszenie{Regula: 10, Nazwa: "powiazania", Zajecia: []string{"Z5", "Z6"}, Dzien: 3}},
+		{"10: ten_sam_termin w innym slocie", przesun("Z8", 5, 3, "S1"),
+			Naruszenie{Regula: 10, Nazwa: "powiazania", Zajecia: []string{"Z7", "Z8"}, Dzien: 5, SalaID: "S1"}},
+	}
+	for _, p := range przypadki {
+		t.Run(p.nazwa, func(t *testing.T) {
+			d, plan := maleDane(), poprawnyPlan()
+			p.zmien(d, plan)
+			ns := Nowy(d).Sprawdz(plan)
+			if len(ns) != 1 {
+				t.Fatalf("%d naruszeń, oczekiwano 1:\n%v", len(ns), ns)
+			}
+			got := ns[0]
+			if got.Opis == "" {
+				t.Error("pusty opis")
+			}
+			got.Opis = ""
+			if !reflect.DeepEqual(got, p.chce) {
+				t.Errorf("naruszenie\n%+v\noczekiwano\n%+v", got, p.chce)
+			}
+		})
+	}
+}
+
+// Kilka problemów tej samej reguły z tymi samymi zajęciami to jedno naruszenie (plan-format.md).
+func TestJednoNaruszenieNaReguleIZajecia(t *testing.T) {
+	d, plan := maleDane(), poprawnyPlan()
+	przesun("Z2", 1, 5, "S1")(d, plan) // zły typ sali i brak MAC
+	ns := Nowy(d).Sprawdz(plan)
+	if len(ns) != 1 || ns[0].Regula != RegulaTypSali {
+		t.Fatalf("naruszenia %v, oczekiwano jednego naruszenia reguły 6", ns)
+	}
+	if !strings.Contains(ns[0].Opis, "typu") || !strings.Contains(ns[0].Opis, "MAC") {
+		t.Errorf("opis nie łączy obu problemów: %q", ns[0].Opis)
+	}
+
+	// Dwóch wspólnych prowadzących dwóch zajęć: jedno naruszenie reguły 3.
+	d, plan = maleDane(), poprawnyPlan()
+	d.Zajecia[2].Prowadzacy = []string{"P3", "P2"} // Z3
+	d.Zajecia[3].Prowadzacy = []string{"P3", "P2"} // Z4
+	przesun("Z4", 2, 2, "S1")(d, plan)
+	ns = Nowy(d).Sprawdz(plan)
+	if len(ns) != 1 || ns[0].Regula != RegulaProwadzacy || !strings.Contains(ns[0].Opis, "P3, P2") {
+		t.Errorf("naruszenia %v, oczekiwano jednego naruszenia reguły 3 dla P3 i P2", ns)
+	}
+}
+
+func TestFormatJSON(t *testing.T) {
+	n := Naruszenie{Regula: 5, Nazwa: "kolizja_grup", Zajecia: []string{"Z014", "Z087"}, Dzien: 2, Sloty: []int{5, 6}, Tygodnie: []int{2, 4}, Opis: "x"}
+	b, err := json.Marshal(n)
+	if err != nil {
+		t.Fatal(err)
+	}
+	chce := `{"regula":5,"nazwa":"kolizja_grup","zajecia_id":["Z014","Z087"],"dzien":2,"sloty":[5,6],"tygodnie":[2,4],"opis":"x"}`
+	if string(b) != chce {
+		t.Errorf("JSON\n%s\noczekiwano\n%s", b, chce)
+	}
+}
+
+func TestNazwaReguly(t *testing.T) {
+	for r := 1; r <= 10; r++ {
+		if NazwaReguly(r) == "" {
+			t.Errorf("reguła %d bez nazwy", r)
+		}
+	}
+	if NazwaReguly(0) != "" || NazwaReguly(11) != "" {
+		t.Error("nazwa dla numeru spoza 1–10")
 	}
 }

@@ -51,9 +51,9 @@ W JSON tygodnie są jawną listą, a nie maską, żeby plik był czytelny i nie 
 Solver zawsze zwraca przypisanie dla każdych zajęć (ADR 0006). Status planu nie jest częścią `plan.json`:
 ustala go walidator.
 
-## Raport walidatora (SZKIC)
+## Raport walidatora
 
-Wynik `internal/validator` dla danego `plan.json`. Backend zapisuje go przy uruchomieniu, frontend
+Wynik `internal/validator` dla danego `plan.json` (naruszenia: `validator.Naruszenie`, raport składa backend). Backend zapisuje go przy uruchomieniu, frontend
 wyświetla status, podświetla zajęcia z naruszeniami i pokazuje listę naruszeń.
 
 ```json
@@ -87,4 +87,19 @@ wyświetla status, podświetla zajęcia z naruszeniami i pokazuje listę narusze
 | `dzien`, `sloty`, `sala_id`, `tygodnie` | gdzie występuje naruszenie: dzień, wspólne sloty, sala (jeśli dotyczy), wspólne tygodnie |
 | `opis` | jedno zdanie po polsku do wyświetlenia w UI |
 | `koszt_miekki`, `koszt_kryteria` | koszt miękki całkowity i rozbicie na kryteria; liczone zawsze, także przy naruszeniach |
-| `walidator` | kto wystawił raport: `internal/validator` albo `atrapa` (backend do czasu merge'a walidatora, [api.md](api.md)); raport `atrapa` nie jest dowodem poprawności |
+| `walidator` | kto wystawił raport: `internal/validator` (serwer) albo `atrapa` (tylko w testach, [api.md](api.md)); raport `atrapa` nie jest dowodem poprawności |
+
+### Położenie naruszenia według reguły
+
+Pola położenia są pominięte, gdy nie dotyczą naruszenia. Kilka problemów tej samej reguły z tymi samymi
+zajęciami (np. zły typ sali i brak wyposażenia) to jedno naruszenie z opisami połączonymi średnikiem.
+
+| Reguła | `dzien`, `sloty` | `sala_id` | `tygodnie` |
+|---|---|---|---|
+| 1 `przypisanie` | z przypisania, o ile w zakresie (brak przy „zajęcia bez przypisania”) | o ile sala istnieje | z przypisania |
+| 2 `tygodnie` | spotkanie | sala spotkania | tygodnie spoza dozwolonych albo brakujące (`co_tydzien`); przy złej liczbie spotkań wszystkie |
+| 3, 4, 5 (kolizje) | wspólny dzień i wspólne sloty | tylko gdy obie zajęcia są w tej samej sali | wspólne tygodnie |
+| 6 `typ_sali`, 7 `pojemnosc` | spotkanie | sala spotkania | tygodnie spotkania |
+| 8 `dezyderaty` | dzień i sloty wykluczone (dezyderat lub Rada) | sala spotkania | tygodnie spotkania |
+| 9 `blokady_stale` | dzień i sloty wspólne z blokadą | sala spotkania | tygodnie spotkania (blokady są co tydzień) |
+| 10 `powiazania` | `rozne_dni`: wspólny dzień, bez slotów; `ten_sam_termin`: dzień, jeśli wspólny | jeśli wspólna | brak |
